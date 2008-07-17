@@ -1,0 +1,532 @@
+pro.linux/hookedfunctions.o pro.win32/hookedfunctions.o:  source/hookedfunctions.cpp source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/hookedfunctions.h ../hlsdk/multiplayer/common/usercmd.h \
+  source/ns_const.h source/ns_const_advanced.h source/utilfunctions.h \
+  source/player_data.h source/events_const.h source/upgrade_cybernetics.h \
+  source/upgrade_data_base.h source/upgrade_thickenedskin.h \
+  source/upgrade_reinforcedarmor.h source/upgrade_etherealshift.h \
+  source/upgrade_nanoarmor.h source/upgrade_bloodlust.h \
+  source/upgrade_advancedammopack.h source/upgrade_hunger.h \
+  source/upgrade_staticfield.h source/upgrade_acidicvengeance.h \
+  source/upgrade_uraniumammo.h source/upgrade_senseofancients.h \
+  source/upgrade_blindingsurge.h source/upgrade_lifesheath.h \
+  source/events.h
+pro.linux/upgrade_acidicvengeance.o pro.win32/upgrade_acidicvengeance.o:  source/upgrade_acidicvengeance.cpp \
+  source/upgrade_acidicvengeance.h source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h
+pro.linux/upgrade_senseofancients.o pro.win32/upgrade_senseofancients.o:  source/upgrade_senseofancients.cpp \
+  source/upgrade_senseofancients.h source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h \
+  source/upgrade_etherealshift.h source/upgrade_bloodlust.h
+pro.linux/upgrade_uraniumammo.o pro.win32/upgrade_uraniumammo.o:  source/upgrade_uraniumammo.cpp \
+  source/upgrade_uraniumammo.h source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h
+pro.linux/player_data.o pro.win32/player_data.o:  source/player_data.cpp source/player_data.h \
+  source/plugin.h ../hlsdk/multiplayer/dlls/extdll.h \
+  ../hlsdk/multiplayer/dlls/vector.h ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_cybernetics.h source/upgrade_data_base.h \
+  source/utilfunctions.h source/ns_const.h source/ns_const_advanced.h \
+  source/events_const.h source/upgrade_thickenedskin.h \
+  source/upgrade_reinforcedarmor.h source/upgrade_etherealshift.h \
+  source/upgrade_nanoarmor.h source/upgrade_bloodlust.h \
+  source/upgrade_advancedammopack.h source/upgrade_hunger.h \
+  source/upgrade_staticfield.h source/upgrade_acidicvengeance.h \
+  source/upgrade_uraniumammo.h source/upgrade_senseofancients.h \
+  source/upgrade_blindingsurge.h source/upgrade_lifesheath.h
+pro.linux/upgrade_reinforcedarmor.o pro.win32/upgrade_reinforcedarmor.o:  source/upgrade_reinforcedarmor.cpp \
+  source/upgrade_reinforcedarmor.h source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h
+pro.linux/utilfunctions.o pro.win32/utilfunctions.o:  source/utilfunctions.cpp source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/utilfunctions.h source/ns_const.h source/ns_const_advanced.h \
+  source/player_data.h source/events_const.h source/upgrade_cybernetics.h \
+  source/upgrade_data_base.h source/upgrade_thickenedskin.h \
+  source/upgrade_reinforcedarmor.h source/upgrade_etherealshift.h \
+  source/upgrade_nanoarmor.h source/upgrade_bloodlust.h \
+  source/upgrade_advancedammopack.h source/upgrade_hunger.h \
+  source/upgrade_staticfield.h source/upgrade_acidicvengeance.h \
+  source/upgrade_uraniumammo.h source/upgrade_senseofancients.h \
+  source/upgrade_blindingsurge.h source/upgrade_lifesheath.h
+pro.linux/plugin.o pro.win32/plugin.o:  source/plugin.cpp source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/utilfunctions.h source/ns_const.h source/ns_const_advanced.h \
+  source/player_data.h source/events_const.h
+pro.linux/upgrade_cybernetics.o pro.win32/upgrade_cybernetics.o:  source/upgrade_cybernetics.cpp source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_cybernetics.h source/upgrade_data_base.h \
+  source/utilfunctions.h source/ns_const.h source/ns_const_advanced.h \
+  source/player_data.h source/events_const.h
+pro.linux/events.o pro.win32/events.o:  source/events.cpp source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_cybernetics.h source/upgrade_data_base.h \
+  source/utilfunctions.h source/ns_const.h source/ns_const_advanced.h \
+  source/player_data.h source/events_const.h \
+  source/upgrade_thickenedskin.h source/upgrade_reinforcedarmor.h \
+  source/upgrade_etherealshift.h source/upgrade_nanoarmor.h \
+  source/upgrade_bloodlust.h source/upgrade_advancedammopack.h \
+  source/upgrade_hunger.h source/upgrade_staticfield.h \
+  source/upgrade_acidicvengeance.h source/upgrade_uraniumammo.h \
+  source/upgrade_senseofancients.h source/upgrade_blindingsurge.h \
+  source/upgrade_lifesheath.h source/events.h
+pro.linux/upgrade_bloodlust.o pro.win32/upgrade_bloodlust.o:  source/upgrade_bloodlust.cpp \
+  source/upgrade_bloodlust.h source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h \
+  source/upgrade_senseofancients.h
+pro.linux/upgrade_blindingsurge.o pro.win32/upgrade_blindingsurge.o:  source/upgrade_blindingsurge.cpp \
+  source/upgrade_blindingsurge.h source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h
+pro.linux/upgrade_staticfield.o pro.win32/upgrade_staticfield.o:  source/upgrade_staticfield.cpp \
+  source/upgrade_staticfield.h source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h
+pro.linux/upgrade_advancedammopack.o pro.win32/upgrade_advancedammopack.o:  source/upgrade_advancedammopack.cpp \
+  source/upgrade_advancedammopack.h source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h
+pro.linux/upgrade_etherealshift.o pro.win32/upgrade_etherealshift.o:  source/upgrade_etherealshift.cpp \
+  source/upgrade_etherealshift.h source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h
+pro.linux/upgrade_hunger.o pro.win32/upgrade_hunger.o:  source/upgrade_hunger.cpp source/upgrade_hunger.h \
+  source/plugin.h ../hlsdk/multiplayer/dlls/extdll.h \
+  ../hlsdk/multiplayer/dlls/vector.h ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h \
+  source/upgrade_bloodlust.h
+pro.linux/upgrade_lifesheath.o pro.win32/upgrade_lifesheath.o:  source/upgrade_lifesheath.cpp \
+  source/upgrade_lifesheath.h source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h
+pro.linux/upgrade_nanoarmor.o pro.win32/upgrade_nanoarmor.o:  source/upgrade_nanoarmor.cpp \
+  source/upgrade_nanoarmor.h source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h \
+  source/upgrade_reinforcedarmor.h
+pro.linux/upgrade_thickenedskin.o pro.win32/upgrade_thickenedskin.o:  source/upgrade_thickenedskin.cpp \
+  source/upgrade_thickenedskin.h source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h
+pro.linux/upgrade_data_base.o pro.win32/upgrade_data_base.o:  source/upgrade_data_base.cpp source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  source/upgrade_data_base.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h
+pro.linux/meta_api.o pro.win32/meta_api.o:  source/meta_api.cpp source/plugin.h \
+  ../hlsdk/multiplayer/dlls/extdll.h ../hlsdk/multiplayer/dlls/vector.h \
+  ../hlsdk/multiplayer/common/const.h \
+  ../hlsdk/multiplayer/common/in_buttons.h \
+  ../hlsdk/multiplayer/engine/progdefs.h \
+  ../hlsdk/multiplayer/engine/edict.h \
+  ../hlsdk/multiplayer/engine/eiface.h \
+  ../hlsdk/multiplayer/engine/archtypes.h \
+  ../hlsdk/multiplayer/engine/custom.h ../hlsdk/multiplayer/common/crc.h \
+  ../hlsdk/multiplayer/common/cvardef.h \
+  ../hlsdk/multiplayer/engine/Sequence.h \
+  ../hlsdk/multiplayer/dlls/cdll_dll.h ../metamod-p/metamod/meta_api.h \
+  ../metamod-p/metamod/comp_dep.h ../metamod-p/metamod/dllapi.h \
+  ../metamod-p/metamod/sdk_util.h ../hlsdk/multiplayer/dlls/util.h \
+  ../hlsdk/multiplayer/dlls/activity.h \
+  ../hlsdk/multiplayer/dlls/enginecallback.h \
+  ../hlsdk/multiplayer/common/event_flags.h ../metamod-p/metamod/osdep.h \
+  ../metamod-p/metamod/types_meta.h ../metamod-p/metamod/mreg.h \
+  ../metamod-p/metamod/new_baseclass.h ../metamod-p/metamod/log_meta.h \
+  ../metamod-p/metamod/engine_api.h ../metamod-p/metamod/plinfo.h \
+  ../metamod-p/metamod/mutil.h ../metamod-p/metamod/mhook.h \
+  ../metamod-p/metamod/h_export.h source/hookedfunctions_table.h \
+  source/hookedfunctions.h source/utilfunctions.h source/ns_const.h \
+  source/ns_const_advanced.h source/player_data.h source/events_const.h
