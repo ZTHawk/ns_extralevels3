@@ -20,7 +20,8 @@ const char *upgrade_symbols[UP_END] =
 	"H",
 	"AV",
 	"SOA",
-	"LS"
+	"LS",
+	"CE"
 };
 
 // default functions if they are not overloaded

@@ -14,6 +14,7 @@
 #include "upgrade_senseofancients.h"
 #include "upgrade_blindingsurge.h"
 #include "upgrade_lifesheath.h"
+#include "upgrade_combatevolution.h"
 #include "utilfunctions.h"
 #include "player_data.h"
 #include "events.h"

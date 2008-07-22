@@ -13,6 +13,7 @@
 #include "upgrade_senseofancients.h"
 #include "upgrade_blindingsurge.h"
 #include "upgrade_lifesheath.h"
+#include "upgrade_combatevolution.h"
 #include "utilfunctions.h"
 #include "ns_const.h"
 #include "events_const.h"

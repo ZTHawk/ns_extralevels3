@@ -21,6 +21,7 @@
 #include "upgrade_senseofancients.h"
 #include "upgrade_blindingsurge.h"
 #include "upgrade_lifesheath.h"
+#include "upgrade_combatevolution.h"
 #include "events.h"
 
 //#include <sdk_util.h> //useful almost everywhere
@@ -96,6 +97,7 @@ int Spawn( edict_t *pEntity )
 	upgrade_data[UP_SOA] = &data_senseofancients;
 	upgrade_data[UP_BS] = &data_blindingsurge;
 	upgrade_data[UP_LS] = &data_lifesheath;
+	upgrade_data[UP_CE] = &data_combatevolution;
 	
 	// Init upgrade_player_data
 	int i = 0;
@@ -127,6 +129,8 @@ int Spawn( edict_t *pEntity )
 		upgrade_pl_data[UP_BS][i] = &player_blindingsurge[i];
 	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_LS][i] = &player_lifesheath[i];
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+		upgrade_pl_data[UP_CE][i] = &player_combatevolution[i];
 	
 	// Find config path
 	UTIL_getConfigFilenames();
@@ -271,7 +275,7 @@ void el3_set_upgrade( int args )
 	
 	if ( ID == 0 )
 	{
-		UTIL_ServerPrint("[" PLUGIN_NAME "] %s %s\n", (level != 0) ? "Enabling" : "Disabling", upgrade_data[upgrade_ID]->upgrade_name);
+		UTIL_ServerPrint("[" PLUGIN_NAME "] %s has been %s\n", upgrade_data[upgrade_ID]->upgrade_name, (level != 0) ? "enabled" : "disabled");
 		if ( level == 0 )
 			upgrade_data[upgrade_ID]->available = false;
 		else
@@ -322,6 +326,10 @@ void KeyValue( edict_t *pentKeyvalue , KeyValueData *pkvd )
 
 void ServerActivate_Post( edict_t *pEdictList , int edictCount , int clientMax )
 {
+#ifdef _DEBUG
+	UTIL_LogDebug("SAPs");
+#endif
+	
 	SAFE_USER_MSG(TextMsg_ID, "TextMsg", -1);
 	
 	SAFE_USER_MSG(HUDText2_ID, "HudText2", -1);
@@ -394,14 +402,25 @@ void ServerActivate_Post( edict_t *pEdictList , int edictCount , int clientMax )
 	for ( short i = 0; i < UP_END; ++i )
 		upgrade_data[i]->precache();
 	
+#ifdef _DEBUG
+	UTIL_LogDebug("SAPe");
+#endif
+	
 	RETURN_META(MRES_IGNORED);
 }
 
 void ServerDeactivate_Post( void )
 {
+#ifdef _DEBUG
+	UTIL_LogDebug("SDPs");
+#endif
 	data_senseofancients.SporeData.clear();
 	
 	Set_Hooks();
+	
+#ifdef _DEBUG
+	UTIL_LogDebug("SDPe");
+#endif
 	
 	RETURN_META(MRES_IGNORED);
 }
@@ -744,6 +763,7 @@ void ServerFrame( void )
 #endif
 	
 	data_senseofancients.SporeEmulationTimer();
+	data_combatevolution.ServerFrame_Think();
 	
 	for ( byte ID = 1; ID <= gpGlobals->maxClients; ++ID )
 	{

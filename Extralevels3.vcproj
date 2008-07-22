@@ -234,6 +234,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\upgrade_combatevolution.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\upgrade_cybernetics.cpp"
 				>
 			</File>
@@ -348,6 +352,10 @@
 			</File>
 			<File
 				RelativePath=".\source\upgrade_bloodlust.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\upgrade_combatevolution.h"
 				>
 			</File>
 			<File

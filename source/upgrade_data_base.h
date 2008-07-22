@@ -43,6 +43,7 @@ enum
 	UP_AV,
 	UP_SOA,
 	UP_LS,
+	UP_CE,
 	
 	UP_END
 };
@@ -51,7 +52,7 @@ enum
 #define UP_MARINE_FIRST		UP_C
 #define UP_MARINE_LAST		UP_BS
 #define UP_ALIEN_FIRST		UP_TS
-#define UP_ALIEN_LAST		UP_LS
+#define UP_ALIEN_LAST		UP_CE
 
 extern const char *upgrade_symbols[UP_END];
 

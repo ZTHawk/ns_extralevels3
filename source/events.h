@@ -163,6 +163,7 @@ inline void EVENT_DamageMsg( int Msg_receiver , int Msg_arg_num , int value )
 			{
 				player_bloodlust[Msg_receiver].drink_my_Blood();
 				player_senseofancients[Msg_receiver].check_Parasite();
+				player_combatevolution[Msg_receiver].check_Cripple();
 			}
 			break;
 		}
