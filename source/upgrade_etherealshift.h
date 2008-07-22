@@ -53,7 +53,7 @@ class EL_Etherealshift : public base_upgrade_pl_data
 };
 
 extern Upgrade_Etherealshift data_etherealshift;
-extern EL_Etherealshift player_etherealshift[MAX_PLAYERS];
+extern EL_Etherealshift player_etherealshift[MAX_PLAYERS_PLUS1];
 
 
 enum ES_sounds
