@@ -6,7 +6,7 @@
 #include "ns_const.h"
 
 Upgrade_Hunger data_hunger;
-EL_Hunger player_hunger[MAX_PLAYERS];
+EL_Hunger player_hunger[MAX_PLAYERS_PLUS1];
 
 void Upgrade_Hunger::init( )
 {
@@ -27,7 +27,7 @@ void Upgrade_Hunger::init( )
 	strcpy(upgrade_name, "Hunger");
 	strcpy(upgrade_description, "Gives you bonuses when you kill an enemy. These bonuses last for the specified time\n"
 					"Lasts [%2.2f] second%s, gain is [+%d%%] of max Health, effects of primalscream and speed bonus by [+%d] upon kill (bonuses stack)\n\n"
-					"Requires: Blood Lust , Level %d, %d point%s\n\n"
+					"Requires: Blood Lust , Level %d, %d Point%s\n\n"
 					"Next level [%d]\n\n"
 					"%s%s\n\n"
 					"0. Exit\n\n\n\n\n\n\n");
@@ -105,6 +105,7 @@ void EL_Hunger::reset_basic( )
 	justKilled = false;
 	HungerEndTime = 0.0;
 	SpeedBonus = 0.0;
+	amount_boosts_got = 0;
 }
 
 bool EL_Hunger::check_Requirements( )
@@ -126,7 +127,7 @@ void EL_Hunger::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_hunger.req_points);
+	UTIL_addPoints(pEntity, data_hunger.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",
@@ -151,26 +152,32 @@ void EL_Hunger::Think( )
 	
 	if ( pEntity->v.frags > lastFrags )
 	{
-		if ( !UTIL_getMask(pEntity, MASK_SILENCE) )
-			EMIT_SOUND_DYN2(pEntity, CHAN_ITEM, H_sound_files[H_sound_primalscream], 0.5, ATTN_NORM, 0, PITCH_NORM);
-		
 		justKilled = true;
 		lastFrags = pEntity->v.frags;
-		HungerEndTime = gpGlobals->time + HungerTime;
 		
-		pEntity->v.health += ( player_data[ID].maxHP / 100.0 * data_hunger.bonusHealthPercentage );
-		SpeedBonus += data_hunger.bonusSpeed;
+		if ( amount_boosts_got < H_MAX_HUNGER_BOOSTS )
+		{
+			++amount_boosts_got;
+			HungerEndTime = gpGlobals->time + HungerTime;
+			
+			pEntity->v.health += ( player_data[ID].maxHP / 100.0 * data_hunger.bonusHealthPercentage );
+			SpeedBonus += data_hunger.bonusSpeed;
+			
+			if ( UTIL_getMask(pEntity, MASK_SILENCE) == false )
+				EMIT_SOUND_DYN2(pEntity, CHAN_ITEM, H_sound_files[H_sound_primalscream], 0.5, ATTN_NORM, 0, PITCH_NORM);
+		}
 	}else if ( gpGlobals->time >= HungerEndTime
 		&& justKilled )
 	{
 		if ( pEntity->v.health > player_data[ID].maxHP )
 			pEntity->v.health = player_data[ID].maxHP;
 		
-		if ( !UTIL_getMask(pEntity, MASK_SILENCE) )
-			EMIT_SOUND_DYN2(pEntity, CHAN_ITEM, H_sound_files[H_sound_chargekill], 0.5, ATTN_NORM, 0, PITCH_NORM);
-		
 		justKilled = false;
 		SpeedBonus = 0.0;
+		amount_boosts_got = 0;
+		
+		if ( UTIL_getMask(pEntity, MASK_SILENCE) == false )
+			EMIT_SOUND_DYN2(pEntity, CHAN_ITEM, H_sound_files[H_sound_chargekill], 0.5, ATTN_NORM, 0, PITCH_NORM);
 	}
 }
 
