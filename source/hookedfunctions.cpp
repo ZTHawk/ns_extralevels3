@@ -1282,7 +1282,10 @@ void pfnWriteByte_Post( int value )
 		EVENT_SetTech_POST(Msg_receiver_Post, value, Msg_arg_num_Post, Msg_stored_data_Post);
 	}else if ( Msg_type_Post == TeamInfo_ID )
 	{
-		Msg_receiver_Post = value;		// we need to set it here cause in MessageBegin ID is = 0
+		// check if message is about to be send to everyone
+		// otherwise there is no need to change its receiver
+		if ( Msg_receiver_Post == 0 )
+			Msg_receiver_Post = value;
 	}else if ( Msg_type_Post == StatusValue_ID )
 	{
 		Msg_correct_data_Post = EVENT_StatusValue_Byte_POST(value);
