@@ -39,7 +39,7 @@ class EL_Nanoarmor : public base_upgrade_pl_data
 };
 
 extern Upgrade_Nanoarmor data_nanoarmor;
-extern EL_Nanoarmor player_nanoarmor[MAX_PLAYERS];
+extern EL_Nanoarmor player_nanoarmor[MAX_PLAYERS_PLUS1];
 
 
 enum NA_sounds

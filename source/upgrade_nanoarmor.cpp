@@ -6,7 +6,7 @@
 #include "ns_const.h"
 
 Upgrade_Nanoarmor data_nanoarmor;
-EL_Nanoarmor player_nanoarmor[MAX_PLAYERS];
+EL_Nanoarmor player_nanoarmor[MAX_PLAYERS_PLUS1];
 
 void Upgrade_Nanoarmor::init( )
 {
@@ -24,8 +24,8 @@ void Upgrade_Nanoarmor::init( )
 	
 	strcpy(upgrade_name, "Nano Armor");
 	strcpy(upgrade_description, "Armor is created with tiny nano bots that weld your armor\n"
-					"Self weld per second is [%d] (for current armor type)\n\n"
-					"Requires: Reinforced Armor 1 , Level %d, %d point%s\n\n"
+					"Self weld every two seconds [+%d] armor (for current armor type)\n\n"
+					"Requires: Reinforced Armor 1 , Level %d, %d Point%s\n\n"
 					"Next level [%d]\n\n"
 					"%s%s\n\n"
 					"0. Exit\n\n\n\n\n\n\n");
@@ -97,6 +97,9 @@ void EL_Nanoarmor::reset( )
 	ha_nanoarmor = 0.0;
 	welding_self = false;
 	nextNanoweld = 0.0;
+	
+	// stop background welding sound
+	EMIT_SOUND_DYN2(pEntity, CHAN_STREAM, NA_sound_files[NA_sound_welderidle], 0.0, ATTN_NORM, SND_STOP, PITCH_NORM);
 }
 
 bool EL_Nanoarmor::check_Requirements( )
@@ -116,7 +119,7 @@ void EL_Nanoarmor::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_nanoarmor.req_points);
+	UTIL_addPoints(pEntity, data_nanoarmor.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",
@@ -145,13 +148,13 @@ void EL_Nanoarmor::Think( )
 	if ( pEntity->v.armorvalue < player_data[ID].maxAP )
 	{
 		if ( !welding_self )
-			EMIT_SOUND_DYN2(pEntity, CHAN_STREAM, NA_sound_files[NA_sound_welderidle], 0.8, ATTN_NORM, 0, PITCH_NORM);
+			EMIT_SOUND_DYN2(pEntity, CHAN_STREAM, NA_sound_files[NA_sound_welderidle], 0.4, ATTN_NORM, 0, PITCH_NORM);
 		
 		welding_self = true;
 		EMIT_SOUND_DYN2(pEntity, CHAN_AUTO, NA_sound_files[NA_sound_welderstop], 0.8, ATTN_NORM, 0, PITCH_NORM);
 	}else if ( welding_self )
 	{
-		// as we already have max AP so stop selfweld and sound
+		// we already have max AP so stop selfweld and sound
 		welding_self = false;
 		EMIT_SOUND_DYN2(pEntity, CHAN_STREAM, NA_sound_files[NA_sound_welderidle], 0.0, ATTN_NORM, SND_STOP, PITCH_NORM);
 		return;
