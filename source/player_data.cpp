@@ -77,7 +77,7 @@ void EL_Player::reset( bool in_game )
 	
 	// addionional data
 	in_main_menu = false;
-	in_upgrade_menu = 0;
+	in_upgrade_menu = -1;
 	in_help_menu = false;
 	
 	pTeam = 0;
@@ -904,7 +904,7 @@ void EL_Player::showMenu( )
 		RETURN_META(MRES_IGNORED);
 	
 	char menu_cont[MENU_CONTENT_LEN] = "Choose an upgrade to view information about:\n\n";
-	in_upgrade_menu = 0;
+	in_upgrade_menu = -1;
 	int Keys = (1<<9);
 	if ( banned == true )
 	{
@@ -1027,7 +1027,7 @@ void EL_Player::MenuSelection( int key )
 				|| UTIL_getMask(pEntity, MASK_DIGESTING) )
 			{
 				UTIL_showPopup(pEntity, "You can't gestate while digesting a player.");
-				in_upgrade_menu = 0;
+				in_upgrade_menu = -1;
 				
 				return;
 			}
@@ -1040,7 +1040,7 @@ void EL_Player::MenuSelection( int key )
 				|| !ptr.fInOpen )
 			{
 				UTIL_showPopup(pEntity, "You need more room to gestate.");
-				in_upgrade_menu = 0;
+				in_upgrade_menu = -1;
 				
 				return;
 			}
