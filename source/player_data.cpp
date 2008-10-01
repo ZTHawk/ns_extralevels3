@@ -74,7 +74,7 @@ void EL_Player::reset( bool in_game )
 	
 	// addionional data
 	in_main_menu = false;
-	in_upgrade_menu = 0;
+	in_upgrade_menu = -1;
 	in_help_menu = false;
 	
 	pTeam = 0;
@@ -885,7 +885,7 @@ void EL_Player::showMenu( )
 		RETURN_META(MRES_IGNORED);
 	
 	char menu_cont[MENU_CONTENT_LEN] = "Choose an upgrade to view information about:\n\n";
-	in_upgrade_menu = 0;
+	in_upgrade_menu = -1;
 	int Keys = (1<<9);
 	if ( banned == true )
 	{
@@ -895,13 +895,15 @@ void EL_Player::showMenu( )
 					"Either you did not follow Server Rules or did something else bad.\n");
 	}else
 	{
-		byte i = 0;
+		byte i = 1;
 		for ( short up_ID = UP_START; up_ID < UP_END; ++up_ID )
 		{
 			if ( upgrade_data[up_ID]->team != team )
 				continue;
 			
-			upgrade_data[up_ID]->add_to_menu(ID, ++i, Keys, menu_cont);
+			upgrade_data[up_ID]->add_to_menu(ID, i, Keys, menu_cont);
+			
+			++i;
 		}
 		
 		in_main_menu = true;
@@ -974,8 +976,10 @@ void EL_Player::MenuSelection( int key )
 		// - 1 because first element is 0 (zero)
 		in_upgrade_menu = ((team == MARINE) ? UP_MARINE_FIRST : UP_ALIEN_FIRST) + key - 1;
 		
-		if ( 1 <= key
-			&& key <= 7 )
+		if ( in_upgrade_menu < UP_END
+			&& 1 <= key
+			&& key <= 9
+			&& upgrade_data[in_upgrade_menu]->team == team )
 			upgrade_data[in_upgrade_menu]->show_upgrade_menu(pEntity);
 	}else if ( in_upgrade_menu != -1 )
 	{
@@ -986,7 +990,7 @@ void EL_Player::MenuSelection( int key )
 					|| UTIL_getMask(pEntity, MASK_DIGESTING) ) )
 			{
 				UTIL_showPopup(pEntity, "You can't gestate while digesting a player.");
-				in_upgrade_menu = 0;
+				in_upgrade_menu = -1;
 				
 				return;
 			}
@@ -999,7 +1003,7 @@ void EL_Player::MenuSelection( int key )
 				|| !ptr.fInOpen )
 			{
 				UTIL_showPopup(pEntity, "You need more room to gestate.");
-				in_upgrade_menu = 0;
+				in_upgrade_menu = -1;
 				
 				return;
 			}
