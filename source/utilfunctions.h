@@ -533,7 +533,15 @@ inline void set_private_f( edict_t *pEntity , int offset , float value )
 	*(float*)((char*)(pEntity->pvPrivateData) + offset) = value;
 }
 
+inline void add_private( edict_t *pEntity , int offset , int value )
+{
+	*(int*)((char*)(pEntity->pvPrivateData) + offset) += value;
+}
 
+inline void add_private_f( edict_t *pEntity , int offset , float value )
+{
+	*(float*)((char*)(pEntity->pvPrivateData) + offset) += value;
+}
 
 
 
