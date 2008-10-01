@@ -125,7 +125,7 @@ inline void EVENT_DeathMsg( byte &Msg_receiver , int Msg_arg_num , int &Msg_stor
 	}
 }
 
-inline void EVENT_DeathMsg_END( int Msg_receiver , int Msg_stored_data )
+inline void EVENT_DeathMsg_END( int Msg_receiver /*victim*/ , int Msg_stored_data /*killer*/ , char *Msg_stored_string )
 {
 	CLIENT_COMMAND(INDEXENT(Msg_receiver), "slot10\n");
 	
@@ -134,6 +134,12 @@ inline void EVENT_DeathMsg_END( int Msg_receiver , int Msg_stored_data )
 		player_data[Msg_receiver].resetGestate();
 		player_data[Msg_receiver].died_during_gestate = true;
 	}
+	
+	if ( player_data[Msg_stored_data].ingame == true	// killer connected
+		&& ( Msg_receiver != Msg_stored_data		// not suicide
+		|| strcmp(Msg_stored_string, "turret") == 0
+		|| strcmp(Msg_stored_string, "siegeturret") == 0 ) )
+		player_acidicvengeance[Msg_receiver].initAV();
 	
 	for ( int upgrade_ID = UP_START; upgrade_ID < UP_END; ++upgrade_ID )
 		upgrade_pl_data[upgrade_ID][Msg_receiver]->reset_basic();
@@ -178,17 +184,6 @@ inline void EVENT_DeathMsg_POST( byte &Msg_receiver_Post , int Msg_arg_num_Post 
 			break;
 		}
 	}
-}
-
-inline void EVENT_DeathMsg_END_POST( int Msg_receiver_Post /*victim*/ , int Msg_stored_data_Post /*killer*/ , char *Msg_stored_string_Post )
-{
-	// needs to be handled in post
-	// otherwise we could not send death messages ( or we get crashs )
-	if ( player_data[Msg_stored_data_Post].ingame == true	// killer connected
-		&& ( Msg_receiver_Post != Msg_stored_data_Post		// not suicide
-		|| strcmp(Msg_stored_string_Post, "turret") == 0
-		|| strcmp(Msg_stored_string_Post, "siegeturret") == 0 ) )
-		player_acidicvengeance[Msg_receiver_Post].Think();
 }
 
 inline bool EVENT_TeamInfo_POST( byte Msg_receiver_Post , const char *TeamName )

@@ -48,13 +48,14 @@ class EL_Acidicvengeance : public base_upgrade_pl_data
 	float ha_ArmorDmg;
 	
 	void respawned( );
+	void initAV( );
 	
 	private:
-	bool startedAV;
+	byte startedAV;
 };
 
 extern Upgrade_Acidicvengeance data_acidicvengeance;
-extern EL_Acidicvengeance player_acidicvengeance[MAX_PLAYERS];
+extern EL_Acidicvengeance player_acidicvengeance[MAX_PLAYERS_PLUS1];
 
 
 enum AV_sounds
@@ -68,6 +69,10 @@ static const char *AV_sound_files[AV_MAX_SOUNDS] =
 {
 	"weapons/divinewindexplode.wav"
 };
+
+#define AV_NONE				0
+#define AV_INIT				1
+#define AV_DONE				2
 
 // default config settings
 #define ACIDICVENGEANCE			true

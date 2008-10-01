@@ -51,13 +51,13 @@ int Msg_arg_num = 0;
 int Msg_stored_data = 0;
 int Msg_stored_data2 = 0;
 bool Msg_correct_data = 0;
+char Msg_stored_string[32];
 
 int Msg_type_Post = 0;
 byte Msg_receiver_Post = 0;
 int Msg_arg_num_Post = 0;
 int Msg_stored_data_Post = 0;
 bool Msg_correct_data_Post = 0;
-char *Msg_stored_string_Post = new char[32];
 
 int Spawn( edict_t *pEntity )
 {
@@ -941,8 +941,11 @@ void pfnWriteString( const char *string )
 		player_data[Msg_receiver].scoreinfo_string = (char *)string;
 	}else if ( Msg_type == Particles_ID )
 	{
-		if ( Msg_arg_num == 1 )
+		if ( Msg_arg_num == 2 )
 			EVENT_Particles(string);
+	}else if ( Msg_type == DeathMsg_ID )
+	{
+		strncpy(Msg_stored_string, string, 31);
 	}
 	
 	++Msg_arg_num;
@@ -974,7 +977,7 @@ void pfnMessageEnd( void )
 	
 	if ( Msg_type == DeathMsg_ID )
 	{
-		EVENT_DeathMsg_END(Msg_receiver, Msg_stored_data);
+		EVENT_DeathMsg_END(Msg_receiver, Msg_stored_data, Msg_stored_string);
 	}else if ( Msg_type == AmmoPickup_ID )
 	{
 		// message is about to be blocked
@@ -987,6 +990,7 @@ void pfnMessageEnd( void )
 	
 	Msg_type = 0;
 	Msg_receiver = 0;
+	Msg_stored_string[0] = 0;
 	
 	if ( gBlockMsg )
 	{
@@ -1180,7 +1184,6 @@ void pfnMessageBegin_Post( int msg_dest , int msg_type , const float *pOrigin , 
 #endif
 	
 	if ( msg_type == SetTech_ID
-		|| msg_type == DeathMsg_ID
 		|| msg_type == ScoreInfo_ID
 		|| msg_type == StatusValue_ID
 		|| msg_type == TeamInfo_ID
@@ -1218,9 +1221,6 @@ void pfnWriteByte_Post( int value )
 	}else if ( Msg_type_Post == StatusValue_ID )
 	{
 		Msg_correct_data_Post = EVENT_StatusValue_Byte_POST(value);
-	}else if ( Msg_type_Post == DeathMsg_ID )
-	{
-		EVENT_DeathMsg_POST(Msg_receiver_Post, Msg_arg_num_Post, Msg_stored_data_Post, value);
 	}else if ( Msg_type_Post == ScoreInfo_ID )
 	{
 		if ( Msg_arg_num_Post == 1 )
@@ -1292,9 +1292,6 @@ void pfnWriteString_Post( const char *string )
 	}else if ( Msg_type_Post == TeamInfo_ID )
 	{
 		Msg_correct_data_Post = EVENT_TeamInfo_POST(Msg_receiver_Post, string);
-	}else if ( Msg_type_Post == DeathMsg_ID )
-	{
-		strncpy(Msg_stored_string_Post, string, 31);
 	}
 	
 	++Msg_arg_num_Post;
@@ -1336,9 +1333,6 @@ void pfnMessageEnd_Post( void )
 	}else if ( Msg_type_Post == StatusValue_ID )
 	{
 		EVENT_StatusValue_END_POST(Msg_receiver_Post);
-	}else if ( Msg_type_Post == DeathMsg_ID )
-	{
-		EVENT_DeathMsg_END_POST(Msg_receiver_Post, Msg_stored_data_Post, Msg_stored_string_Post);
 	}else if ( Msg_type_Post == ScoreInfo_ID )
 	{
 		UTIL_sendScoreInfo(Msg_receiver_Post);
@@ -1346,7 +1340,6 @@ void pfnMessageEnd_Post( void )
 	
 	Msg_type_Post = 0;
 	Msg_receiver_Post = 0;
-	Msg_stored_string_Post[0] = 0;
 	
 #ifdef _DEBUG
 	UTIL_LogDebug("MEPe\n");

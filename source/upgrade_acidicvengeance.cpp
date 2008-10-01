@@ -5,7 +5,7 @@
 #include "ns_const.h"
 
 Upgrade_Acidicvengeance data_acidicvengeance;
-EL_Acidicvengeance player_acidicvengeance[MAX_PLAYERS];
+EL_Acidicvengeance player_acidicvengeance[MAX_PLAYERS_PLUS1];
 
 void Upgrade_Acidicvengeance::init( )
 {
@@ -30,7 +30,7 @@ void Upgrade_Acidicvengeance::init( )
 	strcpy(upgrade_description, "Whenever you are killed, you leave an acidic cloud that damages your enemies.\n"
 					"HA for [%2.1f] HP - [%2.1f] AP and others for [%2.1f] HP - [%2.1f] AP.\n"
 					"Gorge and Gestate have an enhanced damage by [%d%%]. Range depends on your class, current range [%d].\n\n"
-					"Requires: Hive Ability 2 , Sense of Fear , Level %d, %d point%s\n\n"
+					"Requires: Hive Ability 2 , Sense of Fear , Level %d, %d Point%s\n\n"
 					"Next level [%d]\n\n"
 					"%s%s\n\n"
 					"0. Exit\n\n\n\n\n\n\n\n");
@@ -111,7 +111,7 @@ void EL_Acidicvengeance::reset( )
 
 void EL_Acidicvengeance::respawned( )
 {
-	startedAV = false;
+	startedAV = AV_NONE;
 }
 
 bool EL_Acidicvengeance::check_Requirements( )
@@ -134,7 +134,7 @@ void EL_Acidicvengeance::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_acidicvengeance.req_points);
+	UTIL_addPoints(pEntity, data_acidicvengeance.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",
@@ -157,10 +157,10 @@ void EL_Acidicvengeance::Think( )
 	if ( cur_level == 0 )
 		return;
 	
-	if ( startedAV == true )
+	if ( startedAV != AV_INIT )
 		return;
 	
-	startedAV = true;
+	startedAV = AV_DONE;
 	
 	Vector temp = pEntity->v.origin;
 	temp.z += 100.0;
@@ -237,5 +237,11 @@ void EL_Acidicvengeance::Think( )
 	}
 }
 
-
+void EL_Acidicvengeance::initAV( )
+{
+	if ( data_acidicvengeance.available == false )
+		return;
+	
+	startedAV = AV_INIT;
+}
 
