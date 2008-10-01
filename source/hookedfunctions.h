@@ -49,10 +49,17 @@ void pfnWriteString_Post( const char *string );
 void pfnMessageEnd_Post( void );
 
 // misc
+void el3_main( );
 void el3_config_reload( );
-void el3_set_upgrade( );
+void el3_set_upgrade( int args );
 void Cleanup_Hooks( );
+void Cleanup_Hooks_basic( );
 void Cleanup_Init( );
 void Set_Hooks( );
+void Set_Hooks_basic( );
+void Set_Hooks_Message( );
+void Set_Hooks_Message_Post( );
+void Clear_Hooks_Message( );
+void Clear_Hooks_Message_Post( );
 
 #endif

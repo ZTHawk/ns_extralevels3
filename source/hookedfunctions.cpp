@@ -36,10 +36,11 @@ DLL_FUNCTIONS *g_pFunctionTable_Post = NULL;
 bool gIgnore_Self_Send_Msg = false;
 
 base_upgrade_data *upgrade_data[UP_END];
-base_upgrade_pl_data *upgrade_pl_data[UP_END][MAX_PLAYERS];
+base_upgrade_pl_data *upgrade_pl_data[UP_END][MAX_PLAYERS_PLUS1];
 
 // private
 bool initialized = false;
+short el3_paused = 0;
 
 bool gBlockMsg = false;
 float g_next_CVAR_check = 0.0;
@@ -68,6 +69,7 @@ int Spawn( edict_t *pEntity )
 		|| mapname[2] != '_' )
 	{
 		Cleanup_Hooks();
+		el3_paused = -1;
 		
 		RETURN_META_VALUE(MRES_IGNORED, 0);
 	}
@@ -77,8 +79,7 @@ int Spawn( edict_t *pEntity )
 	if ( initialized == true )
 		RETURN_META_VALUE(MRES_IGNORED, 0);
 	
-	REG_SVR_COMMAND("el3_config_reload", el3_config_reload);
-	REG_SVR_COMMAND("el3_set_upgrade", el3_set_upgrade);
+	REG_SVR_COMMAND("el3", el3_main);
 	
 	// Init upgrade_data
 	upgrade_data[UP_C] = &data_cybernetics;
@@ -98,33 +99,33 @@ int Spawn( edict_t *pEntity )
 	
 	// Init upgrade_player_data
 	int i = 0;
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_C][i] = &player_cybernetics[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_TS][i] = &player_thickenedskin[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_RA][i] = &player_reinforcedarmor[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_ES][i] = &player_etherealshift[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_NA][i] = &player_nanoarmor[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_BL][i] = &player_bloodlust[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_AA][i] = &player_advancedammopack[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_H][i] = &player_hunger[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_SF][i] = &player_staticfield[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_AV][i] = &player_acidicvengeance[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_UA][i] = &player_uraniumammo[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_SOA][i] = &player_senseofancients[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_BS][i] = &player_blindingsurge[i];
-	for ( i = 0; i < MAX_PLAYERS; ++i )
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_LS][i] = &player_lifesheath[i];
 	
 	el3_config_reload();
@@ -132,6 +133,50 @@ int Spawn( edict_t *pEntity )
 	initialized = true;
 	
 	RETURN_META_VALUE(MRES_IGNORED, 0);
+}
+
+void el3_main( )
+{
+	int args = CMD_ARGC();
+	if ( args < 2 )
+	{
+		UTIL_ServerPrint("EL3 commands:\n"
+			"on\n"
+			"off\n"
+			"config_reload\n"
+			"set_upgrades\n"
+			);
+		return;
+	}
+	
+	const char* arg2 = CMD_ARGV(1);
+	if ( strcmp(arg2, "on") == 0 )
+	{
+		if ( el3_paused == 0 )
+			UTIL_ServerPrint("[" PLUGIN_NAME "] Already running\n");
+		else if ( el3_paused != -1 )
+		{
+			el3_paused = 0;
+			Set_Hooks_basic();
+		}
+		return;
+	}else if ( strcmp(arg2, "off") == 0 )
+	{
+		if ( el3_paused == 1 )
+			UTIL_ServerPrint("[" PLUGIN_NAME "] Already paused\n");
+		else if ( el3_paused != -1 )
+		{
+			el3_paused = 1;
+			Cleanup_Hooks_basic();
+		}
+		return;
+	}else if ( strcmp(arg2, "config_reload") == 0 )
+	{
+		el3_config_reload();
+	}else if ( strcmp(arg2, "set_upgrades") == 0 )
+	{
+		el3_set_upgrade(args);
+	}
 }
 
 void el3_config_reload( )
@@ -142,16 +187,13 @@ void el3_config_reload( )
 	
 	UTIL_getBanData();
 	
-	
 	FILE *file = fopen(config_file, "r");
 	if ( file == NULL )
 	{
 		UTIL_LogPrintf( "[" PLUGIN_NAME "] Unable to load configfile \"%s\"\n", config_file);
 		UTIL_ServerPrint( "[" PLUGIN_NAME "] Unable to load configfile \"%s\"\n", config_file);
-		
-		return;
-	}
-	fclose(file);
+	}else
+		fclose(file);
 	
 	init_xplevel_data();
 	
@@ -163,16 +205,16 @@ void el3_config_reload( )
 		upgrade_data[i]->init();
 }
 
-void el3_set_upgrade( )
+void el3_set_upgrade( int args )
 {
-	if ( CMD_ARGC() < 4 )
+	if ( args < 5 )
 	{
-		if ( CMD_ARGC() == 2 )
+		if ( args == 3 )
 		{
-			const char* arg2 = CMD_ARGV(1);
-			if( strcmp(arg2, "list") == 0 )
+			const char* arg3 = CMD_ARGV(2);
+			if( strcmp(arg3, "list") == 0 )
 			{
-				UTIL_ServerPrint("EL3 UpgradeSymbols:\n"
+				UTIL_ServerPrint("[" PLUGIN_NAME "] UpgradeSymbols:\n"
 					"C = Cyber / RA = Reinforced / NA = Nanoarmor / AA = AdvAmmo\n"
 					"SF = StaticField / UA = UraniumAmmo / BS = BlindingSurge\n"
 					"TS = ThickenedSkin / ES = EtherealShift / BL = BloodLust / H = Hunger\n"
@@ -183,14 +225,14 @@ void el3_set_upgrade( )
 		}
 		
 		UTIL_ServerPrint("Usage: el3_set_upgrade <PlayerID> <UpgradeSymbol> <NewLevel>\n"
-				"or \"el3_set_upgrade list\" to show the list of UpgradeSymbols\n");
+				"or \"el3 set_upgrade list\" to show the list of UpgradeSymbols\n");
 		
 		return;
 	}
 		
-	byte ID = atoi(CMD_ARGV(1));
-	const char *upgrade_symbol = CMD_ARGV(2);
-	int level = atoi(CMD_ARGV(3));
+	byte ID = atoi(CMD_ARGV(2));
+	const char *upgrade_symbol = CMD_ARGV(3);
+	int level = atoi(CMD_ARGV(4));
 	int upgrade_ID = -1;
 	for ( int i = 0; i < UP_END; ++i )
 	{
@@ -210,14 +252,14 @@ void el3_set_upgrade( )
 		else
 			debug_running = true;
 		
-		UTIL_ServerPrint("EL3: Logging has been %s\n", (level != 0) ? "enabled" : "disabled");
+		UTIL_ServerPrint("[" PLUGIN_NAME "] Logging has been %s\n", (level != 0) ? "enabled" : "disabled");
 		return;
 	}
 #endif
 	
 	if ( upgrade_ID == -1 )
 	{
-		UTIL_ServerPrint("EL3: Upgrade \"%s\" not found\n", upgrade_symbol);
+		UTIL_ServerPrint("[" PLUGIN_NAME "] Upgrade \"%s\" not found\n", upgrade_symbol);
 		return;
 	}
 	
@@ -226,7 +268,7 @@ void el3_set_upgrade( )
 	
 	if ( ID == 0 )
 	{
-		UTIL_ServerPrint("EL3: %s %s\n", (level != 0) ? "Enabling" : "Disabling", upgrade_data[upgrade_ID]->upgrade_name);
+		UTIL_ServerPrint("[" PLUGIN_NAME "] %s has been %s\n", upgrade_data[upgrade_ID]->upgrade_name, (level != 0) ? "enabled" : "disabled");
 		if ( level == 0 )
 			upgrade_data[upgrade_ID]->available = false;
 		else
@@ -237,7 +279,7 @@ void el3_set_upgrade( )
 	
 	if ( player_data[ID].ingame == false )
 	{
-		UTIL_ServerPrint("EL3: Player with ID: %d not connected\n", ID);
+		UTIL_ServerPrint("[" PLUGIN_NAME "] Player with ID: %d not connected\n", ID);
 		return;
 	}
 	
@@ -1320,76 +1362,108 @@ void Cleanup_Init( )
 
 void Set_Hooks( )
 {
-	g_pFunctionTable->pfnSpawn = Spawn;
-	g_pFunctionTable->pfnKeyValue = KeyValue;
+	
 	g_pFunctionTable_Post->pfnServerActivate = ServerActivate_Post;
 	//g_pFunctionTable_Post->pfnServerDeactivate = ServerDeactivate_Post;		// should not have been cleaned
 	
-	g_pFunctionTable_Post->pfnClientUserInfoChanged = ClientUserInfoChanged_Post;
-	g_pFunctionTable->pfnClientCommand = ClientCommand;
-	g_pFunctionTable->pfnCmdStart = CmdStart;
 	g_pFunctionTable_Post->pfnClientConnect = ClientConnect_Post;
-	g_pFunctionTable_Post->pfnClientPutInServer = ClientPutInServer_Post;
 	g_pFunctionTable->pfnClientDisconnect = ClientDisconnect;
+	g_pFunctionTable_Post->pfnClientPutInServer = ClientPutInServer_Post;
+	g_pFunctionTable_Post->pfnClientUserInfoChanged = ClientUserInfoChanged_Post;
+	
+	Set_Hooks_basic();
+}
+
+void Set_Hooks_basic( )
+{
+	g_pFunctionTable->pfnClientCommand = ClientCommand;
 	g_pFunctionTable->pfnPlayerPreThink = ClientPreThink;
 	g_pFunctionTable_Post->pfnPlayerPreThink = ClientPreThink_Post;
+	g_pFunctionTable->pfnCmdStart = CmdStart;
+	
+	g_pFunctionTable->pfnKeyValue = KeyValue;
+	g_pengfuncsTable->pfnAlertMessage = pfnAlertMessage;
+	g_pengfuncsTable->pfnPlaybackEvent = pfnPlaybackEvent;
 	g_pFunctionTable->pfnStartFrame = ServerFrame;
+	g_pFunctionTable->pfnSpawn = Spawn;
 	
 	g_pengfuncsTable->pfnMessageBegin = pfnMessageBegin;
-	g_pengfuncsTable->pfnWriteByte = pfnWriteByte;
-	g_pengfuncsTable->pfnWriteLong = pfnWriteLong;
-	g_pengfuncsTable->pfnWriteShort = pfnWriteShort;
-	g_pengfuncsTable->pfnWriteString = pfnWriteString;
-	g_pengfuncsTable->pfnWriteCoord = pfnWriteCoord;
-	g_pengfuncsTable->pfnMessageEnd = pfnMessageEnd;
-	
-	g_pengfuncsTable->pfnPlaybackEvent = pfnPlaybackEvent;
-	g_pengfuncsTable->pfnAlertMessage = pfnAlertMessage;
+	Set_Hooks_Message();
 		
 	g_pengfuncsTable_Post->pfnMessageBegin = pfnMessageBegin_Post;
-	g_pengfuncsTable_Post->pfnWriteByte = pfnWriteByte_Post;
-	g_pengfuncsTable_Post->pfnWriteLong = pfnWriteLong_Post;
-	g_pengfuncsTable_Post->pfnWriteShort = pfnWriteShort_Post;
-	g_pengfuncsTable_Post->pfnWriteString = pfnWriteString_Post;
-	g_pengfuncsTable_Post->pfnWriteCoord = pfnWriteCoord_Post;
-	g_pengfuncsTable_Post->pfnMessageEnd = pfnMessageEnd_Post;
+	Set_Hooks_Message_Post();
 }
 
 void Cleanup_Hooks( )
 {
-	g_pFunctionTable->pfnSpawn = NULL;
-	g_pFunctionTable->pfnKeyValue = NULL;
 	g_pFunctionTable_Post->pfnServerActivate = NULL;
 	//g_pFunctionTable_Post->pfnServerDeactivate = NULL;	// is needed to set hooks again
 	
-	g_pFunctionTable_Post->pfnClientUserInfoChanged = NULL;
-	g_pFunctionTable->pfnClientCommand = NULL;
-	g_pFunctionTable->pfnCmdStart = NULL;
 	g_pFunctionTable_Post->pfnClientConnect = NULL;
-	g_pFunctionTable_Post->pfnClientPutInServer = NULL;
-	g_pFunctionTable_Post->pfnClientPutInServer = NULL;
 	g_pFunctionTable->pfnClientDisconnect = NULL;
+	g_pFunctionTable_Post->pfnClientPutInServer = NULL;
+	g_pFunctionTable_Post->pfnClientUserInfoChanged = NULL;
+	
+	Cleanup_Hooks_basic();
+}
+
+void Cleanup_Hooks_basic( )
+{
+	g_pFunctionTable->pfnClientCommand = NULL;
 	g_pFunctionTable->pfnPlayerPreThink = NULL;
 	g_pFunctionTable_Post->pfnPlayerPreThink = NULL;
+	g_pFunctionTable->pfnCmdStart = NULL;
+	
+	g_pFunctionTable->pfnKeyValue = NULL;
+	g_pengfuncsTable->pfnAlertMessage = NULL;
+	g_pengfuncsTable->pfnPlaybackEvent = NULL;
 	g_pFunctionTable->pfnStartFrame = NULL;
+	g_pFunctionTable->pfnSpawn = NULL;
 	
 	g_pengfuncsTable->pfnMessageBegin = NULL;
+	Clear_Hooks_Message();
+		
+	g_pengfuncsTable_Post->pfnMessageBegin = NULL;
+	Clear_Hooks_Message_Post();
+}
+
+void Set_Hooks_Message( )
+{
+	g_pengfuncsTable->pfnWriteByte = pfnWriteByte;
+	g_pengfuncsTable->pfnWriteCoord = pfnWriteCoord;
+	g_pengfuncsTable->pfnWriteLong = pfnWriteLong;
+	g_pengfuncsTable->pfnWriteShort = pfnWriteShort;
+	g_pengfuncsTable->pfnWriteString = pfnWriteString;
+	g_pengfuncsTable->pfnMessageEnd = pfnMessageEnd;
+}
+
+void Set_Hooks_Message_Post( )
+{
+	g_pengfuncsTable_Post->pfnWriteByte = pfnWriteByte_Post;
+	g_pengfuncsTable_Post->pfnWriteCoord = pfnWriteCoord_Post;
+	g_pengfuncsTable_Post->pfnWriteLong = pfnWriteLong_Post;
+	g_pengfuncsTable_Post->pfnWriteShort = pfnWriteShort_Post;
+	g_pengfuncsTable_Post->pfnWriteString = pfnWriteString_Post;
+	g_pengfuncsTable_Post->pfnMessageEnd = pfnMessageEnd_Post;
+}
+
+void Clear_Hooks_Message( )
+{
 	g_pengfuncsTable->pfnWriteByte = NULL;
+	g_pengfuncsTable->pfnWriteCoord = NULL;
 	g_pengfuncsTable->pfnWriteLong = NULL;
 	g_pengfuncsTable->pfnWriteShort = NULL;
 	g_pengfuncsTable->pfnWriteString = NULL;
-	g_pengfuncsTable->pfnWriteCoord = NULL;
 	g_pengfuncsTable->pfnMessageEnd = NULL;
-	
-	g_pengfuncsTable->pfnPlaybackEvent = NULL;
-	g_pengfuncsTable->pfnAlertMessage = NULL;
-		
-	g_pengfuncsTable_Post->pfnMessageBegin = NULL;
+}
+
+void Clear_Hooks_Message_Post( )
+{
 	g_pengfuncsTable_Post->pfnWriteByte = NULL;
+	g_pengfuncsTable_Post->pfnWriteCoord = NULL;
 	g_pengfuncsTable_Post->pfnWriteLong = NULL;
 	g_pengfuncsTable_Post->pfnWriteShort = NULL;
 	g_pengfuncsTable_Post->pfnWriteString = NULL;
-	g_pengfuncsTable_Post->pfnWriteCoord = NULL;
 	g_pengfuncsTable_Post->pfnMessageEnd = NULL;
 }
 

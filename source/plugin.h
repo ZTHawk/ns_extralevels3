@@ -119,8 +119,6 @@
 #define HUD_MSG_LEN			256
 #define HUD_MSG_EXTRA_LEN		128
 
-#define MAX_PLAYERS			33
-
 #define MARINE_HUD_COLOR_R		0
 #define MARINE_HUD_COLOR_G		75
 #define MARINE_HUD_COLOR_B		100
@@ -128,7 +126,8 @@
 #define ALIEN_HUD_COLOR_G		100
 #define ALIEN_HUD_COLOR_B		0
 
-#define MAX_PLAYERS			33	// set this to maximum players + 1 so arrays can be accessed via ID
+#define MAX_PLAYERS			33
+#define MAX_PLAYERS_PLUS1		33	// set this to maximum players + 1 so arrays can be accessed via ID
 
 // default config settings
 #define CUSTOM_LEVELS			false
