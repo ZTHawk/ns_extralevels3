@@ -8,7 +8,7 @@
 #include "ns_const.h"
 
 Upgrade_Senseofancients data_senseofancients;
-EL_Senseofancients player_senseofancients[MAX_PLAYERS_PLUS1];
+EL_Senseofancients player_senseofancients[MAX_PLAYERS];
 
 void Upgrade_Senseofancients::init( )
 {
@@ -17,22 +17,21 @@ void Upgrade_Senseofancients::init( )
 		{&(available = SENSEOFANCIENTS), TYPE_BOOL, (char *)SOA_config_names[0]},
 		{&(req_points = SOA_COST), TYPE_INT, (char *)SOA_config_names[1]},
 		{&(max_level = SOA_MAX), TYPE_INT, (char *)SOA_config_names[2]},
-		{&(req_level = SOA_LEVEL), TYPE_INT, (char *)SOA_config_names[3]},
-		{&(ParasiteChanceInit = SOA_PARASITE_INIT), TYPE_FLOAT, (char *)SOA_config_names[4]},
-		{&(ParasiteChanceBonus = SOA_PARASITE_ADD), TYPE_FLOAT, (char *)SOA_config_names[5]},
-		{&(ParasiteDMGPercentage = SOA_PARASITE_DMG), TYPE_FLOAT, (char *)SOA_config_names[6]},
-		{&(HealsprayPercentage = SOA_HEALSPRAY_DMG), TYPE_FLOAT, (char *)SOA_config_names[7]},
-		{&(SporeDMG = SOA_GASDAMAGE), TYPE_FLOAT, (char *)SOA_config_names[8]},
-		{&(BlinkEnergyPercentage = SOA_BLINK_ENERGY_BONUS), TYPE_FLOAT, (char *)SOA_config_names[9]},
-		{&(DevourAdder = SOA_DEVOUR_ADDER), TYPE_INT, (char *)SOA_config_names[10]},
-		{&(DevourTimeInit = SOA_DEVOURTIME_INIT), TYPE_FLOAT, (char *)SOA_config_names[11]},
-		{&(DevourTimeBonus = SOA_DEVOURTIME_BONUS), TYPE_FLOAT, (char *)SOA_config_names[12]},
-		{&(GestateArmorBonus = SOA_GESTATE_ARMOR_ADD), TYPE_FLOAT, (char *)SOA_config_names[13]}
+		{&(ParasiteChanceInit = SOA_PARASITE_INIT), TYPE_FLOAT, (char *)SOA_config_names[3]},
+		{&(ParasiteChanceBonus = SOA_PARASITE_ADD), TYPE_FLOAT, (char *)SOA_config_names[4]},
+		{&(ParasiteDMGPercentage = SOA_PARASITE_DMG), TYPE_FLOAT, (char *)SOA_config_names[5]},
+		{&(HealsprayPercentage = SOA_HEALSPRAY_DMG), TYPE_FLOAT, (char *)SOA_config_names[6]},
+		{&(SporeDMG = SOA_GASDAMAGE), TYPE_FLOAT, (char *)SOA_config_names[7]},
+		{&(BlinkEnergyPercentage = SOA_BLINK_ENERGY_BONUS), TYPE_FLOAT, (char *)SOA_config_names[8]},
+		{&(DevourAdder = SOA_DEVOUR_ADDER), TYPE_INT, (char *)SOA_config_names[9]},
+		{&(DevourTimeInit = SOA_DEVOURTIME_INIT), TYPE_FLOAT, (char *)SOA_config_names[10]},
+		{&(DevourTimeBonus = SOA_DEVOURTIME_BONUS), TYPE_FLOAT, (char *)SOA_config_names[11]},
+		{&(GestateArmorBonus = SOA_GESTATE_ARMOR_ADD), TYPE_FLOAT, (char *)SOA_config_names[12]}
 	};
 	
 	UTIL_getUpgradeDataFromFile(upgrade_data, ARRAYSIZE(upgrade_data));
 	
-	//req_level = 10;
+	req_level = 10;
 	
 	strcpy(upgrade_name, "Sense of Ancients");
 	strcpy(upgrade_description, "Skulk: Parasite [+%d%%] damage, infects players in range by chance [%d%%] over 3 seconds\n"
@@ -40,7 +39,7 @@ void Upgrade_Senseofancients::init( )
 					"Fade: Blink energy reduced by [%d%%]\n"
 					"Onos: Devour [%d] more player%s, with a cooldown time of [%2.1f] second%s between devours\n"
 					"Gestate: Armor increased by [+%d]\n\n"
-					"Requires: 1 Upgrade of each Upgrade Chamber , Level %d, %d Point%s\n\n"
+					"Requires: 1 Upgrade of each Upgrade Chamber , Level %d, %d point%s\n\n"
 					"Next level [%d]\n\n"
 					"%s%s\n\n"
 					"0. Exit\n\n\n\n\n\n\n\n\n\n\n");
@@ -266,7 +265,7 @@ void EL_Senseofancients::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_addPoints(pEntity, data_senseofancients.req_points);
+	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_senseofancients.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",
@@ -300,9 +299,6 @@ void EL_Senseofancients::respawned( )
 
 void EL_Senseofancients::Think( )
 {
-	if ( data_senseofancients.available == false )
-		return;
-	
 	// no level check here cause enemies are those who need the check
 	Parasite_Players();
 	
@@ -453,9 +449,6 @@ void EL_Senseofancients::Parasite_Players( )
 
 void EL_Senseofancients::check_Parasite( )
 {
-	if ( data_senseofancients.available == false )
-		return;
-	
 	// already parasited
 	if ( ParasiteMode > PARASITE_NONE )
 		return;
@@ -463,6 +456,7 @@ void EL_Senseofancients::check_Parasite( )
 	edict_t *entAttackerWeapon = pEntity->v.dmg_inflictor;
 	if ( FNullEnt(entAttackerWeapon) )
 		return;
+	
 	
 	// after spawn weapons sometimes do not have private data set immediatly
 	// so we need a check to prevent a crash

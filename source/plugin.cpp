@@ -12,9 +12,6 @@ cvar_t *CVAR_upgrade_levels[CVAR_LEVELNAMES_NUM];
 
 edict_t *Hive_ID = NULL;
 edict_t *Hive_ID2 = NULL;
-bool isMvA = true;
-bool isMvM = false;
-bool isAvA = false;
 
 bool Custom_Levels = false;
 float Base_XP_Custom = 0;
@@ -23,8 +20,8 @@ int *Base_XP_at_Level = NULL;
 int *Next_Level_XP_modifier = NULL;
 int max_level = 0;
 
-char config_file[128] = "ns/addons/extralevels3/configs/extralevels3.cfg";
-char ban_file[128] = "ns/addons/extralevels3/configs/el3_ban.cfg";
+char *config_file = "ns/addons/extralevels3/configs/extralevels3.cfg";
+char *ban_file = "ns/addons/extralevels3/configs/el3_ban.cfg";
 
 //=================================================================
 //the grand old initialization function
@@ -113,8 +110,7 @@ void initCVARS_values( )
 		
 		sprintf(str_num, "%d", level_to_set);
 		
-		CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string = (char*)malloc(sizeof(char) * strlen(str_num));
-		strcpy(CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string, str_num);
+		CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string = str_num;
 		CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->value = (float)level_to_set;
 	}
 }
@@ -158,13 +154,12 @@ void pre_calc_level_data( )
 		}else if ( i == 1 )
 		{
 			Base_XP_at_Level[i] = 0;		// even with 0 XP you are level 1
-			// all EXP are calculated with +1, so do a fix for first level
-			Next_Level_XP_modifier[i] = 101;	// default value
+			Next_Level_XP_modifier[i] = 100;	// default value
 		}else if ( i < 10 || Custom_Levels == false )
 		{
 			// no Custom levels shall be used, so use default system
 			Base_XP_at_Level[i] = ( i + 2 ) * ( i - 1) * 25 + 1;
-			Next_Level_XP_modifier[i] = ( i + 1 ) * 50;
+			Next_Level_XP_modifier[i] = ( i + 1 )* 50;
 		}else if ( i == 10 )
 		{
 			Base_XP_at_Level[i] = ( i + 2 ) * ( i - 1) * 25 + 1;

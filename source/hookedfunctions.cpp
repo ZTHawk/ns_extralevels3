@@ -21,7 +21,6 @@
 #include "upgrade_senseofancients.h"
 #include "upgrade_blindingsurge.h"
 #include "upgrade_lifesheath.h"
-#include "upgrade_combatevolution.h"
 #include "events.h"
 
 //#include <sdk_util.h> //useful almost everywhere
@@ -37,11 +36,10 @@ DLL_FUNCTIONS *g_pFunctionTable_Post = NULL;
 bool gIgnore_Self_Send_Msg = false;
 
 base_upgrade_data *upgrade_data[UP_END];
-base_upgrade_pl_data *upgrade_pl_data[UP_END][MAX_PLAYERS_PLUS1];
+base_upgrade_pl_data *upgrade_pl_data[UP_END][MAX_PLAYERS];
 
 // private
 bool initialized = false;
-short el3_paused = 0;
 
 bool gBlockMsg = false;
 float g_next_CVAR_check = 0.0;
@@ -52,13 +50,13 @@ int Msg_arg_num = 0;
 int Msg_stored_data = 0;
 int Msg_stored_data2 = 0;
 bool Msg_correct_data = 0;
-char Msg_stored_string[32];
 
 int Msg_type_Post = 0;
 byte Msg_receiver_Post = 0;
 int Msg_arg_num_Post = 0;
 int Msg_stored_data_Post = 0;
 bool Msg_correct_data_Post = 0;
+char *Msg_stored_string_Post = new char[32];
 
 int Spawn( edict_t *pEntity )
 {
@@ -70,7 +68,6 @@ int Spawn( edict_t *pEntity )
 		|| mapname[2] != '_' )
 	{
 		Cleanup_Hooks();
-		el3_paused = -1;
 		
 		RETURN_META_VALUE(MRES_IGNORED, 0);
 	}
@@ -80,7 +77,8 @@ int Spawn( edict_t *pEntity )
 	if ( initialized == true )
 		RETURN_META_VALUE(MRES_IGNORED, 0);
 	
-	REG_SVR_COMMAND("el3", el3_main);
+	REG_SVR_COMMAND("el3_config_reload", el3_config_reload);
+	REG_SVR_COMMAND("el3_set_upgrade", el3_set_upgrade);
 	
 	// Init upgrade_data
 	upgrade_data[UP_C] = &data_cybernetics;
@@ -97,93 +95,43 @@ int Spawn( edict_t *pEntity )
 	upgrade_data[UP_SOA] = &data_senseofancients;
 	upgrade_data[UP_BS] = &data_blindingsurge;
 	upgrade_data[UP_LS] = &data_lifesheath;
-	upgrade_data[UP_CE] = &data_combatevolution;
 	
 	// Init upgrade_player_data
 	int i = 0;
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_C][i] = &player_cybernetics[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_TS][i] = &player_thickenedskin[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_RA][i] = &player_reinforcedarmor[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_ES][i] = &player_etherealshift[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_NA][i] = &player_nanoarmor[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_BL][i] = &player_bloodlust[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_AA][i] = &player_advancedammopack[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_H][i] = &player_hunger[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_SF][i] = &player_staticfield[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_AV][i] = &player_acidicvengeance[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_UA][i] = &player_uraniumammo[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_SOA][i] = &player_senseofancients[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_BS][i] = &player_blindingsurge[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( i = 0; i < MAX_PLAYERS; ++i )
 		upgrade_pl_data[UP_LS][i] = &player_lifesheath[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
-		upgrade_pl_data[UP_CE][i] = &player_combatevolution[i];
-	
-	// Find config path
-	UTIL_getConfigFilenames();
 	
 	el3_config_reload();
 	
 	initialized = true;
 	
 	RETURN_META_VALUE(MRES_IGNORED, 0);
-}
-
-void el3_main( )
-{
-	int args = CMD_ARGC();
-	if ( args < 2 )
-	{
-		UTIL_ServerPrint("EL3 commands:\n"
-			"on\n"
-			"off\n"
-			"config_reload\n"
-			"set_upgrades\n"
-			);
-		return;
-	}
-	
-	const char* arg2 = CMD_ARGV(1);
-	if ( strcmp(arg2, "on") == 0 )
-	{
-		if ( el3_paused == 0 )
-			UTIL_ServerPrint("[" PLUGIN_NAME "] Already running\n");
-		else if ( el3_paused != -1 )
-		{
-			el3_paused = 0;
-			Set_Hooks_basic();
-		}
-		return;
-	}else if ( strcmp(arg2, "off") == 0 )
-	{
-		if ( el3_paused == 1 )
-			UTIL_ServerPrint("[" PLUGIN_NAME "] Already paused\n");
-		else if ( el3_paused != -1 )
-		{
-			el3_paused = 1;
-			Cleanup_Hooks_basic();
-		}
-		return;
-	}else if ( strcmp(arg2, "config_reload") == 0 )
-	{
-		el3_config_reload();
-	}else if ( strcmp(arg2, "set_upgrades") == 0 )
-	{
-		el3_set_upgrade(args);
-	}
 }
 
 void el3_config_reload( )
@@ -194,13 +142,16 @@ void el3_config_reload( )
 	
 	UTIL_getBanData();
 	
+	
 	FILE *file = fopen(config_file, "r");
 	if ( file == NULL )
 	{
 		UTIL_LogPrintf( "[" PLUGIN_NAME "] Unable to load configfile \"%s\"\n", config_file);
 		UTIL_ServerPrint( "[" PLUGIN_NAME "] Unable to load configfile \"%s\"\n", config_file);
-	}else
-		fclose(file);
+		
+		return;
+	}
+	fclose(file);
 	
 	init_xplevel_data();
 	
@@ -212,16 +163,16 @@ void el3_config_reload( )
 		upgrade_data[i]->init();
 }
 
-void el3_set_upgrade( int args )
+void el3_set_upgrade( )
 {
-	if ( args < 5 )
+	if ( CMD_ARGC() < 4 )
 	{
-		if ( args == 3 )
+		if ( CMD_ARGC() == 2 )
 		{
-			const char* arg3 = CMD_ARGV(2);
-			if( strcmp(arg3, "list") == 0 )
+			const char* arg2 = CMD_ARGV(1);
+			if( strcmp(arg2, "list") == 0 )
 			{
-				UTIL_ServerPrint("[" PLUGIN_NAME "] UpgradeSymbols:\n"
+				UTIL_ServerPrint("EL3 UpgradeSymbols:\n"
 					"C = Cyber / RA = Reinforced / NA = Nanoarmor / AA = AdvAmmo\n"
 					"SF = StaticField / UA = UraniumAmmo / BS = BlindingSurge\n"
 					"TS = ThickenedSkin / ES = EtherealShift / BL = BloodLust / H = Hunger\n"
@@ -232,14 +183,14 @@ void el3_set_upgrade( int args )
 		}
 		
 		UTIL_ServerPrint("Usage: el3_set_upgrade <PlayerID> <UpgradeSymbol> <NewLevel>\n"
-				"or \"el3 set_upgrade list\" to show the list of UpgradeSymbols\n");
+				"or \"el3_set_upgrade list\" to show the list of UpgradeSymbols\n");
 		
 		return;
 	}
 		
-	byte ID = atoi(CMD_ARGV(2));
-	const char *upgrade_symbol = CMD_ARGV(3);
-	int level = atoi(CMD_ARGV(4));
+	byte ID = atoi(CMD_ARGV(1));
+	const char *upgrade_symbol = CMD_ARGV(2);
+	int level = atoi(CMD_ARGV(3));
 	int upgrade_ID = -1;
 	for ( int i = 0; i < UP_END; ++i )
 	{
@@ -259,14 +210,14 @@ void el3_set_upgrade( int args )
 		else
 			debug_running = true;
 		
-		UTIL_ServerPrint("[" PLUGIN_NAME "] Logging has been %s\n", (level != 0) ? "enabled" : "disabled");
+		UTIL_ServerPrint("EL3: Logging has been %s\n", (level != 0) ? "enabled" : "disabled");
 		return;
 	}
 #endif
 	
 	if ( upgrade_ID == -1 )
 	{
-		UTIL_ServerPrint("[" PLUGIN_NAME "] Upgrade \"%s\" not found\n", upgrade_symbol);
+		UTIL_ServerPrint("EL3: Upgrade \"%s\" not found\n", upgrade_symbol);
 		return;
 	}
 	
@@ -275,7 +226,7 @@ void el3_set_upgrade( int args )
 	
 	if ( ID == 0 )
 	{
-		UTIL_ServerPrint("[" PLUGIN_NAME "] %s has been %s\n", upgrade_data[upgrade_ID]->upgrade_name, (level != 0) ? "enabled" : "disabled");
+		UTIL_ServerPrint("EL3: %s %s\n", (level != 0) ? "Enabling" : "Disabling", upgrade_data[upgrade_ID]->upgrade_name);
 		if ( level == 0 )
 			upgrade_data[upgrade_ID]->available = false;
 		else
@@ -286,7 +237,7 @@ void el3_set_upgrade( int args )
 	
 	if ( player_data[ID].ingame == false )
 	{
-		UTIL_ServerPrint("[" PLUGIN_NAME "] Player with ID: %d not connected\n", ID);
+		UTIL_ServerPrint("EL3: Player with ID: %d not connected\n", ID);
 		return;
 	}
 	
@@ -295,14 +246,8 @@ void el3_set_upgrade( int args )
 
 void KeyValue( edict_t *pentKeyvalue , KeyValueData *pkvd )
 {
-	if ( Hive_ID != NULL
-		&& Hive_ID2 != NULL )
-	{
-		// prevent further function calls
-		g_pFunctionTable->pfnKeyValue = NULL;
-		
+	if ( Hive_ID != NULL && Hive_ID2 != NULL )
 		RETURN_META(MRES_IGNORED);
-	}
 	
 	// make sure string is valid or crash
 	if ( pkvd->szClassName == NULL )
@@ -326,10 +271,6 @@ void KeyValue( edict_t *pentKeyvalue , KeyValueData *pkvd )
 
 void ServerActivate_Post( edict_t *pEdictList , int edictCount , int clientMax )
 {
-#ifdef _DEBUG
-	UTIL_LogDebug("SAPs");
-#endif
-	
 	SAFE_USER_MSG(TextMsg_ID, "TextMsg", -1);
 	
 	SAFE_USER_MSG(HUDText2_ID, "HudText2", -1);
@@ -360,67 +301,21 @@ void ServerActivate_Post( edict_t *pEdictList , int edictCount , int clientMax )
 	if ( Hive_ID2 == NULL )
 		Hive_ID2 = Hive_ID;	// make sure no NULL pointer is used
 	
-	isAvA = false;
-	isMvM = false;
-	edict_t *temp = NULL;
-	temp = FIND_ENTITY_BY_STRING(temp, "classname", "team_command");
-	while ( FNullEnt(temp) == false )
-	{
-		if ( temp->v.team == 3 )
-		{
-			isMvM = true;
-			break;
-		}
-		temp = FIND_ENTITY_BY_STRING(temp, "classname", "team_command");
-	}
-	
-	if ( isMvM == false )
-	{
-		edict_t *temp = NULL;
-		temp = FIND_ENTITY_BY_STRING(temp, "classname", "team_hive");
-		while ( FNullEnt(temp) == false )
-		{
-			if ( temp->v.team == 4 )
-			{
-				isAvA = true;
-				Hive_ID2 = temp;
-				
-				// make sure we found two hives
-				if ( Hive_ID != NULL )
-					break;
-			}else
-				Hive_ID = temp;
-			temp = FIND_ENTITY_BY_STRING(temp, "classname", "team_hive");
-		}
-		if ( Hive_ID2 == NULL )
-			Hive_ID2 = Hive_ID;
-		else if ( Hive_ID == NULL )
-			Hive_ID = Hive_ID2;
-	}
+	// Find config path
+	UTIL_getConfigFilenames();
 	
 	precacheSounds();
 	for ( short i = 0; i < UP_END; ++i )
 		upgrade_data[i]->precache();
-	
-#ifdef _DEBUG
-	UTIL_LogDebug("SAPe");
-#endif
 	
 	RETURN_META(MRES_IGNORED);
 }
 
 void ServerDeactivate_Post( void )
 {
-#ifdef _DEBUG
-	UTIL_LogDebug("SDPs");
-#endif
 	data_senseofancients.SporeData.clear();
 	
 	Set_Hooks();
-	
-#ifdef _DEBUG
-	UTIL_LogDebug("SDPe");
-#endif
 	
 	RETURN_META(MRES_IGNORED);
 }
@@ -432,7 +327,7 @@ void ClientUserInfoChanged_Post( edict_t *pEntity , char *infobuffer )
 #endif
 	
 	byte ID = ENTINDEX(pEntity);
-	if ( player_data[ID].ingame == true )
+	if ( player_data[ID].ingame )
 	{
 		const char *name = INFOKEY_VALUE(infobuffer, "name");
 		strcpy(player_data[ID].name, name);
@@ -526,8 +421,7 @@ void CmdStart( const edict_t *player , const struct usercmd_s *_cmd , unsigned i
 #endif
 	
 	byte ID = ENTINDEX(player);
-	if( ID < 1
-		|| ID > gpGlobals->maxClients )
+	if( ID < 1 || ID > gpGlobals->maxClients )
 	{
 		RETURN_META(MRES_IGNORED);
 	}
@@ -659,7 +553,7 @@ void ClientPreThink( edict_t *pEntity )
 				player_data[ID].gestate_block_Damage_msg = true;
 				player_data[ID].killPlayer();
 				// correct deaths, due to fake kill
-				UTIL_addDeaths(pEntity, -1);
+				UTIL_setDeaths(pEntity, UTIL_getDeaths(pEntity) - 1);
 			}else
 			{
 				// player spawned, so update armor
@@ -763,7 +657,6 @@ void ServerFrame( void )
 #endif
 	
 	data_senseofancients.SporeEmulationTimer();
-	data_combatevolution.ServerFrame_Think();
 	
 	for ( byte ID = 1; ID <= gpGlobals->maxClients; ++ID )
 	{
@@ -834,7 +727,7 @@ void pfnMessageBegin( int msg_dest , int msg_type , const float *pOrigin , edict
 				player_data[Msg_receiver].gestate_block_Damage_msg = false;
 			}
 		}else if ( msg_type == AmmoPickup_ID
-			&& player_advancedammopack[Msg_receiver].cur_level > 0 )
+			&& player_advancedammopack[Msg_receiver].cur_level )
 		{
 			gBlockMsg = true;
 		}
@@ -1003,14 +896,11 @@ void pfnWriteString( const char *string )
 		Msg_correct_data = EVENT_HUDText2(Msg_receiver, string);
 	}else if ( Msg_type == ScoreInfo_ID )
 	{
-		strncpy(player_data[Msg_receiver].scoreinfo_string, string, 31);
+		player_data[Msg_receiver].scoreinfo_string = (char *)string;
 	}else if ( Msg_type == Particles_ID )
 	{
 		if ( Msg_arg_num == 1 )
 			EVENT_Particles(string);
-	}else if ( Msg_type == DeathMsg_ID )
-	{
-		strncpy(Msg_stored_string, string, 31);
 	}
 	
 	++Msg_arg_num;
@@ -1042,7 +932,7 @@ void pfnMessageEnd( void )
 	
 	if ( Msg_type == DeathMsg_ID )
 	{
-		EVENT_DeathMsg_END(Msg_receiver, Msg_stored_data, Msg_stored_string);
+		EVENT_DeathMsg_END(Msg_receiver, Msg_stored_data);
 	}else if ( Msg_type == AmmoPickup_ID )
 	{
 		// message is about to be blocked
@@ -1055,7 +945,6 @@ void pfnMessageEnd( void )
 	
 	Msg_type = 0;
 	Msg_receiver = 0;
-	Msg_stored_string[0] = 0;
 	
 	if ( gBlockMsg )
 	{
@@ -1084,17 +973,17 @@ void pfnPlaybackEvent( int flags , const edict_t *pInvoker , unsigned short even
 	if ( eventindex == Spore_Event_ID )
 	{
 		byte ID = ENTINDEX(pInvoker->v.owner);
-		if ( player_data[ID].ingame == true )
+		if ( player_data[ID].ingame )
 			player_senseofancients[ID].add_Spore(pInvoker);
 	}else if ( eventindex == Cloak_Event_ID )
 	{
 		byte ID = ENTINDEX(pInvoker);
-		if ( player_data[ID].ingame == true )
+		if ( player_data[ID].ingame )
 			player_senseofancients[ID].Player_Redeemed(origin);
 	}else if ( eventindex == HealingSpray_Event_ID )
 	{
 		byte ID = ENTINDEX(pInvoker);
-		if ( player_data[ID].ingame == true )
+		if ( player_data[ID].ingame )
 			player_senseofancients[ID].check_HealingSpray();
 	}
 	
@@ -1249,6 +1138,7 @@ void pfnMessageBegin_Post( int msg_dest , int msg_type , const float *pOrigin , 
 #endif
 	
 	if ( msg_type == SetTech_ID
+		|| msg_type == DeathMsg_ID
 		|| msg_type == ScoreInfo_ID
 		|| msg_type == StatusValue_ID
 		|| msg_type == TeamInfo_ID
@@ -1282,13 +1172,13 @@ void pfnWriteByte_Post( int value )
 		EVENT_SetTech_POST(Msg_receiver_Post, value, Msg_arg_num_Post, Msg_stored_data_Post);
 	}else if ( Msg_type_Post == TeamInfo_ID )
 	{
-		// check if message is about to be send to everyone
-		// otherwise there is no need to change its receiver
-		if ( Msg_receiver_Post == 0 )
-			Msg_receiver_Post = value;
+		Msg_receiver_Post = value;		// we need to set it here cause in MessageBegin ID is = 0
 	}else if ( Msg_type_Post == StatusValue_ID )
 	{
 		Msg_correct_data_Post = EVENT_StatusValue_Byte_POST(value);
+	}else if ( Msg_type_Post == DeathMsg_ID )
+	{
+		EVENT_DeathMsg_POST(Msg_receiver_Post, Msg_arg_num_Post, Msg_stored_data_Post, value);
 	}else if ( Msg_type_Post == ScoreInfo_ID )
 	{
 		if ( Msg_arg_num_Post == 1 )
@@ -1360,6 +1250,9 @@ void pfnWriteString_Post( const char *string )
 	}else if ( Msg_type_Post == TeamInfo_ID )
 	{
 		Msg_correct_data_Post = EVENT_TeamInfo_POST(Msg_receiver_Post, string);
+	}else if ( Msg_type_Post == DeathMsg_ID )
+	{
+		strncpy(Msg_stored_string_Post, string, 31);
 	}
 	
 	++Msg_arg_num_Post;
@@ -1401,6 +1294,9 @@ void pfnMessageEnd_Post( void )
 	}else if ( Msg_type_Post == StatusValue_ID )
 	{
 		EVENT_StatusValue_END_POST(Msg_receiver_Post);
+	}else if ( Msg_type_Post == DeathMsg_ID )
+	{
+		EVENT_DeathMsg_END_POST(Msg_receiver_Post, Msg_stored_data_Post, Msg_stored_string_Post);
 	}else if ( Msg_type_Post == ScoreInfo_ID )
 	{
 		UTIL_sendScoreInfo(Msg_receiver_Post);
@@ -1408,6 +1304,7 @@ void pfnMessageEnd_Post( void )
 	
 	Msg_type_Post = 0;
 	Msg_receiver_Post = 0;
+	Msg_stored_string_Post[0] = 0;
 	
 #ifdef _DEBUG
 	UTIL_LogDebug("MEPe\n");
@@ -1423,108 +1320,76 @@ void Cleanup_Init( )
 
 void Set_Hooks( )
 {
-	
+	g_pFunctionTable->pfnSpawn = Spawn;
+	g_pFunctionTable->pfnKeyValue = KeyValue;
 	g_pFunctionTable_Post->pfnServerActivate = ServerActivate_Post;
 	//g_pFunctionTable_Post->pfnServerDeactivate = ServerDeactivate_Post;		// should not have been cleaned
 	
-	g_pFunctionTable_Post->pfnClientConnect = ClientConnect_Post;
-	g_pFunctionTable->pfnClientDisconnect = ClientDisconnect;
-	g_pFunctionTable_Post->pfnClientPutInServer = ClientPutInServer_Post;
 	g_pFunctionTable_Post->pfnClientUserInfoChanged = ClientUserInfoChanged_Post;
-	
-	Set_Hooks_basic();
-}
-
-void Set_Hooks_basic( )
-{
 	g_pFunctionTable->pfnClientCommand = ClientCommand;
+	g_pFunctionTable->pfnCmdStart = CmdStart;
+	g_pFunctionTable_Post->pfnClientConnect = ClientConnect_Post;
+	g_pFunctionTable_Post->pfnClientPutInServer = ClientPutInServer_Post;
+	g_pFunctionTable->pfnClientDisconnect = ClientDisconnect;
 	g_pFunctionTable->pfnPlayerPreThink = ClientPreThink;
 	g_pFunctionTable_Post->pfnPlayerPreThink = ClientPreThink_Post;
-	g_pFunctionTable->pfnCmdStart = CmdStart;
-	
-	g_pFunctionTable->pfnKeyValue = KeyValue;
-	g_pengfuncsTable->pfnAlertMessage = pfnAlertMessage;
-	g_pengfuncsTable->pfnPlaybackEvent = pfnPlaybackEvent;
 	g_pFunctionTable->pfnStartFrame = ServerFrame;
-	g_pFunctionTable->pfnSpawn = Spawn;
 	
 	g_pengfuncsTable->pfnMessageBegin = pfnMessageBegin;
-	Set_Hooks_Message();
+	g_pengfuncsTable->pfnWriteByte = pfnWriteByte;
+	g_pengfuncsTable->pfnWriteLong = pfnWriteLong;
+	g_pengfuncsTable->pfnWriteShort = pfnWriteShort;
+	g_pengfuncsTable->pfnWriteString = pfnWriteString;
+	g_pengfuncsTable->pfnWriteCoord = pfnWriteCoord;
+	g_pengfuncsTable->pfnMessageEnd = pfnMessageEnd;
+	
+	g_pengfuncsTable->pfnPlaybackEvent = pfnPlaybackEvent;
+	g_pengfuncsTable->pfnAlertMessage = pfnAlertMessage;
 		
 	g_pengfuncsTable_Post->pfnMessageBegin = pfnMessageBegin_Post;
-	Set_Hooks_Message_Post();
+	g_pengfuncsTable_Post->pfnWriteByte = pfnWriteByte_Post;
+	g_pengfuncsTable_Post->pfnWriteLong = pfnWriteLong_Post;
+	g_pengfuncsTable_Post->pfnWriteShort = pfnWriteShort_Post;
+	g_pengfuncsTable_Post->pfnWriteString = pfnWriteString_Post;
+	g_pengfuncsTable_Post->pfnWriteCoord = pfnWriteCoord_Post;
+	g_pengfuncsTable_Post->pfnMessageEnd = pfnMessageEnd_Post;
 }
 
 void Cleanup_Hooks( )
 {
+	g_pFunctionTable->pfnSpawn = NULL;
+	g_pFunctionTable->pfnKeyValue = NULL;
 	g_pFunctionTable_Post->pfnServerActivate = NULL;
 	//g_pFunctionTable_Post->pfnServerDeactivate = NULL;	// is needed to set hooks again
 	
-	g_pFunctionTable_Post->pfnClientConnect = NULL;
-	g_pFunctionTable->pfnClientDisconnect = NULL;
-	g_pFunctionTable_Post->pfnClientPutInServer = NULL;
 	g_pFunctionTable_Post->pfnClientUserInfoChanged = NULL;
-	
-	Cleanup_Hooks_basic();
-}
-
-void Cleanup_Hooks_basic( )
-{
 	g_pFunctionTable->pfnClientCommand = NULL;
+	g_pFunctionTable->pfnCmdStart = NULL;
+	g_pFunctionTable_Post->pfnClientConnect = NULL;
+	g_pFunctionTable_Post->pfnClientPutInServer = NULL;
+	g_pFunctionTable_Post->pfnClientPutInServer = NULL;
+	g_pFunctionTable->pfnClientDisconnect = NULL;
 	g_pFunctionTable->pfnPlayerPreThink = NULL;
 	g_pFunctionTable_Post->pfnPlayerPreThink = NULL;
-	g_pFunctionTable->pfnCmdStart = NULL;
-	
-	g_pFunctionTable->pfnKeyValue = NULL;
-	g_pengfuncsTable->pfnAlertMessage = NULL;
-	g_pengfuncsTable->pfnPlaybackEvent = NULL;
 	g_pFunctionTable->pfnStartFrame = NULL;
-	g_pFunctionTable->pfnSpawn = NULL;
 	
 	g_pengfuncsTable->pfnMessageBegin = NULL;
-	Clear_Hooks_Message();
-		
-	g_pengfuncsTable_Post->pfnMessageBegin = NULL;
-	Clear_Hooks_Message_Post();
-}
-
-void Set_Hooks_Message( )
-{
-	g_pengfuncsTable->pfnWriteByte = pfnWriteByte;
-	g_pengfuncsTable->pfnWriteCoord = pfnWriteCoord;
-	g_pengfuncsTable->pfnWriteLong = pfnWriteLong;
-	g_pengfuncsTable->pfnWriteShort = pfnWriteShort;
-	g_pengfuncsTable->pfnWriteString = pfnWriteString;
-	g_pengfuncsTable->pfnMessageEnd = pfnMessageEnd;
-}
-
-void Set_Hooks_Message_Post( )
-{
-	g_pengfuncsTable_Post->pfnWriteByte = pfnWriteByte_Post;
-	g_pengfuncsTable_Post->pfnWriteCoord = pfnWriteCoord_Post;
-	g_pengfuncsTable_Post->pfnWriteLong = pfnWriteLong_Post;
-	g_pengfuncsTable_Post->pfnWriteShort = pfnWriteShort_Post;
-	g_pengfuncsTable_Post->pfnWriteString = pfnWriteString_Post;
-	g_pengfuncsTable_Post->pfnMessageEnd = pfnMessageEnd_Post;
-}
-
-void Clear_Hooks_Message( )
-{
 	g_pengfuncsTable->pfnWriteByte = NULL;
-	g_pengfuncsTable->pfnWriteCoord = NULL;
 	g_pengfuncsTable->pfnWriteLong = NULL;
 	g_pengfuncsTable->pfnWriteShort = NULL;
 	g_pengfuncsTable->pfnWriteString = NULL;
+	g_pengfuncsTable->pfnWriteCoord = NULL;
 	g_pengfuncsTable->pfnMessageEnd = NULL;
-}
-
-void Clear_Hooks_Message_Post( )
-{
+	
+	g_pengfuncsTable->pfnPlaybackEvent = NULL;
+	g_pengfuncsTable->pfnAlertMessage = NULL;
+		
+	g_pengfuncsTable_Post->pfnMessageBegin = NULL;
 	g_pengfuncsTable_Post->pfnWriteByte = NULL;
-	g_pengfuncsTable_Post->pfnWriteCoord = NULL;
 	g_pengfuncsTable_Post->pfnWriteLong = NULL;
 	g_pengfuncsTable_Post->pfnWriteShort = NULL;
 	g_pengfuncsTable_Post->pfnWriteString = NULL;
+	g_pengfuncsTable_Post->pfnWriteCoord = NULL;
 	g_pengfuncsTable_Post->pfnMessageEnd = NULL;
 }
 

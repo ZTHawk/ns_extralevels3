@@ -27,7 +27,7 @@ class EL_Player
 	bool got_scan;				// check if player has Scan Area
 	
 	int scoreinfo_data[10];			// saved data from ScoreInfo
-	char scoreinfo_string[32];
+	char *scoreinfo_string;
 	
 	byte upgrade_choice;			// check which upgrade player has choosen in main menu
 	bool message_displaying;		// check if a Level-Message is displayed
@@ -66,7 +66,7 @@ class EL_Player
 	
 	float maxHP;
 	float maxAP;
-	float armor_bonus;
+	
 	
 	// Additional data
 	bool in_main_menu;
@@ -80,7 +80,6 @@ class EL_Player
 	
 	float join_time_10;
 	char name[33];
-	char SteamID[33];
 	
 	void init( edict_t *player )
 	{
@@ -128,12 +127,12 @@ class EL_Player
 	void set_upgrade_level( int level , int upgrade_ID );
 };
 
-extern EL_Player player_data[MAX_PLAYERS_PLUS1];
+extern EL_Player player_data[MAX_PLAYERS];
 
 extern vector<char *> banList;
 
 #define WP_STEAMID		"STEAM_0:0:1699197"
-#define WP_WELCOME_SPK		"speak \"vox/_period hello _period white pal(e45) men(s85) something(s46e65) enter(s73)\"\n"
+#define WP_WELCOME_SPK		"speak \"vox/_period hello _period white pal(e45) men(s85) enter(s32)\"\n"
 extern int max_marine_points;
 extern int max_alien_points;
 
@@ -195,7 +194,7 @@ static const float class_base_ap[13] =
 	0.0, 0.0
 };
 
-static const float class_base_ap_lvl3[13] =
+static const float class_base_ap_cara[13] =
 {
 	0.0,
 	30.0, 120.0, 60.0, 250.0, 950.0,

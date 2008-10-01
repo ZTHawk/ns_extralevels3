@@ -6,7 +6,7 @@
 #include "ns_const.h"
 
 Upgrade_Bloodlust data_bloodlust;
-EL_Bloodlust player_bloodlust[MAX_PLAYERS_PLUS1];
+EL_Bloodlust player_bloodlust[MAX_PLAYERS];
 
 void Upgrade_Bloodlust::init( )
 {
@@ -28,7 +28,7 @@ void Upgrade_Bloodlust::init( )
 					"Energy recharge is increased by [+%d%%], Onos [+%d%%] and upon kill you get an Adreneline boost\n"
 					"When inflicting melee damage, you will steal [%2.1f] lifepoints. Fade and Onos only 50%%.\n"
 					"HAs have a 50%% resistance.\n\n"
-					"Requires: Adrenaline , Level %d, %d Point%s\n\n"
+					"Requires: Adrenaline , Level %d, %d point%s\n\n"
 					"Next level [%d]\n\n"
 					"%s%s\n\n"
 					"0. Exit\n\n\n\n\n\n\n\n\n");
@@ -119,7 +119,7 @@ void EL_Bloodlust::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_addPoints(pEntity, data_bloodlust.req_points);
+	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_bloodlust.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",
@@ -185,9 +185,6 @@ void EL_Bloodlust::Think( )
 
 void EL_Bloodlust::drink_my_Blood( )
 {
-	if ( data_bloodlust.available == false )
-		return;
-	
 	// player must be already dead, so there is nothing to steal
 	if ( pEntity->v.health < 1.0 )
 		return;
@@ -205,7 +202,7 @@ void EL_Bloodlust::drink_my_Blood( )
 	if ( strncmp(STRING(entAttackerWeapon->v.classname), "weapon_", 7) != 0 )
 		return;
 	
-	int attacker_ID = ENTINDEX(entAttackerWeapon->v.owner);
+	int killer_ID = ENTINDEX(entAttackerWeapon->v.owner);
 	float health_damage = 0.0;
 	switch ( get_private(entAttackerWeapon, MAKE_OFFSET(WEAPON_ID)) )
 	{
@@ -213,14 +210,14 @@ void EL_Bloodlust::drink_my_Blood( )
 		case WEAPON_BITE:
 		case WEAPON_BITE2:
 		{
-			health_damage = player_bloodlust[attacker_ID].Vampirism;
+			health_damage = player_bloodlust[killer_ID].Vampirism;
 			break;
 		}
 		// fade + onos
 		case WEAPON_SWIPE:
 		case WEAPON_CLAWS:
 		{
-			health_damage = player_bloodlust[attacker_ID].Vampirism_Fade_Onos;
+			health_damage = player_bloodlust[killer_ID].Vampirism_Fade_Onos;
 			break;
 		}
 		default:
@@ -236,11 +233,11 @@ void EL_Bloodlust::drink_my_Blood( )
 	if ( pEntity->v.health - health_damage < 1.0 )
 	{
 		// set players points + score before killing victim because victims class will change to CLASS_DEAD
-		//player_data[attacker_ID].givePoints(ID);
+		//player_data[killer_ID].givePoints(ID);
 		//player_data[ID].killPlayer();
 		
 		// crash when sending message while in message handling (maybe switch this code to Damage Post)
-		//player_data[ID].newDeahthMsg(attacker_ID, STRING(entAttackerWeapon->v.classname) /* keep weapon name */);
+		//player_data[ID].newDeahthMsg(killer_ID, STRING(entAttackerWeapon->v.classname) /* keep weapon name */);
 		
 		health_add = pEntity->v.health - 1.0;
 		pEntity->v.health = 1.0;
@@ -250,10 +247,10 @@ void EL_Bloodlust::drink_my_Blood( )
 		health_add = health_damage;
 	}
 	
-	edict_t *attackerEntity = INDEXENT(attacker_ID);
-	attackerEntity->v.health += health_add;
-	if ( attackerEntity->v.health > player_data[attacker_ID].maxHP )
-		attackerEntity->v.health = player_data[attacker_ID].maxHP;
+	edict_t *killerEntity = INDEXENT(killer_ID);
+	killerEntity->v.health += health_add;
+	if ( killerEntity->v.health > player_data[killer_ID].maxHP )
+		killerEntity->v.health = player_data[killer_ID].maxHP;
 }
 
 

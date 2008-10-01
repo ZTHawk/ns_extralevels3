@@ -230,6 +230,7 @@ void UTIL_getUpgradeDataFromFile( Config_data upgrade_data[] , int array_size )
 void UTIL_getBanData( )
 {
 	FILE *file = fopen(ban_file, "r");
+	
 	if ( file == NULL )
 		return;
 	
@@ -262,10 +263,10 @@ void UTIL_getConfigFilenames( )
 	char *addons_path = strstr(global_path, "addons");
 	
 	char cfg_path_base[128];
-	memset(cfg_path_base, 0, 128);
 	char *last_slash_pos = strrchr(global_path, '/');
 	
 	strncpy(cfg_path_base, addons_path, last_slash_pos - addons_path);
+	cfg_path_base[last_slash_pos - addons_path + 1] = '\0';
 	
 	// check if dll has special folder
 	char *c = strstr(cfg_path_base, "dll");
@@ -278,10 +279,10 @@ void UTIL_getConfigFilenames( )
 		char cfg_file_main[128];
 		sprintf(cfg_file_main, "ns/%s/configs/extralevels3.cfg", cfg_path_base);
 		
-		memset(config_file, 0, 128);
-		strcpy(config_file, cfg_file_main);
-	}else
-		fclose(file_cfg);
+		char *temp = (char*)malloc(strlen(cfg_file_main) + 1);
+		strcpy(temp, cfg_file_main);
+		config_file = temp;
+	}
 	
 	FILE *file_ban = fopen(ban_file, "r");
 	if ( file_ban == NULL )
@@ -289,10 +290,10 @@ void UTIL_getConfigFilenames( )
 		char cfg_file_bandata[128];
 		sprintf(cfg_file_bandata, "ns/%s/configs/el3_ban.cfg", cfg_path_base);
 		
-		memset(ban_file, 0, 128);
-		strcpy(ban_file, cfg_file_bandata);
-	}else
-		fclose(file_ban);
+		char *temp = (char*)malloc(strlen(cfg_file_bandata) + 1);
+		strcpy(temp, cfg_file_bandata);
+		ban_file = temp;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

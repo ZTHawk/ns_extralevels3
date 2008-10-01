@@ -60,31 +60,24 @@ void UTIL_sendScoreInfo( int ID );
 
 int UTIL_getPoints( edict_t *pEntity );
 void UTIL_setPoints( edict_t *pEntity , int Points );
-void UTIL_addPoints( edict_t *pEntity , int Points );
 
 int UTIL_getWeaponClip( edict_t *entWeapon );
 void UTIL_setWeaponClip( edict_t *entWeapon , int ClipSize );
-void UTIL_addWeaponClip( edict_t *entWeapon , int ClipSize );
 
 int UTIL_getWeaponReserve( edict_t *pEntity , byte WeaponID );
 void UTIL_setWeaponReserve( edict_t *pEntity , byte WeaponID, int ReserveSize );
-void UTIL_addWeaponReserve( edict_t *pEntity , byte WeaponID, int ReserveSize );
 
 float UTIL_getWeaponDamage( edict_t *entWeapon );
 void UTIL_setWeaponDamage( edict_t *entWeapon , float damage );
-void UTIL_addWeaponDamage( edict_t *entWeapon , float damage );
 
 int UTIL_getScore( edict_t *pEntity );
 void UTIL_setScore( edict_t *pEntity , int Score );
-void UTIL_addScore( edict_t *pEntity , int Score );
 
 float UTIL_getEXP( edict_t *pEntity );
 void UTIL_setEXP( edict_t *pEntity , float XP );
-void UTIL_addEXP( edict_t *pEntity , float XP );
 
 int UTIL_getDeaths( edict_t *pEntity );
 void UTIL_setDeaths( edict_t *pEntity , int Deaths );
-void UTIL_addDeaths( edict_t *pEntity , int Deaths );
 
 bool UTIL_getMask( edict_t *pEntity , int Mask );
 void UTIL_setMask( edict_t *pEntity , int Mask , bool on_off );
@@ -110,8 +103,6 @@ int get_private( edict_t *pEntity , int offset );
 float get_private_f( edict_t *pEntity , int offset );
 void set_private( edict_t *pEntity , int offset , int value );
 void set_private_f( edict_t *pEntity , int offset , float value );
-void add_private( edict_t *pEntity , int offset , int value );
-void add_private_f( edict_t *pEntity , int offset , float value );
 
 #ifdef _DEBUG
 extern bool debug_running;
@@ -166,11 +157,6 @@ inline void UTIL_setPoints( edict_t *pEntity , int Points )
 	set_private(pEntity, MAKE_OFFSET(POINTS), Points);
 }
 
-inline void UTIL_addPoints( edict_t *pEntity , int Points )
-{
-	add_private(pEntity, MAKE_OFFSET(POINTS), Points);
-}
-
 inline int UTIL_getWeaponClip( edict_t *entWeapon )
 {
 	return get_private(entWeapon, MAKE_OFFSET(WEAPCLIP));
@@ -181,10 +167,6 @@ inline void UTIL_setWeaponClip( edict_t *entWeapon , int ClipSize )
 	set_private(entWeapon, MAKE_OFFSET(WEAPCLIP), ClipSize);
 }
 
-inline void UTIL_addWeaponClip( edict_t *entWeapon , int ClipSize )
-{
-	add_private(entWeapon, MAKE_OFFSET(WEAPCLIP), ClipSize);
-}
 
 inline float UTIL_getWeaponDamage( edict_t *entWeapon )
 {
@@ -199,11 +181,6 @@ inline void UTIL_setWeaponDamage( edict_t *entWeapon , float damage )
 	return set_private_f(entWeapon, MAKE_OFFSET(WEAPDMG), damage);
 }
 
-inline void UTIL_addWeaponDamage( edict_t *entWeapon , float damage )
-{
-	return add_private_f(entWeapon, MAKE_OFFSET(WEAPDMG), damage);
-}
-
 inline int UTIL_getScore( edict_t *pEntity )
 {
 	return get_private(pEntity, MAKE_OFFSET(SCORE));
@@ -212,11 +189,6 @@ inline int UTIL_getScore( edict_t *pEntity )
 inline void UTIL_setScore( edict_t *pEntity , int Score )
 {
 	set_private(pEntity, MAKE_OFFSET(SCORE), Score);
-}
-
-inline void UTIL_addScore( edict_t *pEntity , int Score )
-{
-	add_private(pEntity, MAKE_OFFSET(SCORE), Score);
 }
 
 inline float UTIL_getEXP( edict_t *pEntity )
@@ -229,11 +201,6 @@ inline void UTIL_setEXP( edict_t *pEntity , float XP )
 	set_private_f(pEntity, MAKE_OFFSET(EXP), XP);
 }
 
-inline void UTIL_addEXP( edict_t *pEntity , float XP )
-{
-	add_private_f(pEntity, MAKE_OFFSET(EXP), XP);
-}
-
 inline int UTIL_getDeaths( edict_t *pEntity )
 {
 	return get_private(pEntity, MAKE_OFFSET(DEATHS));
@@ -242,11 +209,6 @@ inline int UTIL_getDeaths( edict_t *pEntity )
 inline void UTIL_setDeaths( edict_t *pEntity , int Deaths )
 {
 	set_private(pEntity, MAKE_OFFSET(DEATHS), Deaths);
-}
-
-inline void UTIL_addDeaths( edict_t *pEntity , int Deaths )
-{
-	add_private(pEntity, MAKE_OFFSET(DEATHS), Deaths);
 }
 
 inline int UTIL_getHiveAbility( edict_t *pEntity , int HiveAbilityNum )
@@ -533,15 +495,7 @@ inline void set_private_f( edict_t *pEntity , int offset , float value )
 	*(float*)((char*)(pEntity->pvPrivateData) + offset) = value;
 }
 
-inline void add_private( edict_t *pEntity , int offset , int value )
-{
-	*(int*)((char*)(pEntity->pvPrivateData) + offset) += value;
-}
 
-inline void add_private_f( edict_t *pEntity , int offset , float value )
-{
-	*(float*)((char*)(pEntity->pvPrivateData) + offset) += value;
-}
 
 
 

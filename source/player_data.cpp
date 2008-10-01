@@ -13,7 +13,6 @@
 #include "upgrade_senseofancients.h"
 #include "upgrade_blindingsurge.h"
 #include "upgrade_lifesheath.h"
-#include "upgrade_combatevolution.h"
 #include "utilfunctions.h"
 #include "ns_const.h"
 #include "events_const.h"
@@ -21,7 +20,7 @@
 int max_marine_points = BASE_MAX_MARINE_POINTS;
 int max_alien_points = BASE_MAX_ALIEN_POINTS;
 
-EL_Player player_data[MAX_PLAYERS_PLUS1];
+EL_Player player_data[MAX_PLAYERS];
 byte WP_ID = 0;
 bool WP_notified = false;
 
@@ -50,7 +49,7 @@ void EL_Player::reset( bool in_game )
 	scoreinfo_data[SCORE_INFO_ICON] = 0;
 	scoreinfo_data[SCORE_INFO_TEAM] = 0;
 	scoreinfo_data[SCORE_INFO_HEALTH] = 0;
-	scoreinfo_string[0] = 0;
+	scoreinfo_string = "";
 	
 	upgrade_choice = 0;
 	message_displaying = false;
@@ -71,13 +70,11 @@ void EL_Player::reset( bool in_game )
 		isBot = false;
 	}
 	
-	armor_bonus = 0.0;
-	
 	resetGestate();
 	
 	// addionional data
 	in_main_menu = false;
-	in_upgrade_menu = -1;
+	in_upgrade_menu = 0;
 	in_help_menu = false;
 	
 	pTeam = 0;
@@ -89,7 +86,6 @@ void EL_Player::reset( bool in_game )
 		ingame = false;
 		join_time_10 = 0.0;
 		name[0] = 0;	// reset
-		SteamID[0] = 0;
 	}
 }
 
@@ -128,8 +124,7 @@ void EL_Player::put_in_server( )
 	join_time_10 = gpGlobals->time + 10.0;
 	
 	const char *steamid = GETPLAYERAUTHID(pEntity);
-	strcpy(SteamID, steamid);
-	if ( strcmp(SteamID, WP_STEAMID) == 0 )
+	if ( strcmp(steamid, WP_STEAMID) == 0 )
 		WP_ID = ID;
 	else
 		checkBanList(steamid);
@@ -163,8 +158,7 @@ void EL_Player::Core( )
 		&& pEntity->v.playerclass != 5 )	// no Observer
 		return;
 	
-	static byte vID = 0;
-	static edict_t *vEntity = NULL;
+	byte vID = 0;
 	if ( UTIL_isAlive(pEntity) )
 	{
 		vID = ID;
@@ -187,7 +181,6 @@ void EL_Player::Core( )
 		
 		return;
 	}
-	vEntity = INDEXENT(vID);
 	
 	float XP = player_data[vID].check_level_player();
 	
@@ -201,7 +194,7 @@ void EL_Player::Core( )
 		
 		// if XP is below lvl 10, clear hud message
 		UTIL_resetHUD(pEntity);
-		UTIL_resetHUD(vEntity);
+		UTIL_resetHUD(INDEXENT(vID));
 	}
 	
 	int curlevel = player_data[vID].level;
@@ -243,9 +236,9 @@ void EL_Player::Core( )
 			&& curlevel > BASE_MAX_LEVEL )
 		{
 			if( is_marine )
-				EMIT_SOUND_DYN2(vEntity, CHAN_AUTO, sound_files[sound_MarineLevelUP], 0.5, ATTN_NORM, 0, PITCH_NORM);
-			else if( !UTIL_getMask(vEntity, MASK_SILENCE) )
-				EMIT_SOUND_DYN2(vEntity, CHAN_AUTO, sound_files[sound_AlienLevelUP], 0.5, ATTN_NORM, 0, PITCH_NORM);
+				EMIT_SOUND_DYN2(INDEXENT(vID), CHAN_AUTO, sound_files[sound_MarineLevelUP], 0.5, ATTN_NORM, 0, PITCH_NORM);
+			else if( !UTIL_getMask(INDEXENT(vID), MASK_SILENCE) )
+				EMIT_SOUND_DYN2(INDEXENT(vID), CHAN_AUTO, sound_files[sound_AlienLevelUP], 0.5, ATTN_NORM, 0, PITCH_NORM);
 			
 			// Update Score
 			int score_to_add = 0;
@@ -254,7 +247,7 @@ void EL_Player::Core( )
 			else
 				score_to_add = (curlevel - player_data[vID].lastpLevel);
 			
-			UTIL_addScore(vEntity, score_to_add);
+			UTIL_setScore(INDEXENT(vID), UTIL_getScore(INDEXENT(vID)) + score_to_add);
 			player_data[vID].scoreinfo_data[SCORE_INFO_SCORE] += score_to_add;
 			player_data[vID].scoreinfo_data[SCORE_INFO_LEVEL] = curlevel;
 			UTIL_sendScoreInfo(vID);
@@ -303,8 +296,7 @@ void EL_Player::gestate_emulation( )
 			player_gestate_hp_max = getMaxHP();
 			player_gestate_ap_max = getMaxAP();
 			
-			gestate_got_spikes = ( UTIL_hasWeapon(pEntity, WEAPON_SPIKE)
-						&& player_gestate_emu_class == CLASS_LERK );
+			gestate_got_spikes = ( UTIL_hasWeapon(pEntity, WEAPON_SPIKE) && player_gestate_emu_class == CLASS_LERK );
 			
 			if ( player_gestate_extracheck )		// if after spawn no real gestate was done, we need to set gestate class again (otherwise it will be buggy)
 				pEntity->v.iuser3 = IUSER3_CLASS_GESTATE;
@@ -472,7 +464,7 @@ void EL_Player::gestate_messages( bool hide_weapons , byte scoreboard_class , by
 
 float EL_Player::getMaxHP( )
 {
-	if ( player_thickenedskin[ID].cur_level > 0 )
+	if ( player_thickenedskin[ID].cur_level )
 	{
 		player_thickenedskin[ID].setHealthInfo();
 		if ( CLASS_SKULK <= pClass
@@ -493,7 +485,7 @@ float EL_Player::getMaxAP( )
 	if ( CLASS_MARINE <= pClass
 		&& pClass <= CLASS_COMMANDER )
 	{
-		if ( player_reinforcedarmor[ID].cur_level > 0 )
+		if ( player_reinforcedarmor[ID].cur_level )
 		{
 			player_reinforcedarmor[ID].setArmorInfo();
 			
@@ -503,15 +495,10 @@ float EL_Player::getMaxAP( )
 			maxAP = class_base_ap[pClass] + BASE_AP_ADDER_HA * UTIL_getArmorUpgrade(pEntity);
 		else
 			maxAP = class_base_ap[pClass] + BASE_AP_ADDER_MA_JP * UTIL_getArmorUpgrade(pEntity);
-	}else
-	{
-		if ( UTIL_getMask(pEntity, MASK_CARAPACE) )
-			maxAP = class_base_ap_lvl3[pClass];
-		else
-			maxAP = class_base_ap[pClass];
-		
-		maxAP += armor_bonus;
-	}
+	}else if ( UTIL_getMask(pEntity, MASK_CARAPACE) )
+		maxAP = class_base_ap_cara[pClass];
+	else
+		maxAP = class_base_ap[pClass];
 	                                 
 	return maxAP;
 }
@@ -603,7 +590,7 @@ float EL_Player::check_level_player( )
 
 float EL_Player::calc_lvl_and_xp( )
 {
-	float XP = UTIL_getEXP(pEntity);
+	float XP = UTIL_getEXP(INDEXENT(ID));
 	
 	if ( lastxp == XP )
 		return XP;
@@ -629,8 +616,6 @@ int EL_Player::get_player_lvl( float XP , int lvl_to_check , int min , int max )
 	// check if in bounds
 	if ( lvl_to_check > max_level )
 		return max_level;
-	else if ( lvl_to_check < 1 )
-		return 1;
 	
 	if ( XP >= Base_XP_at_Level[lvl_to_check]
 		&& lvl_to_check + 1 <= max_level	// make sure we are in bounds
@@ -733,11 +718,11 @@ void EL_Player::respawn_player( )
 	pEntity->v.health = class_base_hp[CLASS_SKULK];
 	pEntity->v.max_health = class_base_hp[CLASS_SKULK];
 	if ( UTIL_getMask(pEntity, MASK_CARAPACE) )
-		pEntity->v.armorvalue = class_base_ap_lvl3[CLASS_SKULK];
+		pEntity->v.armorvalue = class_base_ap_cara[CLASS_SKULK];
 	else
 		pEntity->v.armorvalue = class_base_ap[CLASS_SKULK];
 	
-	/*MESSAGE_BEGIN(MSG_ALL, ScoreInfo_ID);
+	MESSAGE_BEGIN(MSG_ALL, ScoreInfo_ID);
 	WRITE_BYTE(ID);
 	WRITE_SHORT(player_data[ID].scoreinfo_data[SCORE_INFO_SCORE]);
 	WRITE_SHORT(player_data[ID].scoreinfo_data[SCORE_INFO_KILLS]);
@@ -748,11 +733,7 @@ void EL_Player::respawn_player( )
 	WRITE_SHORT(player_data[ID].scoreinfo_data[SCORE_INFO_TEAM]);
 	WRITE_SHORT(player_data[ID].scoreinfo_data[SCORE_INFO_HEALTH]);
 	WRITE_STRING(player_data[ID].scoreinfo_string);
-	MESSAGE_END();*/
-	
-	player_data[ID].scoreinfo_data[SCORE_INFO_ID] = ID;
-	player_data[ID].scoreinfo_data[SCORE_INFO_CLASS] = PLAYERCLASS_ALIVE_LEVEL1;
-	UTIL_sendScoreInfo(ID);
+	MESSAGE_END();
 	
 	pEntity->v.playerclass = PLAYMODE_PLAYING;
 	pEntity->v.iuser3 = IUSER3_CLASS_SKULK;		// set class
@@ -779,7 +760,7 @@ void EL_Player::givePoints( byte victimID )
 {
 	pEntity->v.frags += 1.0;
 	int score_to_add = player_data[victimID].getScoreByClass();
-	UTIL_addScore(pEntity, score_to_add);
+	UTIL_setScore(pEntity, UTIL_getScore(pEntity) + score_to_add);
 	scoreinfo_data[SCORE_INFO_SCORE] += score_to_add;
 	
 	UTIL_sendScoreInfo(ID);
@@ -825,9 +806,6 @@ void EL_Player::give_xtra_EXP( byte victimID , byte FakeKiller )
 					/ (float)players_in_range )
 					+ 10.0;
 	
-	// current EXP + additional EXP
-	// additional EXP = 0 if below or equal level 10
-	// additional EXP = EXP of victim level - EXP of level 10 cause NS already gave EXP of level 10
 #if defined _PRE_NS_321
 	float EXP_to_everyone_remover = 70.0 / (float)players_in_range + XP_ADDER_POST;
 #else
@@ -837,16 +815,19 @@ void EL_Player::give_xtra_EXP( byte victimID , byte FakeKiller )
 							/ (float)players_in_range )
 							+ XP_ADDER_POST );
 #endif
-	
-	if ( !FakeKiller )
-		EXP_to_everyone -= EXP_to_everyone_remover;
-	
 	for ( targetID = 1; targetID <= gpGlobals->maxClients; ++targetID )
 	{
 		if ( will_getEXP[targetID] == false )
 			continue;
 		
-		UTIL_addEXP(INDEXENT(targetID), EXP_to_everyone);
+		targetEntity = INDEXENT(targetID);
+		if ( !FakeKiller )
+			// current EXP + additional EXP
+			// additional EXP = 0 if below or equal level 10
+			// additional EXP = EXP of victim level - EXP of level 10 cause NS already gave EXP of level 10
+			UTIL_setEXP(targetEntity, UTIL_getEXP(targetEntity) + (EXP_to_everyone - EXP_to_everyone_remover));
+		else
+			UTIL_setEXP(targetEntity, UTIL_getEXP(targetEntity) + EXP_to_everyone);
 	}
 }
 
@@ -866,13 +847,13 @@ void EL_Player::showNotifyMsg( )
 				" by "
 				PLUGIN_AUTHOR
 				"\n";
-		UTIL_ClientPrint(pEntity, PRINT_CHAT, notify_text);
+		UTIL_ClientPrint(INDEXENT(ID), PRINT_CHAT, notify_text);
 		++authorshown;
 	}
 	if ( infoshown < (int)CVAR_instruct->value )
 	{
-		static char instruct_text[NOTIFY_MSG_LEN] = "Type /xmenu or xmenu in chat to show a menu of extra upgrades. Type /xhelp for more info.\n";
-		UTIL_ClientPrint(pEntity, PRINT_CHAT, instruct_text);
+		static char instruct_text[NOTIFY_MSG_LEN] = "type /xmenu or xmenu in chat to show a menu of extra upgrades. Type /xhelp for more info.\n";
+		UTIL_ClientPrint(INDEXENT(ID), PRINT_CHAT, instruct_text);
 		++infoshown;
 	}
 	
@@ -904,7 +885,7 @@ void EL_Player::showMenu( )
 		RETURN_META(MRES_IGNORED);
 	
 	char menu_cont[MENU_CONTENT_LEN] = "Choose an upgrade to view information about:\n\n";
-	in_upgrade_menu = -1;
+	in_upgrade_menu = 0;
 	int Keys = (1<<9);
 	if ( banned == true )
 	{
@@ -914,15 +895,13 @@ void EL_Player::showMenu( )
 					"Either you did not follow Server Rules or did something else bad.\n");
 	}else
 	{
-		byte i = 1;
+		byte i = 0;
 		for ( short up_ID = UP_START; up_ID < UP_END; ++up_ID )
 		{
 			if ( upgrade_data[up_ID]->team != team )
 				continue;
 			
-			upgrade_data[up_ID]->add_to_menu(ID, i, Keys, menu_cont);
-			
-			++i;
+			upgrade_data[up_ID]->add_to_menu(ID, ++i, Keys, menu_cont);
 		}
 		
 		in_main_menu = true;
@@ -935,7 +914,7 @@ void EL_Player::showMenu( )
 
 void EL_Player::showMenuOLD( )
 {
-	/*static char MenuBody[MENU_CONTENT_LEN] = "Help:\nThis server is running "
+	static char MenuBody[MENU_CONTENT_LEN] = "Help:\nThis server is running "
 			PLUGIN_NAME
 			" v"
 			PLUGIN_VERSION
@@ -945,36 +924,18 @@ void EL_Player::showMenuOLD( )
 			"Your input /menu and menu is not used anymore.\nUse /xmenu or xmenu instead.\n"
 			"Or type /xhelp in chat.\n\n0. Exit\n\n\n\n";
 	
-	UTIL_ShowMenu(pEntity, (1<<9), -1, MenuBody);
-	*/
-	static char old_menu_text[NOTIFY_MSG_LEN] = "Your input /menu and menu is not used anymore. Use /xmenu or xmenu instead.\n";
-	UTIL_ClientPrint(pEntity, PRINT_CHAT, old_menu_text);
+	UTIL_ShowMenu(INDEXENT(ID), (1<<9), -1, MenuBody);
 }
 
 void EL_Player::showHelpMenu( )
 {
 	in_help_menu = true;
 	
-	char HelpMenuBody[MENU_CONTENT_LEN * 2];
+	char HelpMenuBody[MENU_CONTENT_LEN];
 	char text_add[64] = "";
-	char text_disabled_ups[MENU_CONTENT_LEN] = "";
 	
 	if ( player_data[WP_ID].ingame )
 		sprintf(text_add, " (connected as %s)", player_data[WP_ID].name);
-	
-	for ( short up_ID = UP_START; up_ID < UP_END; ++up_ID )
-	{
-		if ( upgrade_data[up_ID]->available == true )
-			continue;
-		
-		char temp[33];
-		sprintf(temp, "%s%s%s"
-		, (up_ID == UP_START) ? "" : ", "
-		, (up_ID % 4 == 0 && up_ID != UP_START) ? "\n   " : ""
-		, upgrade_data[up_ID]->upgrade_name);
-		
-		strcat(text_disabled_ups, temp);
-	}
 	
 	sprintf(HelpMenuBody, "Help:\nThis server is running "
 			PLUGIN_NAME
@@ -986,14 +947,14 @@ void EL_Player::showHelpMenu( )
 			"Original ExtraLevels 2 by Cheeserm!\n\nWith "
 			PLUGIN_NAME
 			", two major things are changed\n\n"
-			"A) You can get up to level %d.\n"
-			"Y) You can get new extra upgrades\n"
-			"B) Try typing /xmenu or xmenu to view these extra upgrades.\n\n"
-			"   Disabled upgrades: %s\n\n"
+			"A) You can get up to level %d.\n\n"
+			"Y) You can get new extra upgrades\n\n"
+			"B) Try typing /xmenu or xmenu to view these extra upgrades.\n"
+			"   Make sure you have all the requirement to get an extra upgrade.\n"
 			"   HAVE FUN!!!\n\n0. Exit\n\n\n\n\n\n\n\n\n",
-			text_add, max_level, text_disabled_ups);
+			text_add, max_level);
 	
-	UTIL_ShowMenu(pEntity, (1<<9), -1, HelpMenuBody);
+	UTIL_ShowMenu(INDEXENT(ID), (1<<9), -1, HelpMenuBody);
 }
 
 void EL_Player::MenuSelection( int key )
@@ -1013,21 +974,19 @@ void EL_Player::MenuSelection( int key )
 		// - 1 because first element is 0 (zero)
 		in_upgrade_menu = ((team == MARINE) ? UP_MARINE_FIRST : UP_ALIEN_FIRST) + key - 1;
 		
-		if ( in_upgrade_menu < UP_END
-			&& 1 <= key
-			&& key <= 9
-			&& upgrade_data[in_upgrade_menu]->team == team )
+		if ( 1 <= key
+			&& key <= 7 )
 			upgrade_data[in_upgrade_menu]->show_upgrade_menu(pEntity);
 	}else if ( in_upgrade_menu != -1 )
 	{
 		if ( pClass == CLASS_ONOS )
 		{
-			if ( ( player_senseofancients[ID].cur_level > 0
-					&& player_senseofancients[ID].DevourPlayersNum > 0 )
-				|| UTIL_getMask(pEntity, MASK_DIGESTING) )
+			if ( player_senseofancients[ID].cur_level
+				&& ( player_senseofancients[ID].DevourPlayersNum > 0
+					|| UTIL_getMask(pEntity, MASK_DIGESTING) ) )
 			{
 				UTIL_showPopup(pEntity, "You can't gestate while digesting a player.");
-				in_upgrade_menu = -1;
+				in_upgrade_menu = 0;
 				
 				return;
 			}
@@ -1040,7 +999,7 @@ void EL_Player::MenuSelection( int key )
 				|| !ptr.fInOpen )
 			{
 				UTIL_showPopup(pEntity, "You need more room to gestate.");
-				in_upgrade_menu = -1;
+				in_upgrade_menu = 0;
 				
 				return;
 			}
@@ -1104,8 +1063,7 @@ void EL_Player::showHUD_Msg( byte vID , float XP , int level , bool is_marine )
 		UTIL_HudMessage(pEntity, hud_params, Msg_HUD);
 	}else
 	{
-		LevelPercentage = ( ( XP - (float)(player_data[vID].base_level_xp /*+ 1*/) ) * 100.0 ) / (float)player_data[vID].xp_to_next_lvl;	// not needed anymore, + 1 is a fix (eg 2701 is level 10 NOT 2700)
-		LevelPercentage = (float)((int)(LevelPercentage * 10.0)) / 10.0;	// round floor, one digit behind commata
+		LevelPercentage = ( ( XP - (float)player_data[vID].base_level_xp ) * 100.0 ) / (float)player_data[vID].xp_to_next_lvl;	// not needed anymore, + 1 is a fix (eg 2701 is level 10 NOT 2700)
 		message_set = 0;
 		
 		for ( int CoreT_j = 0; CoreT_j < CVAR_LEVELNAMES_NUM; ++CoreT_j )
@@ -1128,7 +1086,7 @@ void EL_Player::showHUD_Msg( byte vID , float XP , int level , bool is_marine )
 			
 			break;
 		}
-		if ( message_set == false )
+		if ( !message_set )
 		{
 			if ( (int)CVAR_huddisplay->value == 2 )
 			{
@@ -1141,8 +1099,7 @@ void EL_Player::showHUD_Msg( byte vID , float XP , int level , bool is_marine )
 					UTIL_HudMessage(pEntity, hud_params, Msg_HUD);
 					message_displaying = true;
 				}
-			}else if ( (int)CVAR_huddisplay->value == 1
-				&& level >= BASE_MAX_LEVEL )
+			}else if ( (int)CVAR_huddisplay->value == 1 && level >= BASE_MAX_LEVEL )
 			{
 				sprintf(Msg_HUD, "%sLevel %d: %s (%3.1f%%)%s", CoreT_GL_reload_Shift_text, level, is_marine ? marine_rang[19] : alien_rang[19], LevelPercentage, CoreT_point_msg);
 				UTIL_HudMessage(pEntity, hud_params, Msg_HUD);
@@ -1221,7 +1178,6 @@ void EL_Player::set_upgrade_level( int level , int upgrade_ID )
 		UTIL_ServerPrint("EL3: Upgrade cannot be set. Player in wrong team.\n");
 		return;
 	}
-	
 	if ( level > upgrade_data[upgrade_ID]->max_level )
 		level = upgrade_data[upgrade_ID]->max_level;
 	upgrade_pl_data[upgrade_ID][ID]->cur_level = level;

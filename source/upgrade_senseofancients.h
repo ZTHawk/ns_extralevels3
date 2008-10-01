@@ -12,7 +12,6 @@ static const char *SOA_config_names[] =
 	"SENSEOFANCIENTS",
 	"SOA_COST",
 	"SOA_MAX",
-	"SOA_LEVEL",
 	"SOA_PARASITE_INIT",
 	"SOA_PARASITE_ADD",
 	"SOA_PARASITE_DMG",
@@ -127,7 +126,7 @@ class EL_Senseofancients : public base_upgrade_pl_data
 };
 
 extern Upgrade_Senseofancients data_senseofancients;
-extern EL_Senseofancients player_senseofancients[MAX_PLAYERS_PLUS1];
+extern EL_Senseofancients player_senseofancients[MAX_PLAYERS];
 
 
 #define MAX_PARASITE_CHANCE		40
@@ -224,7 +223,6 @@ static const char No_Gestate_Digest_Msg[POPUP_MSG_LEN] = "You can't gestate whil
 #define SENSEOFANCIENTS			true
 #define SOA_COST			1
 #define SOA_MAX				5
-#define SOA_LEVEL			10
 #define SOA_PARASITE_INIT		5.0
 #define SOA_PARASITE_ADD		5.0
 #define SOA_PARASITE_DMG		10.0

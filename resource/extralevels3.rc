@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,7,8,2
- PRODUCTVERSION 0,7,8,2
+ FILEVERSION 0,7,8,1
+ PRODUCTVERSION 0,7,8,1
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -70,12 +70,12 @@ BEGIN
         BLOCK "000004b0"
         BEGIN
             VALUE "FileDescription", "ExtraLevels 3 MetaMod"
-            VALUE "FileVersion", "0.7.8b2"
+            VALUE "FileVersion", "0.7.8.c1"
             VALUE "InternalName", "extralevels3"
             VALUE "LegalCopyright", "Copyright (C) 2006-2008, White Panther; GPL licensed"
             VALUE "OriginalFilename", "extralevels3.dll"
             VALUE "ProductName", "ExtraLevels 3 MM"
-            VALUE "ProductVersion", "0.7.8.b2"
+            VALUE "ProductVersion", "0.7.8.c2"
         END
     END
     BLOCK "VarFileInfo"

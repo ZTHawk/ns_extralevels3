@@ -55,7 +55,7 @@ void Upgrade_Reinforcedarmor::show_upgrade_menu( edict_t *pEntity )
 	
 	float bonus = ( ( player_data[ID].pClass == CLASS_HEAVY ) ? ha_armor : ma_armor )
 			* ( player_reinforcedarmor[ID].cur_level + 1 );
-	int maxarmor = (int)(class_base_ap_lvl3[player_data[ID].pClass]
+	int maxarmor = (int)(class_base_ap_cara[player_data[ID].pClass]
 				+ bonus + 0.5);		// + 0.5 to emulate round()
 	
 	bool req_correct = player_reinforcedarmor[ID].check_Requirements();
@@ -134,7 +134,7 @@ void EL_Reinforcedarmor::set_upgrade_values( )
 
 void EL_Reinforcedarmor::setArmorInfo( )
 {
-	player_data[ID].maxAP = class_base_ap_lvl3[player_data[ID].pClass]
+	player_data[ID].maxAP = class_base_ap_cara[player_data[ID].pClass]
 				+ ( ( player_data[ID].pClass == CLASS_HEAVY ) ? ha_armor : ma_armor );
 }
 
@@ -143,7 +143,7 @@ void EL_Reinforcedarmor::Think( )
 	if ( cur_level == 0 )
 		return;
 	
-	if ( pEntity->v.armorvalue < class_base_ap_lvl3[player_data[ID].pClass]
+	if ( pEntity->v.armorvalue < class_base_ap_cara[player_data[ID].pClass]
 		|| pEntity->v.armorvalue >= player_data[ID].maxAP )
 		return;
 	
@@ -177,7 +177,7 @@ void EL_Reinforcedarmor::Think( )
 			return;
 		
 		byte aimID = ENTINDEX(aimEntity);
-		if ( class_base_ap_lvl3[player_data[aimID].pClass] <= aimEntity->v.armorvalue
+		if ( class_base_ap_cara[player_data[aimID].pClass] <= aimEntity->v.armorvalue
 			&& aimEntity->v.armorvalue < player_data[aimID].maxAP
 			&& player_data[aimID].team == MARINE )
 		{

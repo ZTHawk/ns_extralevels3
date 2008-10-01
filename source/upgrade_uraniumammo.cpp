@@ -5,7 +5,7 @@
 #include "ns_const.h"
 
 Upgrade_Uraniumammo data_uraniumammo;
-EL_Uraniumammo player_uraniumammo[MAX_PLAYERS_PLUS1];
+EL_Uraniumammo player_uraniumammo[MAX_PLAYERS];
 
 void Upgrade_Uraniumammo::init( )
 {
@@ -14,19 +14,18 @@ void Upgrade_Uraniumammo::init( )
 		{&(available = URANIUMAMMO), TYPE_BOOL, (char *)UA_config_names[0]},
 		{&(req_points = UA_COST), TYPE_INT, (char *)UA_config_names[1]},
 		{&(max_level = UA_MAX), TYPE_INT, (char *)UA_config_names[2]},
-		{&(req_level = UA_LEVEL), TYPE_INT, (char *)UA_config_names[3]},
-		{&(BulletDmgPercentage = UA_BULLETDMG), TYPE_FLOAT, (char *)UA_config_names[4]},
-		{&(GrenadeDmgPercentage = UA_GRENDMG), TYPE_FLOAT, (char *)UA_config_names[5]}
+		{&(BulletDmgPercentage = UA_BULLETDMG), TYPE_FLOAT, (char *)UA_config_names[3]},
+		{&(GrenadeDmgPercentage = UA_GRENDMG), TYPE_FLOAT, (char *)UA_config_names[4]}
 	};
 	
 	UTIL_getUpgradeDataFromFile(upgrade_data, ARRAYSIZE(upgrade_data));
 	
-	//req_level = 10;
+	req_level = 10;
 	
 	strcpy(upgrade_name, "Uranium Ammo");
 	strcpy(upgrade_description, "Ammunition contains depleted uranium to enhance damage for all weapons except (Knife, Welder)\n"
 					"Damage increased by: Bullets [+%d%%] / Grenades [+%d%%]\n\n"
-					"Requires: Weapons 3 , Level %d, %d Point%s\n\n"
+					"Requires: Weapons 3 , Level %d, %d point%s\n\n"
 					"Next level [%d]\n\n"
 					"%s%s\n\n"
 					"0. Exit\n\n\n\n\n\n\n");
@@ -113,7 +112,7 @@ void EL_Uraniumammo::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_addPoints(pEntity, data_uraniumammo.req_points);
+	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_uraniumammo.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",

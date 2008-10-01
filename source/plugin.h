@@ -10,19 +10,19 @@
 //=================================================================
 //Plugin Information
 //=================================================================
-#define PLUGIN_DATE		"July 17, 2008"
+#define PLUGIN_DATE		"January 31, 2008"
 #define PLUGIN_NAME		"ExtraLevels 3 MM"
 #define PLUGIN_AUTHOR		"White Panther"
 #define PLUGIN_EMAIL		""
 #define PLUGIN_URL		""
 #define MY_LOGTAG		"EXTRALEVELS_3_MM"
 #define PLUGIN_CVAR		"mm_extralevels3"
-#define PLUGIN_VERSION		"0.7.8b2"
+#define PLUGIN_VERSION		"0.7.7f"
 #define PLUGIN_LOADABLE		PT_CHANGELEVEL
 #define PLUGIN_UNLOADABLE	PT_ANYPAUSE
 
 
-#define PLUGIN_VERS_DWORD	0, 7, 8, 2
+#define PLUGIN_VERS_DWORD	0, 7, 7, 10
 #define PLUGIN_COMMENTS		"Enjoy"
 #define PLUGIN_DESC		"More than 10 levels + new upgrades"
 #define PLUGIN_FILENAME		PLUGIN_LOGTAG ".DLL"
@@ -119,6 +119,8 @@
 #define HUD_MSG_LEN			256
 #define HUD_MSG_EXTRA_LEN		128
 
+#define MAX_PLAYERS			33
+
 #define MARINE_HUD_COLOR_R		0
 #define MARINE_HUD_COLOR_G		75
 #define MARINE_HUD_COLOR_B		100
@@ -126,8 +128,7 @@
 #define ALIEN_HUD_COLOR_G		100
 #define ALIEN_HUD_COLOR_B		0
 
-#define MAX_PLAYERS			33
-#define MAX_PLAYERS_PLUS1		33	// set this to maximum players + 1 so arrays can be accessed via ID
+#define MAX_PLAYERS			33	// set this to maximum players + 1 so arrays can be accessed via ID
 
 // default config settings
 #define CUSTOM_LEVELS			false
@@ -148,8 +149,8 @@ void precacheSounds( );
 void init_xplevel_data( );
 void pre_calc_level_data( );
 
-extern char config_file[128];
-extern char ban_file[128];
+extern char *config_file;
+extern char *ban_file;
 
 extern bool Custom_Levels;
 extern float Base_XP_Custom;
@@ -168,9 +169,6 @@ static const char *Custom_config_names[] =
 
 extern edict_t *Hive_ID;
 extern edict_t *Hive_ID2;
-extern bool isMvA;
-extern bool isMvM;
-extern bool isAvA;
 
 extern bool gBlockMsgPlayer;
 extern bool gBlockLog;
