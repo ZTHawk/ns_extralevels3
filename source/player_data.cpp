@@ -985,9 +985,9 @@ void EL_Player::MenuSelection( int key )
 	{
 		if ( pClass == CLASS_ONOS )
 		{
-			if ( player_senseofancients[ID].cur_level
-				&& ( player_senseofancients[ID].DevourPlayersNum > 0
-					|| UTIL_getMask(pEntity, MASK_DIGESTING) ) )
+			if ( ( player_senseofancients[ID].cur_level > 0
+					&& player_senseofancients[ID].DevourPlayersNum > 0 )
+				|| UTIL_getMask(pEntity, MASK_DIGESTING) )
 			{
 				UTIL_showPopup(pEntity, "You can't gestate while digesting a player.");
 				in_upgrade_menu = -1;
