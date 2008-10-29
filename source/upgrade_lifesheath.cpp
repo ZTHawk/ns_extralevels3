@@ -142,7 +142,9 @@ void EL_Lifesheath::Think( )
 	
 	nextLifesteath = gpGlobals->time + data_lifesheath.cooldown_time;
 	
-	edict_t *pUmbraCloud = CREATE_NAMED_ENTITY(ALLOC_STRING("umbracloud"));
+	//edict_t *pUmbraCloud = CREATE_NAMED_ENTITY(ALLOC_STRING("umbracloud"));
+	int hl_strings_umbracloud_id = hl_strings.find("umbracloud");
+	edict_t *pUmbraCloud = CREATE_NAMED_ENTITY(hl_strings_umbracloud_id);
 	pUmbraCloud->v.origin = pEntity->v.origin;
 	pUmbraCloud->v.team = pEntity->v.team;
 	MDLL_Spawn(pUmbraCloud);

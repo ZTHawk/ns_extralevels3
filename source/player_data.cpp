@@ -637,7 +637,10 @@ void EL_Player::killPlayer( )
 {
 	pEntity->v.takedamage = DAMAGE_AIM;
 	
-	edict_t *entity = CREATE_NAMED_ENTITY(ALLOC_STRING("trigger_hurt"));
+	//edict_t *entity = CREATE_NAMED_ENTITY(ALLOC_STRING("trigger_hurt"));
+	//hl_string_base::iterator iter = hl_strings.find("trigger_hurt");
+	int hl_strings_trigger_hurt_id = hl_strings.find("trigger_hurt");
+	edict_t *entity = CREATE_NAMED_ENTITY(hl_strings_trigger_hurt_id);
 	
 	KeyValueData kvd;
 	kvd.szClassName = (char*)STRING(entity->v.classname);
@@ -669,7 +672,8 @@ void EL_Player::killPlayer( )
 	
 	MDLL_Spawn(entity);
 	
-	entity->v.classname = ALLOC_STRING("trigger_hurt");
+	//entity->v.classname = ALLOC_STRING("trigger_hurt");
+	entity->v.classname = hl_strings_trigger_hurt_id;
 	
 	// block DeathMsg and Damage
 	gBlockMsgPlayer = true;

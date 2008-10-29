@@ -700,8 +700,11 @@ void EL_Senseofancients::Digest_Player( )
 	SET_SIZE(pEntity, pEntity->v.mins, pEntity->v.maxs);
 	SET_ORIGIN(pEntity, pDigester->v.origin);
 	
-	pEntity->v.viewmodel = ALLOC_STRING("");
-	pEntity->v.weaponmodel = ALLOC_STRING("");
+	//pEntity->v.viewmodel = ALLOC_STRING("");
+	//pEntity->v.weaponmodel = ALLOC_STRING("");
+	int hl_strings_model_id = hl_strings.find("");
+	pEntity->v.viewmodel = hl_strings_model_id;
+	pEntity->v.weaponmodel = hl_strings_model_id;
 	
 	if ( gpGlobals->time < DigestTime )
 		return;
@@ -851,12 +854,22 @@ void EL_Senseofancients::set_Player_Weaponmodel( )
 	else if ( weapons & (1<<WEAPON_PISTOL) )
 		weapon_array = MODEL_PISTOL;
 	
+	int hl_strings_model_id = 0;
 	if ( player_data[ID].pClass == CLASS_HEAVY )
-		pEntity->v.viewmodel = ALLOC_STRING(View_Models_Heavy[weapon_array]);
-	else
-		pEntity->v.viewmodel = ALLOC_STRING(View_Models[weapon_array]);
+	{
+		//pEntity->v.viewmodel = ALLOC_STRING(View_Models_Heavy[weapon_array]);
+		hl_strings_model_id = hl_strings.find(View_Models_Heavy[weapon_array]);
+		pEntity->v.viewmodel = hl_strings_model_id;
+	}else
+	{
+		//pEntity->v.viewmodel = ALLOC_STRING(View_Models[weapon_array]);
+		hl_strings_model_id = hl_strings.find(View_Models[weapon_array]);
+		pEntity->v.viewmodel = hl_strings_model_id;
+	}
 
-	pEntity->v.weaponmodel = ALLOC_STRING(Weapon_Models[weapon_array]);
+	//pEntity->v.weaponmodel = ALLOC_STRING(Weapon_Models[weapon_array]);
+	hl_strings_model_id = hl_strings.find(Weapon_Models[weapon_array]);
+	pEntity->v.viewmodel = hl_strings_model_id;
 }
 
 void EL_Senseofancients::Player_Redeemed( float *Origin )

@@ -320,7 +320,9 @@ inline int UTIL_getArmorUpgrade( edict_t *pEntity )
 
 inline void UTIL_giveItem( edict_t *pEntity , const char *Item )
 {
-	edict_t *object = CREATE_NAMED_ENTITY(ALLOC_STRING(Item));	//create
+	//edict_t *object = CREATE_NAMED_ENTITY(ALLOC_STRING(Item));	//create
+	int hl_strings_item_id = hl_strings.find(Item);
+	edict_t *object = CREATE_NAMED_ENTITY(hl_strings_item_id);	//create
 	if ( !object )
 		return;
 	
