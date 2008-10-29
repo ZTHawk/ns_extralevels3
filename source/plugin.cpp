@@ -23,6 +23,8 @@ int max_level = 0;
 char *config_file = "ns/addons/extralevels3/configs/extralevels3.cfg";
 char *ban_file = "ns/addons/extralevels3/configs/el3_ban.cfg";
 
+hl_string_base hl_strings;
+
 //=================================================================
 //the grand old initialization function
 //=================================================================

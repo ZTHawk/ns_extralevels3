@@ -10,19 +10,19 @@
 //=================================================================
 //Plugin Information
 //=================================================================
-#define PLUGIN_DATE		"January 31, 2008"
+#define PLUGIN_DATE		"October 01, 2008"
 #define PLUGIN_NAME		"ExtraLevels 3 MM"
 #define PLUGIN_AUTHOR		"White Panther"
 #define PLUGIN_EMAIL		""
 #define PLUGIN_URL		""
 #define MY_LOGTAG		"EXTRALEVELS_3_MM"
 #define PLUGIN_CVAR		"mm_extralevels3"
-#define PLUGIN_VERSION		"0.7.7f"
+#define PLUGIN_VERSION		"0.7.8c2"
 #define PLUGIN_LOADABLE		PT_CHANGELEVEL
 #define PLUGIN_UNLOADABLE	PT_ANYPAUSE
 
 
-#define PLUGIN_VERS_DWORD	0, 7, 7, 10
+#define PLUGIN_VERS_DWORD	0, 7, 8, 12
 #define PLUGIN_COMMENTS		"Enjoy"
 #define PLUGIN_DESC		"More than 10 levels + new upgrades"
 #define PLUGIN_FILENAME		PLUGIN_LOGTAG ".DLL"
@@ -34,6 +34,13 @@
 
 #include <string.h>		//to prevent linux errors while processing meta_api.h
 #include <meta_api.h>
+
+#include <string>
+#include <map>
+
+using std::map;
+using std::string;
+using std::pair;
 
 //=================================================================
 //=================================================================
@@ -210,6 +217,33 @@ static const char *sound_files[MAX_SOUNDS] =
 	"misc/levelup.wav"	// levelup sound marines
 };
 
+class hl_string_base
+{
+	private:
+	map<string, int> hl_string_map;
+	
+	public:
+	int find( const char *item )
+	{
+		int id = 0;
+		map<string, int>::iterator iter = hl_string_map.find(item);
+		if ( iter == hl_string_map.end() )
+		{
+			id = ALLOC_STRING(item);
+			hl_string_map.insert(pair<string, int>(item, id));
+		}else
+			id = iter->second;
+		
+		return id;
+	};
+	
+	void insert( const char *item , int value )
+	{
+		hl_string_map.insert(pair<string, int>(item, value));
+	};
+};
+
+extern hl_string_base hl_strings;
 
 #endif // #ifndef VERS_PLUGIN_H
 #endif // #ifndef _PLUGIN_H_
