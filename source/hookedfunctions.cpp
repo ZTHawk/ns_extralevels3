@@ -313,6 +313,10 @@ void KeyValue( edict_t *pentKeyvalue , KeyValueData *pkvd )
 
 void ServerActivate_Post( edict_t *pEdictList , int edictCount , int clientMax )
 {
+#ifdef _DEBUG
+	UTIL_LogDebug("SAPs");
+#endif
+	
 	SAFE_USER_MSG(TextMsg_ID, "TextMsg", -1);
 	
 	SAFE_USER_MSG(HUDText2_ID, "HudText2", -1);
@@ -388,14 +392,29 @@ void ServerActivate_Post( edict_t *pEdictList , int edictCount , int clientMax )
 	for ( short i = 0; i < UP_END; ++i )
 		upgrade_data[i]->precache();
 	
+#ifdef _DEBUG
+	UTIL_LogDebug("SAPe");
+#endif
+	
 	RETURN_META(MRES_IGNORED);
 }
 
 void ServerDeactivate_Post( void )
 {
+#ifdef _DEBUG
+	UTIL_LogDebug("SDPs");
+#endif
+	
 	data_senseofancients.SporeData.clear();
 	
 	Set_Hooks();
+	
+	Hive_ID = NULL;
+	Hive_ID2 = NULL;
+	
+#ifdef _DEBUG
+	UTIL_LogDebug("SDPe");
+#endif
 	
 	RETURN_META(MRES_IGNORED);
 }
@@ -407,7 +426,7 @@ void ClientUserInfoChanged_Post( edict_t *pEntity , char *infobuffer )
 #endif
 	
 	byte ID = ENTINDEX(pEntity);
-	if ( player_data[ID].ingame )
+	if ( player_data[ID].ingame == true )
 	{
 		const char *name = INFOKEY_VALUE(infobuffer, "name");
 		strcpy(player_data[ID].name, name);
@@ -493,7 +512,6 @@ void ClientCommand( edict_t *pEntity )
 	RETURN_META(MRES_IGNORED);
 }
 
-
 void CmdStart( const edict_t *player , const struct usercmd_s *_cmd , unsigned int random_seed )
 {
 #ifdef _DEBUG
@@ -501,7 +519,8 @@ void CmdStart( const edict_t *player , const struct usercmd_s *_cmd , unsigned i
 #endif
 	
 	byte ID = ENTINDEX(player);
-	if( ID < 1 || ID > gpGlobals->maxClients )
+	if( ID < 1
+		|| ID > gpGlobals->maxClients )
 	{
 		RETURN_META(MRES_IGNORED);
 	}
@@ -633,7 +652,7 @@ void ClientPreThink( edict_t *pEntity )
 				player_data[ID].gestate_block_Damage_msg = true;
 				player_data[ID].killPlayer();
 				// correct deaths, due to fake kill
-				UTIL_setDeaths(pEntity, UTIL_getDeaths(pEntity) - 1);
+				UTIL_addDeaths(pEntity, -1);
 			}else
 			{
 				// player spawned, so update armor
@@ -807,7 +826,7 @@ void pfnMessageBegin( int msg_dest , int msg_type , const float *pOrigin , edict
 				player_data[Msg_receiver].gestate_block_Damage_msg = false;
 			}
 		}else if ( msg_type == AmmoPickup_ID
-			&& player_advancedammopack[Msg_receiver].cur_level )
+			&& player_advancedammopack[Msg_receiver].cur_level > 0 )
 		{
 			gBlockMsg = true;
 		}
@@ -1057,17 +1076,17 @@ void pfnPlaybackEvent( int flags , const edict_t *pInvoker , unsigned short even
 	if ( eventindex == Spore_Event_ID )
 	{
 		byte ID = ENTINDEX(pInvoker->v.owner);
-		if ( player_data[ID].ingame )
+		if ( player_data[ID].ingame == true )
 			player_senseofancients[ID].add_Spore(pInvoker);
 	}else if ( eventindex == Cloak_Event_ID )
 	{
 		byte ID = ENTINDEX(pInvoker);
-		if ( player_data[ID].ingame )
+		if ( player_data[ID].ingame == true )
 			player_senseofancients[ID].Player_Redeemed(origin);
 	}else if ( eventindex == HealingSpray_Event_ID )
 	{
 		byte ID = ENTINDEX(pInvoker);
-		if ( player_data[ID].ingame )
+		if ( player_data[ID].ingame == true )
 			player_senseofancients[ID].check_HealingSpray();
 	}
 	
