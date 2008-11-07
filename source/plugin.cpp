@@ -54,6 +54,8 @@ void plugin_quit( )
 	
 	for ( int i = 0; i < CVAR_LEVELNAMES_NUM; ++i )
 		delete CVAR_upgrade_levels[i]->string;
+	delete config_file;
+	delete ban_file;
 }
 
 void initCVARS( )
