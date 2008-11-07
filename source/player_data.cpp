@@ -628,6 +628,8 @@ int EL_Player::get_player_lvl( float XP , int lvl_to_check , int min , int max )
 	// check if in bounds
 	if ( lvl_to_check > max_level )
 		return max_level;
+	else if ( lvl_to_check < 1 )
+		return 1;
 	
 	if ( XP >= Base_XP_at_Level[lvl_to_check]
 		&& lvl_to_check + 1 <= max_level	// make sure we are in bounds
@@ -822,6 +824,9 @@ void EL_Player::give_xtra_EXP( byte victimID , byte FakeKiller )
 					/ (float)players_in_range )
 					+ 10.0;
 	
+	// current EXP + additional EXP
+	// additional EXP = 0 if below or equal level 10
+	// additional EXP = EXP of victim level - EXP of level 10 cause NS already gave EXP of level 10
 #if defined _PRE_NS_321
 	float EXP_to_everyone_remover = 70.0 / (float)players_in_range + XP_ADDER_POST;
 #else
@@ -831,19 +836,16 @@ void EL_Player::give_xtra_EXP( byte victimID , byte FakeKiller )
 							/ (float)players_in_range )
 							+ XP_ADDER_POST );
 #endif
+	
+	if ( !FakeKiller )
+		EXP_to_everyone -= EXP_to_everyone_remover;
+	
 	for ( targetID = 1; targetID <= gpGlobals->maxClients; ++targetID )
 	{
 		if ( will_getEXP[targetID] == false )
 			continue;
 		
-		targetEntity = INDEXENT(targetID);
-		if ( !FakeKiller )
-			// current EXP + additional EXP
-			// additional EXP = 0 if below or equal level 10
-			// additional EXP = EXP of victim level - EXP of level 10 cause NS already gave EXP of level 10
-			UTIL_setEXP(targetEntity, UTIL_getEXP(targetEntity) + (EXP_to_everyone - EXP_to_everyone_remover));
-		else
-			UTIL_setEXP(targetEntity, UTIL_getEXP(targetEntity) + EXP_to_everyone);
+		UTIL_addEXP(INDEXENT(targetID), EXP_to_everyone);
 	}
 }
 
@@ -1083,7 +1085,8 @@ void EL_Player::showHUD_Msg( byte vID , float XP , int level , bool is_marine )
 		UTIL_HudMessage(pEntity, hud_params, Msg_HUD);
 	}else
 	{
-		LevelPercentage = ( ( XP - (float)player_data[vID].base_level_xp ) * 100.0 ) / (float)player_data[vID].xp_to_next_lvl;	// not needed anymore, + 1 is a fix (eg 2701 is level 10 NOT 2700)
+		LevelPercentage = ( ( XP - (float)(player_data[vID].base_level_xp /*+ 1*/) ) * 100.0 ) / (float)player_data[vID].xp_to_next_lvl;	// not needed anymore, + 1 is a fix (eg 2701 is level 10 NOT 2700)
+		LevelPercentage = (float)((int)(LevelPercentage * 10.0)) / 10.0;	// round floor, one digit behind comma
 		message_set = 0;
 		
 		for ( int CoreT_j = 0; CoreT_j < CVAR_LEVELNAMES_NUM; ++CoreT_j )

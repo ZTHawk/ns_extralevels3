@@ -164,7 +164,8 @@ void pre_calc_level_data( )
 		}else if ( i == 1 )
 		{
 			Base_XP_at_Level[i] = 0;		// even with 0 XP you are level 1
-			Next_Level_XP_modifier[i] = 100;	// default value
+			// all EXP are calculated with +1, so do a fix for first level
+			Next_Level_XP_modifier[i] = 101;	// default value
 		}else if ( i < 10 || Custom_Levels == false )
 		{
 			// no Custom levels shall be used, so use default system
