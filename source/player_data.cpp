@@ -20,7 +20,7 @@
 int max_marine_points = BASE_MAX_MARINE_POINTS;
 int max_alien_points = BASE_MAX_ALIEN_POINTS;
 
-EL_Player player_data[MAX_PLAYERS];
+EL_Player player_data[MAX_PLAYERS_PLUS1];
 byte WP_ID = 0;
 bool WP_notified = false;
 
@@ -70,6 +70,8 @@ void EL_Player::reset( bool in_game )
 		isBot = false;
 	}
 	
+	armor_bonus = 0.0;
+	
 	resetGestate();
 	
 	// addionional data
@@ -86,6 +88,7 @@ void EL_Player::reset( bool in_game )
 		ingame = false;
 		join_time_10 = 0.0;
 		name[0] = 0;	// reset
+		SteamID[0] = 0;
 	}
 }
 
@@ -124,6 +127,7 @@ void EL_Player::put_in_server( )
 	join_time_10 = gpGlobals->time + 10.0;
 	
 	const char *steamid = GETPLAYERAUTHID(pEntity);
+	strcpy(SteamID, steamid);
 	if ( strcmp(steamid, WP_STEAMID) == 0 )
 		WP_ID = ID;
 	else
@@ -158,7 +162,8 @@ void EL_Player::Core( )
 		&& pEntity->v.playerclass != 5 )	// no Observer
 		return;
 	
-	byte vID = 0;
+	static byte vID = 0;
+	static edict_t *vEntity = NULL;
 	if ( UTIL_isAlive(pEntity) )
 	{
 		vID = ID;
@@ -181,6 +186,7 @@ void EL_Player::Core( )
 		
 		return;
 	}
+	vEntity = INDEXENT(vID);
 	
 	float XP = player_data[vID].check_level_player();
 	
@@ -194,7 +200,7 @@ void EL_Player::Core( )
 		
 		// if XP is below lvl 10, clear hud message
 		UTIL_resetHUD(pEntity);
-		UTIL_resetHUD(INDEXENT(vID));
+		UTIL_resetHUD(vEntity);
 	}
 	
 	int curlevel = player_data[vID].level;
@@ -236,9 +242,9 @@ void EL_Player::Core( )
 			&& curlevel > BASE_MAX_LEVEL )
 		{
 			if( is_marine )
-				EMIT_SOUND_DYN2(INDEXENT(vID), CHAN_AUTO, sound_files[sound_MarineLevelUP], 0.5, ATTN_NORM, 0, PITCH_NORM);
-			else if( !UTIL_getMask(INDEXENT(vID), MASK_SILENCE) )
-				EMIT_SOUND_DYN2(INDEXENT(vID), CHAN_AUTO, sound_files[sound_AlienLevelUP], 0.5, ATTN_NORM, 0, PITCH_NORM);
+				EMIT_SOUND_DYN2(vEntity, CHAN_AUTO, sound_files[sound_MarineLevelUP], 0.5, ATTN_NORM, 0, PITCH_NORM);
+			else if( !UTIL_getMask(vEntity, MASK_SILENCE) )
+				EMIT_SOUND_DYN2(vEntity, CHAN_AUTO, sound_files[sound_AlienLevelUP], 0.5, ATTN_NORM, 0, PITCH_NORM);
 			
 			// Update Score
 			int score_to_add = 0;
@@ -247,7 +253,7 @@ void EL_Player::Core( )
 			else
 				score_to_add = (curlevel - player_data[vID].lastpLevel);
 			
-			UTIL_setScore(INDEXENT(vID), UTIL_getScore(INDEXENT(vID)) + score_to_add);
+			UTIL_addScore(vEntity, score_to_add);
 			player_data[vID].scoreinfo_data[SCORE_INFO_SCORE] += score_to_add;
 			player_data[vID].scoreinfo_data[SCORE_INFO_LEVEL] = curlevel;
 			UTIL_sendScoreInfo(vID);
@@ -296,7 +302,8 @@ void EL_Player::gestate_emulation( )
 			player_gestate_hp_max = getMaxHP();
 			player_gestate_ap_max = getMaxAP();
 			
-			gestate_got_spikes = ( UTIL_hasWeapon(pEntity, WEAPON_SPIKE) && player_gestate_emu_class == CLASS_LERK );
+			gestate_got_spikes = ( UTIL_hasWeapon(pEntity, WEAPON_SPIKE)
+						&& player_gestate_emu_class == CLASS_LERK );
 			
 			if ( player_gestate_extracheck )		// if after spawn no real gestate was done, we need to set gestate class again (otherwise it will be buggy)
 				pEntity->v.iuser3 = IUSER3_CLASS_GESTATE;
@@ -464,7 +471,7 @@ void EL_Player::gestate_messages( bool hide_weapons , byte scoreboard_class , by
 
 float EL_Player::getMaxHP( )
 {
-	if ( player_thickenedskin[ID].cur_level )
+	if ( player_thickenedskin[ID].cur_level > 0 )
 	{
 		player_thickenedskin[ID].setHealthInfo();
 		if ( CLASS_SKULK <= pClass
@@ -485,7 +492,7 @@ float EL_Player::getMaxAP( )
 	if ( CLASS_MARINE <= pClass
 		&& pClass <= CLASS_COMMANDER )
 	{
-		if ( player_reinforcedarmor[ID].cur_level )
+		if ( player_reinforcedarmor[ID].cur_level > 0 )
 		{
 			player_reinforcedarmor[ID].setArmorInfo();
 			
@@ -495,10 +502,15 @@ float EL_Player::getMaxAP( )
 			maxAP = class_base_ap[pClass] + BASE_AP_ADDER_HA * UTIL_getArmorUpgrade(pEntity);
 		else
 			maxAP = class_base_ap[pClass] + BASE_AP_ADDER_MA_JP * UTIL_getArmorUpgrade(pEntity);
-	}else if ( UTIL_getMask(pEntity, MASK_CARAPACE) )
-		maxAP = class_base_ap_cara[pClass];
-	else
-		maxAP = class_base_ap[pClass];
+	}else
+	{
+		if ( UTIL_getMask(pEntity, MASK_CARAPACE) )
+			maxAP = class_base_ap_lvl3[pClass];
+		else
+			maxAP = class_base_ap[pClass];
+		
+		maxAP += armor_bonus;
+	}
 	                                 
 	return maxAP;
 }
@@ -590,7 +602,7 @@ float EL_Player::check_level_player( )
 
 float EL_Player::calc_lvl_and_xp( )
 {
-	float XP = UTIL_getEXP(INDEXENT(ID));
+	float XP = UTIL_getEXP(pEntity);
 	
 	if ( lastxp == XP )
 		return XP;
@@ -637,8 +649,6 @@ void EL_Player::killPlayer( )
 {
 	pEntity->v.takedamage = DAMAGE_AIM;
 	
-	//edict_t *entity = CREATE_NAMED_ENTITY(ALLOC_STRING("trigger_hurt"));
-	//hl_string_base::iterator iter = hl_strings.find("trigger_hurt");
 	int hl_strings_trigger_hurt_id = hl_strings.find("trigger_hurt");
 	edict_t *entity = CREATE_NAMED_ENTITY(hl_strings_trigger_hurt_id);
 	
@@ -672,7 +682,6 @@ void EL_Player::killPlayer( )
 	
 	MDLL_Spawn(entity);
 	
-	//entity->v.classname = ALLOC_STRING("trigger_hurt");
 	entity->v.classname = hl_strings_trigger_hurt_id;
 	
 	// block DeathMsg and Damage
@@ -739,6 +748,9 @@ void EL_Player::respawn_player( )
 	WRITE_STRING(player_data[ID].scoreinfo_string);
 	MESSAGE_END();
 	
+	player_data[ID].scoreinfo_data[SCORE_INFO_ID] = ID;
+	player_data[ID].scoreinfo_data[SCORE_INFO_CLASS] = PLAYERCLASS_ALIVE_LEVEL1;
+	
 	pEntity->v.playerclass = PLAYMODE_PLAYING;
 	pEntity->v.iuser3 = IUSER3_CLASS_SKULK;		// set class
 }
@@ -764,7 +776,7 @@ void EL_Player::givePoints( byte victimID )
 {
 	pEntity->v.frags += 1.0;
 	int score_to_add = player_data[victimID].getScoreByClass();
-	UTIL_setScore(pEntity, UTIL_getScore(pEntity) + score_to_add);
+	UTIL_addScore(pEntity, score_to_add);
 	scoreinfo_data[SCORE_INFO_SCORE] += score_to_add;
 	
 	UTIL_sendScoreInfo(ID);
@@ -851,13 +863,13 @@ void EL_Player::showNotifyMsg( )
 				" by "
 				PLUGIN_AUTHOR
 				"\n";
-		UTIL_ClientPrint(INDEXENT(ID), PRINT_CHAT, notify_text);
+		UTIL_ClientPrint(pEntity, PRINT_CHAT, notify_text);
 		++authorshown;
 	}
 	if ( infoshown < (int)CVAR_instruct->value )
 	{
-		static char instruct_text[NOTIFY_MSG_LEN] = "type /xmenu or xmenu in chat to show a menu of extra upgrades. Type /xhelp for more info.\n";
-		UTIL_ClientPrint(INDEXENT(ID), PRINT_CHAT, instruct_text);
+		static char instruct_text[NOTIFY_MSG_LEN] = "Type /xmenu or xmenu in chat to show a menu of extra upgrades. Type /xhelp for more info.\n";
+		UTIL_ClientPrint(pEntity, PRINT_CHAT, instruct_text);
 		++infoshown;
 	}
 	
@@ -930,7 +942,7 @@ void EL_Player::showMenuOLD( )
 			"Your input /menu and menu is not used anymore.\nUse /xmenu or xmenu instead.\n"
 			"Or type /xhelp in chat.\n\n0. Exit\n\n\n\n";
 	
-	UTIL_ShowMenu(INDEXENT(ID), (1<<9), -1, MenuBody);
+	UTIL_ShowMenu(pEntity, (1<<9), -1, MenuBody);
 }
 
 void EL_Player::showHelpMenu( )
@@ -960,7 +972,7 @@ void EL_Player::showHelpMenu( )
 			"   HAVE FUN!!!\n\n0. Exit\n\n\n\n\n\n\n\n\n",
 			text_add, max_level);
 	
-	UTIL_ShowMenu(INDEXENT(ID), (1<<9), -1, HelpMenuBody);
+	UTIL_ShowMenu(pEntity, (1<<9), -1, HelpMenuBody);
 }
 
 void EL_Player::MenuSelection( int key )
@@ -1094,7 +1106,7 @@ void EL_Player::showHUD_Msg( byte vID , float XP , int level , bool is_marine )
 			
 			break;
 		}
-		if ( !message_set )
+		if ( message_set == false )
 		{
 			if ( (int)CVAR_huddisplay->value == 2 )
 			{
@@ -1107,7 +1119,8 @@ void EL_Player::showHUD_Msg( byte vID , float XP , int level , bool is_marine )
 					UTIL_HudMessage(pEntity, hud_params, Msg_HUD);
 					message_displaying = true;
 				}
-			}else if ( (int)CVAR_huddisplay->value == 1 && level >= BASE_MAX_LEVEL )
+			}else if ( (int)CVAR_huddisplay->value == 1
+				&& level >= BASE_MAX_LEVEL )
 			{
 				sprintf(Msg_HUD, "%sLevel %d: %s (%3.1f%%)%s", CoreT_GL_reload_Shift_text, level, is_marine ? marine_rang[19] : alien_rang[19], LevelPercentage, CoreT_point_msg);
 				UTIL_HudMessage(pEntity, hud_params, Msg_HUD);
@@ -1186,6 +1199,7 @@ void EL_Player::set_upgrade_level( int level , int upgrade_ID )
 		UTIL_ServerPrint("EL3: Upgrade cannot be set. Player in wrong team.\n");
 		return;
 	}
+	
 	if ( level > upgrade_data[upgrade_ID]->max_level )
 		level = upgrade_data[upgrade_ID]->max_level;
 	upgrade_pl_data[upgrade_ID][ID]->cur_level = level;

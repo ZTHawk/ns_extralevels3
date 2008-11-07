@@ -27,7 +27,7 @@ class EL_Player
 	bool got_scan;				// check if player has Scan Area
 	
 	int scoreinfo_data[10];			// saved data from ScoreInfo
-	char *scoreinfo_string;
+	char scoreinfo_string[32];
 	
 	byte upgrade_choice;			// check which upgrade player has choosen in main menu
 	bool message_displaying;		// check if a Level-Message is displayed
@@ -66,7 +66,7 @@ class EL_Player
 	
 	float maxHP;
 	float maxAP;
-	
+	float armor_bonus;
 	
 	// Additional data
 	bool in_main_menu;
@@ -80,6 +80,7 @@ class EL_Player
 	
 	float join_time_10;
 	char name[33];
+	char SteamID[33];
 	
 	void init( edict_t *player )
 	{
@@ -127,7 +128,7 @@ class EL_Player
 	void set_upgrade_level( int level , int upgrade_ID );
 };
 
-extern EL_Player player_data[MAX_PLAYERS];
+extern EL_Player player_data[MAX_PLAYERS_PLUS1];
 
 extern vector<char *> banList;
 
