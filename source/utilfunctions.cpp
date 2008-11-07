@@ -247,7 +247,7 @@ void UTIL_getBanData( )
 		if ( pos < 7 )		// make sure at least containing "STEAM_"
 			continue;
 		
-		char *tmp = (char*)malloc(64);
+		char *tmp = new char[64];
 		strncpy(tmp, buffer, pos);
 		tmp[pos] = '\0';
 		banList.push_back(tmp);

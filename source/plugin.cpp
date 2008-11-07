@@ -56,6 +56,10 @@ void plugin_quit( )
 		delete CVAR_upgrade_levels[i]->string;
 	delete config_file;
 	delete ban_file;
+	
+	for ( unsigned int i = 0; i < banList.size(); ++i )
+		delete(banList[i]);
+	banList.clear();
 }
 
 void initCVARS( )
