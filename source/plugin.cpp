@@ -51,6 +51,9 @@ void plugin_quit( )
 	//UTIL_LogPrintf( "[" PLUGIN_NAME "] By " PLUGIN_AUTHOR " (" PLUGIN_EMAIL ")\n");
 	UTIL_LogPrintf( "[" PLUGIN_NAME "] By " PLUGIN_AUTHOR " - Version: " PLUGIN_VERSION " - Date: " PLUGIN_DATE " \n");
 	//UTIL_LogPrintf( "[" PLUGIN_NAME "] ===============UNLOADING==============\n");
+	
+	for ( int i = 0; i < CVAR_LEVELNAMES_NUM; ++i )
+		delete CVAR_upgrade_levels[i]->string;
 }
 
 void initCVARS( )
@@ -115,7 +118,9 @@ void initCVARS_values( )
 		
 		sprintf(str_num, "%d", level_to_set);
 		
-		CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string = str_num;
+		delete CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string;
+		CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string = new char[strlen(str_num)];
+		strcpy(CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string, str_num);
 		CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->value = (float)level_to_set;
 	}
 }
