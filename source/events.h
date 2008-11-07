@@ -144,7 +144,8 @@ inline void EVENT_DeathMsg_END( int Msg_receiver /*victim*/ , int Msg_stored_dat
 	for ( int upgrade_ID = UP_START; upgrade_ID < UP_END; ++upgrade_ID )
 		upgrade_pl_data[upgrade_ID][Msg_receiver]->reset_basic();
 	
-	if ( Msg_stored_data != Msg_receiver )	// ignore suicide
+	if ( Msg_stored_data != Msg_receiver	// ignore suicide
+		&& player_data[Msg_receiver].pTeam != player_data[Msg_stored_data].pTeam )	// ignore team killing
 	{
 		player_data[Msg_stored_data].got_xp = true;
 		player_data[Msg_stored_data].is_killer_of = Msg_receiver;
