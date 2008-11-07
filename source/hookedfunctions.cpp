@@ -343,6 +343,44 @@ void ServerActivate_Post( edict_t *pEdictList , int edictCount , int clientMax )
 	if ( Hive_ID2 == NULL )
 		Hive_ID2 = Hive_ID;	// make sure no NULL pointer is used
 	
+	isAvA = false;
+	isMvM = false;
+	edict_t *temp = NULL;
+	temp = FIND_ENTITY_BY_STRING(temp, "classname", "team_command");
+	while ( FNullEnt(temp) == false )
+	{
+		if ( temp->v.team == 3 )
+		{
+			isMvM = true;
+			break;
+		}
+		temp = FIND_ENTITY_BY_STRING(temp, "classname", "team_command");
+	}
+	
+	if ( isMvM == false )
+	{
+		edict_t *temp = NULL;
+		temp = FIND_ENTITY_BY_STRING(temp, "classname", "team_hive");
+		while ( FNullEnt(temp) == false )
+		{
+			if ( temp->v.team == 4 )
+			{
+				isAvA = true;
+				Hive_ID2 = temp;
+				
+				// make sure we found two hives
+				if ( Hive_ID != NULL )
+					break;
+			}else
+				Hive_ID = temp;
+			temp = FIND_ENTITY_BY_STRING(temp, "classname", "team_hive");
+		}
+		if ( Hive_ID2 == NULL )
+			Hive_ID2 = Hive_ID;
+		else if ( Hive_ID == NULL )
+			Hive_ID = Hive_ID2;
+	}
+	
 	// Find config path
 	UTIL_getConfigFilenames();
 	

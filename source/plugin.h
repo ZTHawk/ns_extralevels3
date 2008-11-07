@@ -175,6 +175,9 @@ static const char *Custom_config_names[] =
 
 extern edict_t *Hive_ID;
 extern edict_t *Hive_ID2;
+extern bool isMvA;
+extern bool isMvM;
+extern bool isAvA;
 
 extern bool gBlockMsgPlayer;
 extern bool gBlockLog;

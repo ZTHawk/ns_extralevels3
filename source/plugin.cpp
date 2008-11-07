@@ -12,6 +12,9 @@ cvar_t *CVAR_upgrade_levels[CVAR_LEVELNAMES_NUM];
 
 edict_t *Hive_ID = NULL;
 edict_t *Hive_ID2 = NULL;
+bool isMvA = true;
+bool isMvM = false;
+bool isAvA = false;
 
 bool Custom_Levels = false;
 float Base_XP_Custom = 0;
