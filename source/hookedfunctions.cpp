@@ -976,7 +976,7 @@ void pfnWriteString( const char *string )
 		Msg_correct_data = EVENT_HUDText2(Msg_receiver, string);
 	}else if ( Msg_type == ScoreInfo_ID )
 	{
-		player_data[Msg_receiver].scoreinfo_string = (char *)string;
+		strncpy(player_data[Msg_receiver].scoreinfo_string, string, 31);
 	}else if ( Msg_type == Particles_ID )
 	{
 		if ( Msg_arg_num == 2 )

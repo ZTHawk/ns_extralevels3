@@ -49,7 +49,7 @@ void EL_Player::reset( bool in_game )
 	scoreinfo_data[SCORE_INFO_ICON] = 0;
 	scoreinfo_data[SCORE_INFO_TEAM] = 0;
 	scoreinfo_data[SCORE_INFO_HEALTH] = 0;
-	scoreinfo_string = "";
+	scoreinfo_string[0] = 0;
 	
 	upgrade_choice = 0;
 	message_displaying = false;
@@ -505,7 +505,7 @@ float EL_Player::getMaxAP( )
 	}else
 	{
 		if ( UTIL_getMask(pEntity, MASK_CARAPACE) )
-			maxAP = class_base_ap_lvl3[pClass];
+			maxAP = class_base_ap_cara[pClass];
 		else
 			maxAP = class_base_ap[pClass];
 		
