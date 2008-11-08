@@ -281,7 +281,6 @@ void UTIL_getConfigFilenames( )
 		
 		char *temp = new char[strlen(cfg_file_main) + 1];
 		strcpy(temp, cfg_file_main);
-		config_file = temp;
 		
 		delete config_file;
 		config_file = temp;

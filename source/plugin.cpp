@@ -23,8 +23,8 @@ int *Base_XP_at_Level = NULL;
 int *Next_Level_XP_modifier = NULL;
 int max_level = 0;
 
-char *config_file = "ns/addons/extralevels3/configs/extralevels3.cfg";
-char *ban_file = "ns/addons/extralevels3/configs/el3_ban.cfg";
+char *config_file;
+char *ban_file;
 
 hl_string_base hl_strings;
 
@@ -37,6 +37,16 @@ void plugin_init( )
 	//UTIL_LogPrintf( "[" PLUGIN_NAME "] By " PLUGIN_AUTHOR " (" PLUGIN_EMAIL ")\n");
 	UTIL_LogPrintf( "[" PLUGIN_NAME "] By " PLUGIN_AUTHOR " - Version: " PLUGIN_VERSION " - Date: " PLUGIN_DATE " \n");
 	//UTIL_LogPrintf( "[" PLUGIN_NAME "] ================LOADING===============\n");
+	
+	int len = strlen("ns/addons/extralevels3/configs/extralevels3.cfg");
+	config_file = new char[len + 1];
+	strcpy(config_file, "ns/addons/extralevels3/configs/extralevels3.cfg");
+	config_file[len] = 0;
+	
+	len = strlen("ns/addons/extralevels3/configs/el3_ban.cfg");
+	ban_file = new char[len + 1];
+	strcpy(ban_file, "ns/addons/extralevels3/configs/el3_ban.cfg");
+	ban_file[len] = 0;
 	
 	// Register Cvars
 	initCVARS();
@@ -53,7 +63,10 @@ void plugin_quit( )
 	//UTIL_LogPrintf( "[" PLUGIN_NAME "] ===============UNLOADING==============\n");
 	
 	for ( int i = 0; i < CVAR_LEVELNAMES_NUM; ++i )
+	{
 		delete CVAR_upgrade_levels[i]->string;
+		CVAR_upgrade_levels[i]->string = NULL;
+	}
 	delete config_file;
 	delete ban_file;
 	
@@ -89,7 +102,7 @@ void initCVARS( )
 	{
 		cvar_t* level_list_cvar = new cvar_t;
 		level_list_cvar->name = (char *)level_cvar_list[(CVAR_LEVELNAMES_NUM - 1) - i];
-		level_list_cvar->string = "0";
+		level_list_cvar->string = "-1";
 		level_list_cvar->flags = 0;
 		level_list_cvar->value = 0.0;
 		
@@ -110,6 +123,7 @@ void initCVARS_values( )
 	int level_difference;
 	int level_to_set = 10;
 	char str_num[12];
+	char *temp_str;
 	for ( int i = 0; i < CVAR_LEVELNAMES_NUM; ++i )
 	{
 		level_to_set += level_increaser;
@@ -124,8 +138,12 @@ void initCVARS_values( )
 		
 		sprintf(str_num, "%d", level_to_set);
 		
-		delete CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string;
-		CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string = new char[strlen(str_num)];
+		if ( CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string != NULL
+			&& strcmp(CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string, "-1") != 0 )
+			delete CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string;
+		temp_str = new char[strlen(str_num) + 1];
+		memset(temp_str, 0, strlen(str_num));
+		CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string = temp_str;
 		strcpy(CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string, str_num);
 		CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->value = (float)level_to_set;
 	}
