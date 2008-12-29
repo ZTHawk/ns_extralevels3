@@ -6,7 +6,7 @@
 #include "ns_const.h"
 
 Upgrade_Cybernetics data_cybernetics;
-EL_Cybernetics player_cybernetics[MAX_PLAYERS];
+EL_Cybernetics player_cybernetics[MAX_PLAYERS_PLUS1];
 
 void Upgrade_Cybernetics::init( )
 {
@@ -25,7 +25,7 @@ void Upgrade_Cybernetics::init( )
 	strcpy(upgrade_name, "Cybernetics");
 	strcpy(upgrade_description, "Cybernetically enhances leg muscles to improve overall movement speed\n"
 					"Heavy Armor has a lowered Speed bonus\n\n"
-					"Requires: Level %d, %d point%s\n\n"
+					"Requires: Level %d, %d Point%s\n\n"
 					"Next level [%d]\n\n"
 					"%s%s\n\n"
 					"0. Exit\n\n\n\n\n\n\n");
@@ -82,6 +82,7 @@ void EL_Cybernetics::reset( )
 	cur_level = 0;
 	ma_speed = 0.0;
 	ha_jp_speed = 0.0;
+	jp_air_speed = 0.0;
 }
 
 bool EL_Cybernetics::check_Requirements( )
@@ -100,7 +101,7 @@ void EL_Cybernetics::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_cybernetics.req_points);
+	UTIL_addPoints(pEntity, data_cybernetics.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",
@@ -114,6 +115,7 @@ void EL_Cybernetics::set_upgrade_values( )
 {
 	ma_speed = cur_level * data_cybernetics.ma_speed;
 	ha_jp_speed = cur_level * data_cybernetics.ha_jp_speed;
+	jp_air_speed = ha_jp_speed / 100 * C_JP_SPEED_PERCENTAGE;
 }
 
 void EL_Cybernetics::Think( )
@@ -126,13 +128,31 @@ void EL_Cybernetics::Think_Post( )
 	if ( cur_level == 0 )
 		return;
 	
-	if ( player_data[ID].pClass == CLASS_HEAVY
-		|| player_data[ID].pClass == CLASS_JETPACK )
+	switch ( player_data[ID].pClass )
 	{
-		pEntity->v.maxspeed += ha_jp_speed;
-	}else
-	{
-		pEntity->v.maxspeed += ma_speed;
+		case CLASS_HEAVY:
+		{
+			pEntity->v.maxspeed += ha_jp_speed;
+			break;
+		}
+		case CLASS_JETPACK:
+		{
+			// get the time player touched ground
+			if ( pEntity->v.flags & FL_ONGROUND )
+				in_air_time_check = gpGlobals->time + C_MAX_TIME_IN_AIR;
+			
+			// if too long in air he is most likely flying with JP
+			if ( in_air_time_check < gpGlobals->time )
+				pEntity->v.maxspeed += jp_air_speed;
+			else
+				pEntity->v.maxspeed += ha_jp_speed;
+			break;
+		}
+		default:
+		{
+			pEntity->v.maxspeed += ma_speed;
+			break;
+		}
 	}
 }
 

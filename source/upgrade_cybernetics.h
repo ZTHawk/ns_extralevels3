@@ -33,12 +33,17 @@ class EL_Cybernetics : public base_upgrade_pl_data
 	private:
 	float ma_speed;
 	float ha_jp_speed;
+	float jp_air_speed;
+	float in_air_time_check;
 	
 	void Think_Post( );
 };
 
 extern Upgrade_Cybernetics data_cybernetics;
-extern EL_Cybernetics player_cybernetics[MAX_PLAYERS];
+extern EL_Cybernetics player_cybernetics[MAX_PLAYERS_PLUS1];
+
+#define C_MAX_TIME_IN_AIR	0.5
+#define C_JP_SPEED_PERCENTAGE	33.0
 
 // default config settings
 #define CYBERNETICS		true
