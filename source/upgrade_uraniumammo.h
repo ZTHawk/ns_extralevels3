@@ -10,6 +10,7 @@ static const char *UA_config_names[] =
 	"URANIUMAMMO",
 	"UA_COST",
 	"UA_MAX",
+	"UA_LEVEL",
 	"UA_BULLETDMG",
 	"UA_GRENDMG"
 };
@@ -47,7 +48,7 @@ class EL_Uraniumammo : public base_upgrade_pl_data
 };
 
 extern Upgrade_Uraniumammo data_uraniumammo;
-extern EL_Uraniumammo player_uraniumammo[MAX_PLAYERS];
+extern EL_Uraniumammo player_uraniumammo[MAX_PLAYERS_PLUS1];
 
 #define UA_BOUGHT_NEW_WEAPON		1
 
@@ -55,6 +56,7 @@ extern EL_Uraniumammo player_uraniumammo[MAX_PLAYERS];
 #define URANIUMAMMO			true
 #define UA_COST				1
 #define UA_MAX				5
+#define UA_LEVEL			10
 #define UA_BULLETDMG			10.0
 #define UA_GRENDMG			7.0
 
