@@ -195,6 +195,10 @@ void EL_Acidicvengeance::Think( )
 		if ( pEntity->v.team == targetEntity->v.team )
 			continue;
 		
+		// check for invulnerability
+		if ( pEntity->v.takedamage == DAMAGE_NO )
+			continue;
+		
 		if ( (targetEntity->v.origin - pEntity->v.origin).Length()
 			> ( data_acidicvengeance.InitRange
 				+ (float)curClass * data_acidicvengeance.ClassRange ) )
