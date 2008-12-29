@@ -45,10 +45,12 @@ class EL_Hunger : public base_upgrade_pl_data
 	float HungerTime;
 	float HungerEndTime;
 	float SpeedBonus;
+	
+	int amount_boosts_got;
 };
 
 extern Upgrade_Hunger data_hunger;
-extern EL_Hunger player_hunger[MAX_PLAYERS];
+extern EL_Hunger player_hunger[MAX_PLAYERS_PLUS1];
 
 
 enum H_sounds
@@ -64,6 +66,8 @@ static const char *H_sound_files[H_MAX_SOUNDS] =
 	"weapons/primalscream.wav",
 	"weapons/chargekill.wav"
 };
+
+#define H_MAX_HUNGER_BOOSTS	3
 
 // default config settings
 #define HUNGER			true
