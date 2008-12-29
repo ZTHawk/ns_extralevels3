@@ -128,8 +128,6 @@ int Spawn( edict_t *pEntity )
 	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_LS][i] = &player_lifesheath[i];
 	
-	el3_config_reload();
-	
 	initialized = true;
 	
 	RETURN_META_VALUE(MRES_IGNORED, 0);
@@ -387,6 +385,8 @@ void ServerActivate_Post( edict_t *pEdictList , int edictCount , int clientMax )
 	
 	// Find config path
 	UTIL_getConfigFilenames();
+	
+	el3_config_reload();
 	
 	precacheSounds();
 	for ( short i = 0; i < UP_END; ++i )
