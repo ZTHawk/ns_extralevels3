@@ -185,6 +185,9 @@ void EL_Bloodlust::Think( )
 
 void EL_Bloodlust::drink_my_Blood( )
 {
+	if ( cur_level <= 0 )
+		return;
+	
 	// player must be already dead, so there is nothing to steal
 	if ( pEntity->v.health < 1.0 )
 		return;
