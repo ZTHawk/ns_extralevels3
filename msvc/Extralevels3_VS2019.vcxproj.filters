@@ -113,9 +113,6 @@
     <ClInclude Include="..\source\plugin.h">
       <Filter>Headerfiles</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Headerfiles</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\upgrade_acidicvengeance.h">
       <Filter>Headerfiles</Filter>
     </ClInclude>
@@ -167,9 +164,12 @@
     <ClInclude Include="..\source\utilfunctions.h">
       <Filter>Headerfiles</Filter>
     </ClInclude>
+    <ClInclude Include="resource\resource.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="extralevels3.rc">
+    <ResourceCompile Include="resource\extralevels3.rc">
       <Filter>Ressourcfiles</Filter>
     </ResourceCompile>
   </ItemGroup>

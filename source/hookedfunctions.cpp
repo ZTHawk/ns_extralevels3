@@ -192,7 +192,7 @@ void el3_main( )
 void el3_config_reload( )
 {
 	for ( unsigned int i = 0; i < banList.size(); ++i )
-		delete(banList[i]);
+		delete[] banList[i];
 	banList.clear();
 	
 	UTIL_getBanData();

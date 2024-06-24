@@ -64,14 +64,14 @@ void plugin_quit( )
 	
 	for ( int i = 0; i < CVAR_LEVELNAMES_NUM; ++i )
 	{
-		delete CVAR_upgrade_levels[i]->string;
+		delete[] CVAR_upgrade_levels[i]->string;
 		CVAR_upgrade_levels[i]->string = NULL;
 	}
-	delete config_file;
-	delete ban_file;
+	delete[] config_file;
+	delete[] ban_file;
 	
 	for ( unsigned int i = 0; i < banList.size(); ++i )
-		delete(banList[i]);
+		delete[] banList[i];
 	banList.clear();
 }
 
@@ -140,7 +140,7 @@ void initCVARS_values( )
 		
 		if ( CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string != NULL
 			&& strcmp(CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string, "-1") != 0 )
-			delete CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string;
+			delete[] CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string;
 		temp_str = new char[strlen(str_num) + 1];
 		memset(temp_str, 0, strlen(str_num));
 		CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string = temp_str;

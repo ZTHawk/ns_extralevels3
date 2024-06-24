@@ -790,7 +790,7 @@ void EL_Player::givePoints( byte victimID )
 
 void EL_Player::give_xtra_EXP( byte victimID , byte FakeKiller )
 {
-	bool *will_getEXP = (bool*)alloca(sizeof(bool) * (gpGlobals->maxClients + 1));
+	bool *will_getEXP = new bool[gpGlobals->maxClients + 1];
 	byte players_in_range = 0;
 	edict_t *targetEntity = NULL;
 	byte targetID = 0;
@@ -849,6 +849,8 @@ void EL_Player::give_xtra_EXP( byte victimID , byte FakeKiller )
 		
 		UTIL_addEXP(INDEXENT(targetID), EXP_to_everyone);
 	}
+
+	delete[] will_getEXP;
 }
 
 void EL_Player::showNotifyMsg( )

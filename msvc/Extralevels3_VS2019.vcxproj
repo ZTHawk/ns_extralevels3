@@ -83,7 +83,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\HLSDK\multiplayer\pm_shared;..\..\HLSDK\multiplayer\engine;..\..\HLSDK\multiplayer\dlls;..\..\HLSDK\multiplayer\common;..\..\HLSDK\multiplayer\cl_dll;..\..\HLSDK\multiplayer;..\..\..\metamod-p\metamod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\HLSDK\multiplayer\pm_shared;..\..\HLSDK\multiplayer\engine;..\..\HLSDK\multiplayer\dlls;..\..\HLSDK\multiplayer\common;..\..\HLSDK\multiplayer\cl_dll;..\..\HLSDK\multiplayer;..\..\metamod-p\metamod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;EXTRALEVELS3_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -92,9 +92,9 @@
       <PrecompiledHeader />
       <PrecompiledHeaderOutputFile>.\Debug/Extralevels3.pch</PrecompiledHeaderOutputFile>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
-      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
-      <ObjectFileName>.\Debug/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>.\Debug/asm/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/obj/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/pdb/</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
@@ -118,7 +118,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>..\..\HLSDK\multiplayer\pm_shared;..\..\HLSDK\multiplayer\engine;..\..\HLSDK\multiplayer\dlls;..\..\HLSDK\multiplayer\common;..\..\HLSDK\multiplayer\cl_dll;..\..\HLSDK\multiplayer;..\..\..\metamod-p\metamod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\HLSDK\multiplayer\pm_shared;..\..\HLSDK\multiplayer\engine;..\..\HLSDK\multiplayer\dlls;..\..\HLSDK\multiplayer\common;..\..\HLSDK\multiplayer\cl_dll;..\..\HLSDK\multiplayer;..\..\metamod-p\metamod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;EXTRALEVELS3_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -126,6 +126,9 @@
       <PrecompiledHeaderOutputFile>.\Debug/Extralevels3.pch</PrecompiledHeaderOutputFile>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat />
+      <AssemblerListingLocation>$(IntDir)/asm/</AssemblerListingLocation>
+      <ProgramDataBaseFileName>$(IntDir)/pdb/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <ObjectFileName>$(IntDir)/obj/</ObjectFileName>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>.\plugin_exports.def</ModuleDefinitionFile>
@@ -142,7 +145,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\HLSDK\multiplayer\pm_shared;..\..\HLSDK\multiplayer\engine;..\..\HLSDK\multiplayer\dlls;..\..\HLSDK\multiplayer\common;..\..\HLSDK\multiplayer\cl_dll;..\..\HLSDK\multiplayer;..\..\..\metamod-p\metamod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\HLSDK\multiplayer\pm_shared;..\..\HLSDK\multiplayer\engine;..\..\HLSDK\multiplayer\dlls;..\..\HLSDK\multiplayer\common;..\..\HLSDK\multiplayer\cl_dll;..\..\HLSDK\multiplayer;..\..\metamod-p\metamod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;EXTRALEVELS3_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -151,9 +154,9 @@
       <PrecompiledHeader />
       <PrecompiledHeaderOutputFile>.\Debug/Extralevels3.pch</PrecompiledHeaderOutputFile>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
-      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
-      <ObjectFileName>.\Debug/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <AssemblerListingLocation>.\Debug/asm/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/obj/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/pdb/</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>Default</CompileAs>

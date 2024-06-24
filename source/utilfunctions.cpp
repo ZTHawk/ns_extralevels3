@@ -283,7 +283,7 @@ void UTIL_getConfigFilenames( )
 		char *temp = new char[strlen(cfg_file_main) + 1];
 		strcpy(temp, cfg_file_main);
 		
-		delete config_file;
+		delete[] config_file;
 		config_file = temp;
 		config_file[strlen(cfg_file_main)] = 0;
 	}
@@ -297,7 +297,7 @@ void UTIL_getConfigFilenames( )
 		char *temp = new char[strlen(cfg_file_bandata) + 1];
 		strcpy(temp, cfg_file_bandata);
 		
-		delete ban_file;
+		delete[] ban_file;
 		ban_file = temp;
 		ban_file[strlen(cfg_file_bandata)] = 0;
 	}
