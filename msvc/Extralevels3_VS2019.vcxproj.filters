@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sourcefiles">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Headerfiles">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Ressourcfiles">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\events.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\exp_controller.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\hookedfunctions.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\meta_api.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\player_data.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\plugin.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_acidicvengeance.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_advancedammopack.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_blindingsurge.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_bloodlust.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_combatevolution.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_cybernetics.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_data_base.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_etherealshift.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_hunger.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_lifesheath.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_nanoarmor.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_reinforcedarmor.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_senseofancients.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_staticfield.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_thickenedskin.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\upgrade_uraniumammo.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\utilfunctions.cpp">
+      <Filter>Sourcefiles</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\source\events.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\events_const.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\exp_controller.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\hookedfunctions.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\hookedfunctions_table.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\ns_const.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\ns_const_advanced.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\player_data.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\plugin.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_acidicvengeance.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_advancedammopack.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_blindingsurge.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_bloodlust.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_combatevolution.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_cybernetics.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_data_base.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_etherealshift.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_hunger.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_lifesheath.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_nanoarmor.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_reinforcedarmor.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_senseofancients.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_staticfield.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_thickenedskin.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\upgrade_uraniumammo.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\utilfunctions.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="extralevels3.rc">
+      <Filter>Ressourcfiles</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

@@ -22,7 +22,7 @@ class Upgrade_Reinforcedarmor : public base_upgrade_data
 	float ha_armor;
 	
 	void init( );
-	void add_to_menu( byte ID , int num , int &Keys , char *menu );
+	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
 	void show_upgrade_menu( edict_t *player );
 	void precache( );
 };
@@ -33,6 +33,7 @@ class EL_Reinforcedarmor : public base_upgrade_pl_data
 	
 	public:
 	void setArmorInfo( );
+	void Think_Post( );
 	
 	private:
 	float ma_armor;
@@ -44,7 +45,7 @@ class EL_Reinforcedarmor : public base_upgrade_pl_data
 };
 
 extern Upgrade_Reinforcedarmor data_reinforcedarmor;
-extern EL_Reinforcedarmor player_reinforcedarmor[MAX_PLAYERS];
+extern EL_Reinforcedarmor player_reinforcedarmor[MAX_PLAYERS_PLUS1];
 
 
 enum RA_sounds
@@ -67,6 +68,8 @@ static const char *RA_sound_files[RA_MAX_SOUNDS] =
 #define ARMOR_ADD_PER_WELD		35.0
 #define WELD_DISTANCE			500.0
 #define WELD_TIME			0.7
+
+#define MAX_ARMOR_VALUE			12800.0		// +100 for health
 
 #define AngleVectors			(*g_engfuncs.pfnAngleVectors)
 

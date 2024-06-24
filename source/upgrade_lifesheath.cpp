@@ -7,7 +7,7 @@
 #include "plugin.h"
 
 Upgrade_Lifesheath data_lifesheath;
-EL_Lifesheath player_lifesheath[MAX_PLAYERS];
+EL_Lifesheath player_lifesheath[MAX_PLAYERS_PLUS1];
 
 void Upgrade_Lifesheath::init( )
 {
@@ -25,7 +25,7 @@ void Upgrade_Lifesheath::init( )
 	strcpy(upgrade_name, "LifeSheath");
 	strcpy(upgrade_description, "Whenever your health is below 50%% an umbra cloud will be spawned.\n"
 					"After each umbra cloud there is a [%2.1f] second%s cooldown time.\n\n"
-					"Requires: Hive Ability 1 , Level %d, %d point%s\n\n"
+					"Requires: Hive Ability 1 , Level %d, %d Point%s\n\n"
 					"\n\n"
 					"%s%s\n\n"
 					"0. Exit\n\n\n\n\n\n\n");
@@ -36,12 +36,13 @@ void Upgrade_Lifesheath::init( )
 	max_alien_points += available * max_level * req_points;
 }
 
-void Upgrade_Lifesheath::add_to_menu( byte ID , int num , int &Keys , char *menu )
+bool Upgrade_Lifesheath::add_to_menu( byte ID , int num , int &Keys , char *menu )
 {
 	char dummy_string[MENU_OPTION_LEN];
 	if ( !available )
 	{
 		sprintf(dummy_string, "#. %s                (Disabled)\n", upgrade_name);
+		//return false;
 	}else if ( player_lifesheath[ID].cur_level == max_level )
 	{
 		sprintf(dummy_string, "#. %s                ( max / %3i )\n", upgrade_name, max_level);
@@ -51,6 +52,7 @@ void Upgrade_Lifesheath::add_to_menu( byte ID , int num , int &Keys , char *menu
 		sprintf(dummy_string, "%d. %s                ( %3i / %3i )\n", num, upgrade_name, player_lifesheath[ID].cur_level, max_level);
 	}
 	strcat(menu, dummy_string);
+	return true;
 }
 
 void Upgrade_Lifesheath::show_upgrade_menu( edict_t *pEntity )
@@ -105,7 +107,7 @@ void EL_Lifesheath::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_lifesheath.req_points);
+	UTIL_addPoints(pEntity, data_lifesheath.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",

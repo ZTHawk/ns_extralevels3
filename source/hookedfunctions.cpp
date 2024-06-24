@@ -21,6 +21,8 @@
 #include "upgrade_senseofancients.h"
 #include "upgrade_blindingsurge.h"
 #include "upgrade_lifesheath.h"
+#include "upgrade_combatevolution.h"
+#include "exp_controller.h"
 #include "events.h"
 
 //#include <sdk_util.h> //useful almost everywhere
@@ -80,6 +82,8 @@ int Spawn( edict_t *pEntity )
 		RETURN_META_VALUE(MRES_IGNORED, 0);
 	
 	REG_SVR_COMMAND("el3", el3_main);
+	//REG_SVR_COMMAND("el3_config_reload", el3_config_reload);
+	//REG_SVR_COMMAND("el3_set_upgrade", el3_set_upgrade);
 	
 	// Init upgrade_data
 	upgrade_data[UP_C] = &data_cybernetics;
@@ -96,6 +100,7 @@ int Spawn( edict_t *pEntity )
 	upgrade_data[UP_SOA] = &data_senseofancients;
 	upgrade_data[UP_BS] = &data_blindingsurge;
 	upgrade_data[UP_LS] = &data_lifesheath;
+	upgrade_data[UP_CE] = &data_combatevolution;
 	
 	// Init upgrade_player_data
 	int i = 0;
@@ -127,6 +132,13 @@ int Spawn( edict_t *pEntity )
 		upgrade_pl_data[UP_BS][i] = &player_blindingsurge[i];
 	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_LS][i] = &player_lifesheath[i];
+	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+		upgrade_pl_data[UP_CE][i] = &player_combatevolution[i];
+	
+	// Find config path
+	UTIL_getConfigFilenames();
+	
+	el3_config_reload();
 	
 	initialized = true;
 	
@@ -217,6 +229,7 @@ void el3_set_upgrade( int args )
 					"SF = StaticField / UA = UraniumAmmo / BS = BlindingSurge\n"
 					"TS = ThickenedSkin / ES = EtherealShift / BL = BloodLust / H = Hunger\n"
 					"AV = AcidicVengeance / SOA = SenseOfAncients / LS = LifeSheath\n"
+					"CE = Combat Evolution\n"
 					);
 				return;
 			}
@@ -266,7 +279,7 @@ void el3_set_upgrade( int args )
 	
 	if ( ID == 0 )
 	{
-		UTIL_ServerPrint("[" PLUGIN_NAME "] %s has been %s\n", upgrade_data[upgrade_ID]->upgrade_name, (level != 0) ? "enabled" : "disabled");
+		UTIL_ServerPrint("[" PLUGIN_NAME "] %s %s\n", (level != 0) ? "Enabling" : "Disabling", upgrade_data[upgrade_ID]->upgrade_name);
 		if ( level == 0 )
 			upgrade_data[upgrade_ID]->available = false;
 		else
@@ -286,8 +299,14 @@ void el3_set_upgrade( int args )
 
 void KeyValue( edict_t *pentKeyvalue , KeyValueData *pkvd )
 {
-	if ( Hive_ID != NULL && Hive_ID2 != NULL )
+	if ( Hive_ID != NULL
+		&& Hive_ID2 != NULL )
+	{
+		// prevent further function calls
+		g_pFunctionTable->pfnKeyValue = NULL;
+		
 		RETURN_META(MRES_IGNORED);
+	}
 	
 	// make sure string is valid or crash
 	if ( pkvd->szClassName == NULL )
@@ -340,13 +359,28 @@ void ServerActivate_Post( edict_t *pEdictList , int edictCount , int clientMax )
 	Particle_Event_ID = PRECACHE_EVENT(1, Particle_Event_Name);
 	HealingSpray_Event_ID = PRECACHE_EVENT(1, HealingSpray_Event_Name);
 	
-	FuseLight = PRECACHE_MODEL("sprites/glow01.spr");
-	
 	if ( Hive_ID2 == NULL )
 		Hive_ID2 = Hive_ID;	// make sure no NULL pointer is used
 	
 	isAvA = false;
 	isMvM = false;
+	/*if ( Hive_ID2 != Hive_ID )
+	{
+		isAvA = true;
+	}else
+	{
+		edict_t *temp = NULL;
+		temp = FIND_ENTITY_BY_STRING(temp, "classname", "team_command");
+		while ( FNullEnt(temp) == false )
+		{
+			if ( temp->v.team == 3 )
+			{
+				isMvM = true;
+				break;
+			}
+			temp = FIND_ENTITY_BY_STRING(temp, "classname", "team_command");
+		}
+	}*/
 	edict_t *temp = NULL;
 	temp = FIND_ENTITY_BY_STRING(temp, "classname", "team_command");
 	while ( FNullEnt(temp) == false )
@@ -383,11 +417,6 @@ void ServerActivate_Post( edict_t *pEdictList , int edictCount , int clientMax )
 			Hive_ID = Hive_ID2;
 	}
 	
-	// Find config path
-	UTIL_getConfigFilenames();
-	
-	el3_config_reload();
-	
 	precacheSounds();
 	for ( short i = 0; i < UP_END; ++i )
 		upgrade_data[i]->precache();
@@ -404,8 +433,8 @@ void ServerDeactivate_Post( void )
 #ifdef _DEBUG
 	UTIL_LogDebug("SDPs");
 #endif
-	
 	data_senseofancients.SporeData.clear();
+	exp_controller.init();
 	
 	Set_Hooks();
 	
@@ -568,6 +597,7 @@ void ClientPutInServer_Post( edict_t *pEntity )
 	UTIL_LogDebug("CPISs");
 #endif
 	player_data[ENTINDEX(pEntity)].put_in_server();
+	exp_controller.put_in_server(pEntity);
 	
 #ifdef _DEBUG
 	UTIL_LogDebug("CPISe\n");
@@ -581,6 +611,8 @@ void ClientDisconnect( edict_t *pEntity )
 #ifdef _DEBUG
 	UTIL_LogDebug("CDs");
 #endif
+	
+	exp_controller.disconnect(pEntity);
 	
 	player_data[ENTINDEX(pEntity)].disconnect();
 	
@@ -756,6 +788,7 @@ void ServerFrame( void )
 #endif
 	
 	data_senseofancients.SporeEmulationTimer();
+	data_combatevolution.ServerFrame_Think();
 	
 	for ( byte ID = 1; ID <= gpGlobals->maxClients; ++ID )
 	{
@@ -779,6 +812,8 @@ void ServerFrame( void )
 			pre_calc_level_data();
 		}
 	}
+	
+	exp_controller.Think();
 	
 #ifdef _DEBUG
 	UTIL_LogDebug("SFe\n");
@@ -830,6 +865,8 @@ void pfnMessageBegin( int msg_dest , int msg_type , const float *pOrigin , edict
 		{
 			gBlockMsg = true;
 		}
+		
+		Set_Hooks_Message();
 	}
 	
 	if ( gBlockMsg )
@@ -850,9 +887,6 @@ void pfnMessageBegin( int msg_dest , int msg_type , const float *pOrigin , edict
 
 void pfnWriteByte( int value )
 {
-	if ( gIgnore_Self_Send_Msg )
-		RETURN_META(MRES_IGNORED);
-	
 #ifdef _DEBUG
 	UTIL_LogDebug("WBs");
 #endif
@@ -922,9 +956,6 @@ void pfnWriteLong( int value )
 
 void pfnWriteShort( int value )
 {
-	if ( gIgnore_Self_Send_Msg )
-		RETURN_META(MRES_IGNORED);
-	
 #ifdef _DEBUG
 	UTIL_LogDebug("WSHs");
 #endif
@@ -956,9 +987,6 @@ void pfnWriteShort( int value )
 
 void pfnWriteCoord( float fvalue )
 {
-	if ( gIgnore_Self_Send_Msg )
-		RETURN_META(MRES_IGNORED);
-	
 #ifdef _DEBUG
 	UTIL_LogDebug("WCs");
 #endif
@@ -983,9 +1011,6 @@ void pfnWriteCoord( float fvalue )
 
 void pfnWriteString( const char *string )
 {
-	if ( gIgnore_Self_Send_Msg )
-		RETURN_META(MRES_IGNORED);
-	
 #ifdef _DEBUG
 	UTIL_LogDebug("WSTs");
 #endif
@@ -1025,12 +1050,11 @@ void pfnWriteString( const char *string )
 
 void pfnMessageEnd( void )
 {
-	if ( gIgnore_Self_Send_Msg )
-		RETURN_META(MRES_IGNORED);
-	
 #ifdef _DEBUG
 	UTIL_LogDebug("MEs");
 #endif
+	
+	Clear_Hooks_Message();
 	
 	if ( Msg_type == DeathMsg_ID )
 	{
@@ -1251,6 +1275,8 @@ void pfnMessageBegin_Post( int msg_dest , int msg_type , const float *pOrigin , 
 		Msg_arg_num_Post = 1;
 		Msg_stored_data_Post = 0;
 		Msg_correct_data_Post = false;
+		
+		Set_Hooks_Message_Post();
 	}
 	
 #ifdef _DEBUG
@@ -1274,7 +1300,10 @@ void pfnWriteByte_Post( int value )
 		EVENT_SetTech_POST(Msg_receiver_Post, value, Msg_arg_num_Post, Msg_stored_data_Post);
 	}else if ( Msg_type_Post == TeamInfo_ID )
 	{
-		Msg_receiver_Post = value;		// we need to set it here cause in MessageBegin ID is = 0
+		// check if message is about to be send to everyone
+		// otherwise there is no need to change its receiver
+		if ( Msg_receiver_Post == 0 )
+			Msg_receiver_Post = value;		// we need to set it here cause in MessageBegin ID is = 0
 	}else if ( Msg_type_Post == StatusValue_ID )
 	{
 		Msg_correct_data_Post = EVENT_StatusValue_Byte_POST(value);
@@ -1378,6 +1407,8 @@ void pfnMessageEnd_Post( void )
 #ifdef _DEBUG
 	UTIL_LogDebug("MEPs");
 #endif
+	
+	Clear_Hooks_Message_Post();
 	
 	if ( Msg_type_Post == HUDText2_ID )
 	{
@@ -1517,3 +1548,32 @@ void Clear_Hooks_Message_Post( )
 	g_pengfuncsTable_Post->pfnMessageEnd = NULL;
 }
 
+C_DLLEXPORT int EL3_get_level( int ID )
+{
+	if ( ID > 0
+		&& ID <= gpGlobals->maxClients )
+		return player_data[ID].level;
+	return -1;
+}
+
+C_DLLEXPORT int EL3_get_upgrade_level( int ID , char* upgrade_symbol )
+{
+	if ( ID <= 0
+		&& ID > gpGlobals->maxClients )
+		return -1;
+	
+	int upgrade_ID = -1;
+	for ( int i = 0; i < UP_END; ++i )
+	{
+		if ( strcmp(upgrade_symbol, upgrade_symbols[i]) != 0 )
+			continue;
+		
+		upgrade_ID = i;
+		break;
+	}
+	
+	if ( upgrade_ID == -1 )
+		return -1;
+	
+	return upgrade_pl_data[upgrade_ID][ID]->cur_level;
+}

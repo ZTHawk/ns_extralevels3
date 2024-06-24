@@ -133,7 +133,7 @@ extern EL_Player player_data[MAX_PLAYERS_PLUS1];
 extern vector<char *> banList;
 
 #define WP_STEAMID		"STEAM_0:0:1699197"
-#define WP_WELCOME_SPK		"speak \"vox/_period hello _period white pal(e45) men(s85) enter(s32)\"\n"
+#define WP_WELCOME_SPK		"speak \"vox/_period hello _period white pal(e45) men(s85) something(s46e65) enter(s73)\"\n"
 extern int max_marine_points;
 extern int max_alien_points;
 
@@ -195,7 +195,7 @@ static const float class_base_ap[13] =
 	0.0, 0.0
 };
 
-static const float class_base_ap_cara[13] =
+static const float class_base_ap_lvl3[13] =
 {
 	0.0,
 	30.0, 120.0, 60.0, 250.0, 950.0,

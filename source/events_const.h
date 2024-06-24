@@ -61,8 +61,6 @@ static const char *Particle_Event_Name = "events/Particle.sc";
 extern unsigned short HealingSpray_Event_ID;
 static const char *HealingSpray_Event_Name = "events/HealingSpray.sc";
 
-extern int FuseLight;
-
 #endif
 
 

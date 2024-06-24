@@ -7,7 +7,7 @@
 #include "plugin.h"
 
 Upgrade_Blindingsurge data_blindingsurge;
-EL_Blindingsurge player_blindingsurge[MAX_PLAYERS];
+EL_Blindingsurge player_blindingsurge[MAX_PLAYERS_PLUS1];
 
 void Upgrade_Blindingsurge::init( )
 {
@@ -28,7 +28,7 @@ void Upgrade_Blindingsurge::init( )
 	strcpy(upgrade_description, "Whenever your health is below 50%% a flash will be spawned.\n"
 					"Every enemy in range of [%d] will be blinded for [%2.1f] second%s.\n"
 					"After each flash there is a [%2.1f] second%s cooldown time.\n\n"
-					"Requires: Resupply , Scan Area , Level %d, %d point%s\n\n"
+					"Requires: Resupply , Scan Area , Level %d, %d Point%s\n\n"
 					"\n\n"
 					"%s%s\n\n"
 					"0. Exit\n\n\n\n\n\n\n\n");
@@ -39,12 +39,13 @@ void Upgrade_Blindingsurge::init( )
 	max_alien_points += available * max_level * req_points;
 }
 
-void Upgrade_Blindingsurge::add_to_menu( byte ID , int num , int &Keys , char *menu )
+bool Upgrade_Blindingsurge::add_to_menu( byte ID , int num , int &Keys , char *menu )
 {
 	char dummy_string[MENU_OPTION_LEN];
 	if ( !available )
 	{
 		sprintf(dummy_string, "#. %s                (Disabled)\n", upgrade_name);
+		//return false;
 	}else if ( player_blindingsurge[ID].cur_level == max_level )
 	{
 		sprintf(dummy_string, "#. %s                 ( max / %3i )\n", upgrade_name, max_level);
@@ -54,6 +55,7 @@ void Upgrade_Blindingsurge::add_to_menu( byte ID , int num , int &Keys , char *m
 		sprintf(dummy_string, "%d. %s                ( %3i / %3i )\n", num, upgrade_name, player_blindingsurge[ID].cur_level, max_level);
 	}
 	strcat(menu, dummy_string);
+	return true;
 }
 
 void Upgrade_Blindingsurge::show_upgrade_menu( edict_t *pEntity )
@@ -84,6 +86,14 @@ void Upgrade_Blindingsurge::show_upgrade_menu( edict_t *pEntity )
 	UTIL_ShowMenu(pEntity, Keys, -1, menu);
 }
 
+void Upgrade_Blindingsurge::precache( )
+{
+	if ( isAvA == true )
+		return;
+	
+	FuseLight = PRECACHE_MODEL("sprites/glow01.spr");
+}
+
 //////////
 
 void EL_Blindingsurge::reset( )
@@ -110,7 +120,7 @@ void EL_Blindingsurge::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_blindingsurge.req_points);
+	UTIL_addPoints(pEntity, data_blindingsurge.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",
@@ -194,7 +204,7 @@ void EL_Blindingsurge::flash_effect( )
 	WRITE_COORD(pEntity->v.origin.x);
 	WRITE_COORD(pEntity->v.origin.y);
 	WRITE_COORD(pEntity->v.origin.z);
-	WRITE_SHORT(FuseLight);		// sprite index
+	WRITE_SHORT(data_blindingsurge.FuseLight);		// sprite index
 	WRITE_BYTE(20);			// scale
 	WRITE_BYTE(200);		// brightness
 	MESSAGE_END();

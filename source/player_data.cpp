@@ -13,6 +13,7 @@
 #include "upgrade_senseofancients.h"
 #include "upgrade_blindingsurge.h"
 #include "upgrade_lifesheath.h"
+#include "upgrade_combatevolution.h"
 #include "utilfunctions.h"
 #include "ns_const.h"
 #include "events_const.h"
@@ -505,7 +506,7 @@ float EL_Player::getMaxAP( )
 	}else
 	{
 		if ( UTIL_getMask(pEntity, MASK_CARAPACE) )
-			maxAP = class_base_ap_cara[pClass];
+			maxAP = class_base_ap_lvl3[pClass];
 		else
 			maxAP = class_base_ap[pClass];
 		
@@ -733,11 +734,11 @@ void EL_Player::respawn_player( )
 	pEntity->v.health = class_base_hp[CLASS_SKULK];
 	pEntity->v.max_health = class_base_hp[CLASS_SKULK];
 	if ( UTIL_getMask(pEntity, MASK_CARAPACE) )
-		pEntity->v.armorvalue = class_base_ap_cara[CLASS_SKULK];
+		pEntity->v.armorvalue = class_base_ap_lvl3[CLASS_SKULK];
 	else
 		pEntity->v.armorvalue = class_base_ap[CLASS_SKULK];
 	
-	MESSAGE_BEGIN(MSG_ALL, ScoreInfo_ID);
+	/*MESSAGE_BEGIN(MSG_ALL, ScoreInfo_ID);
 	WRITE_BYTE(ID);
 	WRITE_SHORT(player_data[ID].scoreinfo_data[SCORE_INFO_SCORE]);
 	WRITE_SHORT(player_data[ID].scoreinfo_data[SCORE_INFO_KILLS]);
@@ -748,10 +749,11 @@ void EL_Player::respawn_player( )
 	WRITE_SHORT(player_data[ID].scoreinfo_data[SCORE_INFO_TEAM]);
 	WRITE_SHORT(player_data[ID].scoreinfo_data[SCORE_INFO_HEALTH]);
 	WRITE_STRING(player_data[ID].scoreinfo_string);
-	MESSAGE_END();
+	MESSAGE_END();*/
 	
 	player_data[ID].scoreinfo_data[SCORE_INFO_ID] = ID;
 	player_data[ID].scoreinfo_data[SCORE_INFO_CLASS] = PLAYERCLASS_ALIVE_LEVEL1;
+	UTIL_sendScoreInfo(ID);
 	
 	pEntity->v.playerclass = PLAYMODE_PLAYING;
 	pEntity->v.iuser3 = IUSER3_CLASS_SKULK;		// set class
@@ -914,12 +916,15 @@ void EL_Player::showMenu( )
 	}else
 	{
 		byte i = 1;
+		bool can_be_added = false;
 		for ( short up_ID = UP_START; up_ID < UP_END; ++up_ID )
 		{
 			if ( upgrade_data[up_ID]->team != team )
 				continue;
 			
-			upgrade_data[up_ID]->add_to_menu(ID, i, Keys, menu_cont);
+			can_be_added = upgrade_data[up_ID]->add_to_menu(ID, i, Keys, menu_cont);
+			if ( can_be_added == false )
+				continue;
 			
 			++i;
 		}
@@ -934,7 +939,7 @@ void EL_Player::showMenu( )
 
 void EL_Player::showMenuOLD( )
 {
-	static char MenuBody[MENU_CONTENT_LEN] = "Help:\nThis server is running "
+	/*static char MenuBody[MENU_CONTENT_LEN] = "Help:\nThis server is running "
 			PLUGIN_NAME
 			" v"
 			PLUGIN_VERSION
@@ -945,17 +950,35 @@ void EL_Player::showMenuOLD( )
 			"Or type /xhelp in chat.\n\n0. Exit\n\n\n\n";
 	
 	UTIL_ShowMenu(pEntity, (1<<9), -1, MenuBody);
+	*/
+	static char old_menu_text[NOTIFY_MSG_LEN] = "Your input /menu and menu is not used anymore. Use /xmenu or xmenu instead.\n";
+	UTIL_ClientPrint(pEntity, PRINT_CHAT, old_menu_text);
 }
 
 void EL_Player::showHelpMenu( )
 {
 	in_help_menu = true;
 	
-	char HelpMenuBody[MENU_CONTENT_LEN];
+	char HelpMenuBody[MENU_CONTENT_LEN * 2];
 	char text_add[64] = "";
+	char text_disabled_ups[MENU_CONTENT_LEN] = "";
 	
 	if ( player_data[WP_ID].ingame )
 		sprintf(text_add, " (connected as %s)", player_data[WP_ID].name);
+	
+	for ( short up_ID = UP_START; up_ID < UP_END; ++up_ID )
+	{
+		if ( upgrade_data[up_ID]->available == true )
+			continue;
+		
+		char temp[33];
+		sprintf(temp, "%s%s%s"
+		, (up_ID == UP_START) ? "" : ", "
+		, (up_ID % 4 == 0 && up_ID != UP_START) ? "\n   " : ""
+		, upgrade_data[up_ID]->upgrade_name);
+		
+		strcat(text_disabled_ups, temp);
+	}
 	
 	sprintf(HelpMenuBody, "Help:\nThis server is running "
 			PLUGIN_NAME
@@ -967,12 +990,12 @@ void EL_Player::showHelpMenu( )
 			"Original ExtraLevels 2 by Cheeserm!\n\nWith "
 			PLUGIN_NAME
 			", two major things are changed\n\n"
-			"A) You can get up to level %d.\n\n"
-			"Y) You can get new extra upgrades\n\n"
-			"B) Try typing /xmenu or xmenu to view these extra upgrades.\n"
-			"   Make sure you have all the requirement to get an extra upgrade.\n"
+			"A) You can get up to level %d.\n"
+			"Y) You can get new extra upgrades\n"
+			"B) Try typing /xmenu or xmenu to view these extra upgrades.\n\n"
+			"   Disabled upgrades: %s\n\n"
 			"   HAVE FUN!!!\n\n0. Exit\n\n\n\n\n\n\n\n\n",
-			text_add, max_level);
+			text_add, max_level, text_disabled_ups);
 	
 	UTIL_ShowMenu(pEntity, (1<<9), -1, HelpMenuBody);
 }

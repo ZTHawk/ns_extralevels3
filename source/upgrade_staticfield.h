@@ -26,7 +26,7 @@ class Upgrade_Staticfield : public base_upgrade_data
 	float shock_adder;
 	
 	void init( );
-	void add_to_menu( byte ID , int num , int &Keys , char *menu );
+	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
 	void show_upgrade_menu( edict_t *player );
 	void precache( );
 };
@@ -42,7 +42,7 @@ class EL_Staticfield : public base_upgrade_pl_data
 };
 
 extern Upgrade_Staticfield data_staticfield;
-extern EL_Staticfield player_staticfield[MAX_PLAYERS];
+extern EL_Staticfield player_staticfield[MAX_PLAYERS_PLUS1];
 
 
 enum SF_sounds

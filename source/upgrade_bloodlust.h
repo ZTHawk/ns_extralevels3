@@ -24,7 +24,7 @@ class Upgrade_Bloodlust : public base_upgrade_data
 	float baseVampirism;
 	
 	void init( );
-	void add_to_menu( byte ID , int num , int &Keys , char *menu );
+	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
 	void show_upgrade_menu( edict_t *player );
 };
 
@@ -47,7 +47,7 @@ class EL_Bloodlust : public base_upgrade_pl_data
 };
 
 extern Upgrade_Bloodlust data_bloodlust;
-extern EL_Bloodlust player_bloodlust[MAX_PLAYERS];
+extern EL_Bloodlust player_bloodlust[MAX_PLAYERS_PLUS1];
 
 
 #define BASE_ADRENELINE_REGEN		15.5	// adreneline player gets with lvl 3 adren per 0.1 sec ( not 100% exact value )

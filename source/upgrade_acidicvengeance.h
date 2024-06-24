@@ -32,7 +32,7 @@ class Upgrade_Acidicvengeance : public base_upgrade_data
 	float ClassRange;
 	
 	void init( );
-	void add_to_menu( byte ID , int num , int &Keys , char *menu );
+	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
 	void show_upgrade_menu( edict_t *player );
 	void precache( );
 };

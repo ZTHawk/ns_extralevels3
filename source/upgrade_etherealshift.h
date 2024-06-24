@@ -28,7 +28,7 @@ class Upgrade_Etherealshift : public base_upgrade_data
 	float ShiftDelay;
 	
 	void init( );
-	void add_to_menu( byte ID , int num , int &Keys , char *menu );
+	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
 	void show_upgrade_menu( edict_t *player );
 	void precache( );
 };
@@ -53,7 +53,7 @@ class EL_Etherealshift : public base_upgrade_pl_data
 };
 
 extern Upgrade_Etherealshift data_etherealshift;
-extern EL_Etherealshift player_etherealshift[MAX_PLAYERS];
+extern EL_Etherealshift player_etherealshift[MAX_PLAYERS_PLUS1];
 
 
 enum ES_sounds

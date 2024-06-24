@@ -21,7 +21,7 @@ class Upgrade_Lifesheath : public base_upgrade_data
 	float health_ratio;
 	
 	void init( );
-	void add_to_menu( byte ID , int num , int &Keys , char *menu );
+	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
 	void show_upgrade_menu( edict_t *player );
 };
 
@@ -36,7 +36,7 @@ class EL_Lifesheath : public base_upgrade_pl_data
 };
 
 extern Upgrade_Lifesheath data_lifesheath;
-extern EL_Lifesheath player_lifesheath[MAX_PLAYERS];
+extern EL_Lifesheath player_lifesheath[MAX_PLAYERS_PLUS1];
 
 // default config settings
 #define LIFESHEATH		true

@@ -10,19 +10,19 @@
 //=================================================================
 //Plugin Information
 //=================================================================
-#define PLUGIN_DATE		"October 01, 2008"
+#define PLUGIN_DATE		"November 11, 2008"
 #define PLUGIN_NAME		"ExtraLevels 3 MM"
 #define PLUGIN_AUTHOR		"White Panther"
 #define PLUGIN_EMAIL		""
 #define PLUGIN_URL		""
 #define MY_LOGTAG		"EXTRALEVELS_3_MM"
 #define PLUGIN_CVAR		"mm_extralevels3"
-#define PLUGIN_VERSION		"0.7.8c2"
+#define PLUGIN_VERSION		"0.7.9beta1"
 #define PLUGIN_LOADABLE		PT_CHANGELEVEL
 #define PLUGIN_UNLOADABLE	PT_ANYPAUSE
 
 
-#define PLUGIN_VERS_DWORD	0, 7, 8, 12
+#define PLUGIN_VERS_DWORD	0, 7, 9, 1
 #define PLUGIN_COMMENTS		"Enjoy"
 #define PLUGIN_DESC		"More than 10 levels + new upgrades"
 #define PLUGIN_FILENAME		PLUGIN_LOGTAG ".DLL"
@@ -133,8 +133,7 @@ using std::pair;
 #define ALIEN_HUD_COLOR_G		100
 #define ALIEN_HUD_COLOR_B		0
 
-#define MAX_PLAYERS			33
-#define MAX_PLAYERS_PLUS1		33	// set this to maximum players + 1 so arrays can be accessed via ID
+#define MAX_PLAYERS_PLUS1			33	// set this to maximum players + 1 so arrays can be accessed via ID
 
 // default config settings
 #define CUSTOM_LEVELS			false

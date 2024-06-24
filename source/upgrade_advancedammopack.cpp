@@ -3,10 +3,10 @@
 #include "player_data.h"
 #include "ns_const.h"
 
-Upgrade_Advancedammopack data_advancedammopack;
-EL_Advancedammopack player_advancedammopack[MAX_PLAYERS];
+Upgrade_AdvancedAmmopack data_advancedammopack;
+EL_AdvancedAmmopack player_advancedammopack[MAX_PLAYERS_PLUS1];
 
-void Upgrade_Advancedammopack::init( )
+void Upgrade_AdvancedAmmopack::init( )
 {
 	Config_data upgrade_data[] =
 	{
@@ -27,7 +27,7 @@ void Upgrade_Advancedammopack::init( )
 	strcpy(upgrade_description, "Your Ammopacks will be enhanced to provide more max Ammunition\n"
 					"Pistol [%d]    / LMG [%d]    / Shotgun [%d]\n"
 					"HMG [%d]    / GL [%d]\n\n"
-					"Requires: Resupply , Armor 1 , Weapons 1 , Level %d, %d point%s\n\n"
+					"Requires: Resupply , Armor 1 , Weapons 1 , Level %d, %d Point%s\n\n"
 					"Next level [%d]\n\n"
 					"%s%s\n\n"
 					"0. Exit\n\n\n\n\n\n\n\n");
@@ -36,12 +36,13 @@ void Upgrade_Advancedammopack::init( )
 	max_marine_points += available * max_level * req_points;
 }
 
-void Upgrade_Advancedammopack::add_to_menu( byte ID , int num , int &Keys , char *menu )
+bool Upgrade_AdvancedAmmopack::add_to_menu( byte ID , int num , int &Keys , char *menu )
 {
 	char dummy_string[MENU_OPTION_LEN];
 	if ( !available )
 	{
 		sprintf(dummy_string, "#. %s    (Disabled)\n", upgrade_name);
+		//return false;
 	}else if ( player_advancedammopack[ID].cur_level == max_level )
 	{
 		sprintf(dummy_string, "#. %s    ( max / %3i )\n", upgrade_name, max_level);
@@ -51,9 +52,10 @@ void Upgrade_Advancedammopack::add_to_menu( byte ID , int num , int &Keys , char
 		sprintf(dummy_string, "%d. %s    ( %3i / %3i )\n", num, upgrade_name, player_advancedammopack[ID].cur_level, max_level);
 	}
 	strcat(menu, dummy_string);
+	return true;
 }
 
-void Upgrade_Advancedammopack::show_upgrade_menu( edict_t *pEntity )
+void Upgrade_AdvancedAmmopack::show_upgrade_menu( edict_t *pEntity )
 {
 	byte ID = ENTINDEX(pEntity);
 	char menu[UPGRADE_DESCRIPTION_LEN];
@@ -96,7 +98,7 @@ void Upgrade_Advancedammopack::show_upgrade_menu( edict_t *pEntity )
 
 //////////
 
-void EL_Advancedammopack::reset( )
+void EL_AdvancedAmmopack::reset( )
 {
 	cur_level = 0;
 	
@@ -112,7 +114,7 @@ void EL_Advancedammopack::reset( )
 	resetExtra();
 }
 
-void EL_Advancedammopack::resetGunPointer( )
+void EL_AdvancedAmmopack::resetGunPointer( )
 {
 	entPistolID = 0;
 	entPrimaryGunID = 0;
@@ -120,7 +122,7 @@ void EL_Advancedammopack::resetGunPointer( )
 	PrimaryGunID = 0;
 }
 
-void EL_Advancedammopack::resetExtra( )
+void EL_AdvancedAmmopack::resetExtra( )
 {
 	if ( curReloadingWeapon == WEAPON_SHOTGUN )
 	{
@@ -149,7 +151,7 @@ void EL_Advancedammopack::resetExtra( )
 	curWeaponMaxAmmoBasic = 0;
 }
 
-void EL_Advancedammopack::reset_basic( )
+void EL_AdvancedAmmopack::reset_basic( )
 {
 	if ( cur_level == 0 )
 		return;
@@ -174,7 +176,7 @@ void EL_Advancedammopack::reset_basic( )
 	endReloadTime = 0.0;		// time when reload will be done
 }
 
-void EL_Advancedammopack::fixAnimation( )
+void EL_AdvancedAmmopack::fixAnimation( )
 {
 	if ( cur_level == 0 )
 		return;
@@ -186,7 +188,7 @@ void EL_Advancedammopack::fixAnimation( )
 	}
 }
 
-bool EL_Advancedammopack::check_Requirements( )
+bool EL_AdvancedAmmopack::check_Requirements( )
 {
 	return ( player_data[ID].level >= data_advancedammopack.req_level + cur_level
 		&& player_data[ID].points_available >= data_advancedammopack.req_points
@@ -196,7 +198,7 @@ bool EL_Advancedammopack::check_Requirements( )
 		&& UTIL_getMask(pEntity, MASK_WEAPONS1) );
 }
 
-void EL_Advancedammopack::buy_upgrade( )
+void EL_AdvancedAmmopack::buy_upgrade( )
 {
 	if ( check_Requirements() == false )
 		return;
@@ -205,7 +207,7 @@ void EL_Advancedammopack::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_advancedammopack.req_points);
+	UTIL_addPoints(pEntity, data_advancedammopack.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",
@@ -215,7 +217,7 @@ void EL_Advancedammopack::buy_upgrade( )
 	UTIL_showPopup(pEntity, Msg);
 }
 
-void EL_Advancedammopack::set_upgrade_values( )
+void EL_AdvancedAmmopack::set_upgrade_values( )
 {
 	// set for each weapon ( 32 weapons )
 	for ( byte i = 0; i < 33; ++i )
@@ -266,12 +268,12 @@ void EL_Advancedammopack::set_upgrade_values( )
 	}
 }
 
-void EL_Advancedammopack::respawned( )
+void EL_AdvancedAmmopack::respawned( )
 {
 	SpawnTime = gpGlobals->time + 0.1;
 }
 
-void EL_Advancedammopack::setWeaponData_Ammo( byte mode )
+void EL_AdvancedAmmopack::setWeaponData_Ammo( byte mode )
 {
 	if ( cur_level == 0 )
 		return;
@@ -290,7 +292,7 @@ void EL_Advancedammopack::setWeaponData_Ammo( byte mode )
 
 
 
-void EL_Advancedammopack::Think( )
+void EL_AdvancedAmmopack::Think( )
 {
 	if ( cur_level == 0 )
 		return;
@@ -309,13 +311,21 @@ void EL_Advancedammopack::Think( )
 	}
 	
 	byte WeaponID = player_data[ID].curWeapon;
-	if ( WeaponID != WEAPON_PISTOL
-		&& WeaponID != WEAPON_LMG
-		&& WeaponID != WEAPON_SHOTGUN
-		&& WeaponID != WEAPON_HMG
-		&& WeaponID != WEAPON_GRENADE_GUN )
+	switch ( WeaponID )
 	{
-		return;
+		case WEAPON_PISTOL:
+		case WEAPON_LMG:
+		case WEAPON_SHOTGUN:
+		case WEAPON_HMG:
+		case WEAPON_GRENADE_GUN:
+		{
+			break;
+		}
+		default:
+		{
+			// wrong weapon, leave AdvAmmo
+			return;
+		}
 	}
 	
 	int entWeaponID = ( WeaponID == WEAPON_PISTOL ) ? entPistolID : entPrimaryGunID;
@@ -363,7 +373,7 @@ void EL_Advancedammopack::Think( )
 	//	player_data[ID].lastHUD_display = gpGlobals->time - 2.0;
 }
 
-void EL_Advancedammopack::checkReloadCorrectors( byte WeaponID , int *Ammo_to_add )
+void EL_AdvancedAmmopack::checkReloadCorrectors( byte WeaponID , int *Ammo_to_add )
 {
 	// make sure only primary weapon gets this check ( it is not probable that pistol will have over 250 ammo )
 	if ( WeaponID != PrimaryGunID )
@@ -386,7 +396,7 @@ void EL_Advancedammopack::checkReloadCorrectors( byte WeaponID , int *Ammo_to_ad
 		*Ammo_to_add = Reserve_Ammo;
 }
 
-void EL_Advancedammopack::checkReloadStarting( byte WeaponID , edict_t *entWeapon )
+void EL_AdvancedAmmopack::checkReloadStarting( byte WeaponID , edict_t *entWeapon )
 {
 	if ( ReloadingStarted == true )
 		return;
@@ -397,7 +407,8 @@ void EL_Advancedammopack::checkReloadStarting( byte WeaponID , edict_t *entWeapo
 		return;
 	}
 	
-	// if full ammo + full Advammopack OR no reserve, do not allow to reload
+	// if full ammo + full Advammopack OR attacking OR still reloading,
+	// do not allow to reload
 	if ( Current_Ammo >= BasicAmmo[WeaponID] + bonusAmmo[WeaponID]
 		|| gpGlobals->time < endReloadTime
 		|| pEntity->v.button & IN_ATTACK )
@@ -405,9 +416,12 @@ void EL_Advancedammopack::checkReloadStarting( byte WeaponID , edict_t *entWeapo
 		pEntity->v.button = pEntity->v.button & ~IN_RELOAD;
 		
 		return;
-	}else if ( Current_Ammo >= BasicAmmo[WeaponID]
-		&& WeaponID == WEAPON_GRENADE_GUN )
+	}else if ( WeaponID == WEAPON_GRENADE_GUN
+		&& Current_Ammo >= BasicAmmo[WeaponID] )
 	{
+		if ( Reserve_Ammo <= 0 )
+			return;
+		
 		// correct GL reloading
 		// NS will only make animations if ammo is < default max
 		// so check how many grens we need to remove from clip and add to reserve
@@ -422,16 +436,24 @@ void EL_Advancedammopack::checkReloadStarting( byte WeaponID , edict_t *entWeapo
 	ReloadingStarted = true;
 }
 
-void EL_Advancedammopack::checkReloadingFullAmmo( byte WeaponID , edict_t *entWeapon )
+void EL_AdvancedAmmopack::checkReloadingFullAmmo( byte WeaponID , edict_t *entWeapon )
 {
-	if ( ( ( WeaponID != WEAPON_SHOTGUN
-			|| Current_Ammo < BasicAmmo[WeaponID]
-			|| Shotgun_bulltes_stolen != 0 )	// nothing  stolen yet, to prevent loops
-		&& ( WeaponID == WEAPON_SHOTGUN
-			|| Current_Ammo != BasicAmmo[WeaponID] ) )
-		|| Reserve_Ammo <= 0
-		|| ReloadingStarted == false
-		|| curReloadingWeapon != 0 )
+	if ( ReloadingStarted == false )
+		return;
+	
+	if ( Reserve_Ammo <= 0 )
+		return;
+	
+	if ( curReloadingWeapon != 0 )
+		return;
+	
+	if ( WeaponID == WEAPON_SHOTGUN
+		&& ( Current_Ammo < BasicAmmo[WeaponID]
+			|| Shotgun_bulltes_stolen != 0 ) )	// nothing  stolen yet, to prevent loops
+		return;
+	
+	if ( WeaponID != WEAPON_SHOTGUN
+		&& Current_Ammo != BasicAmmo[WeaponID] )
 		return;
 	
 	if ( WeaponID == WEAPON_SHOTGUN )
@@ -450,7 +472,7 @@ void EL_Advancedammopack::checkReloadingFullAmmo( byte WeaponID , edict_t *entWe
 	}
 }
 
-void EL_Advancedammopack::ReloadInitiate( byte WeaponID , int Ammo_to_add , bool isWeaponReloading )
+void EL_AdvancedAmmopack::ReloadInitiate( byte WeaponID , int Ammo_to_add , bool isWeaponReloading )
 {
 	byte Player_WeaponAnimation = pEntity->v.weaponanim;
 	if ( isWeaponReloading == false
@@ -516,7 +538,7 @@ void EL_Advancedammopack::ReloadInitiate( byte WeaponID , int Ammo_to_add , bool
 	}
 }
 
-void EL_Advancedammopack::ReloadShotgun( edict_t *entWeapon )
+void EL_AdvancedAmmopack::ReloadShotgun( edict_t *entWeapon )
 {
 	// check if player started attacking with shotgun
 	if ( ( pEntity->v.button & IN_ATTACK )
@@ -546,16 +568,16 @@ void EL_Advancedammopack::ReloadShotgun( edict_t *entWeapon )
 			&& Shotgun_bulltes_to_steal >= 1
 			&& Reserve_Ammo > 0 )
 		{
-			int cPT_temp_ammo;
+			int temp_ammo;
 			if ( Current_Ammo > Shotgun_bulltes_to_steal )
-				cPT_temp_ammo = Shotgun_bulltes_to_steal;
+				temp_ammo = Shotgun_bulltes_to_steal;
 			else
-				cPT_temp_ammo = Current_Ammo - 1;
+				temp_ammo = Current_Ammo - 1;
 			
 			// remove bullets from clip and add it to reserve
-			Shotgun_bulltes_stolen += cPT_temp_ammo;
-			Shotgun_bulltes_to_steal -= cPT_temp_ammo;
-			addWeaponClip(entWeapon, -cPT_temp_ammo);
+			Shotgun_bulltes_stolen += temp_ammo;
+			Shotgun_bulltes_to_steal -= temp_ammo;
+			addWeaponClip(entWeapon, -temp_ammo);
 		}else if ( Shotgun_bulltes_to_steal >= 1
 			&& Reserve_Ammo <= 0 )
 		{
@@ -570,16 +592,16 @@ void EL_Advancedammopack::ReloadShotgun( edict_t *entWeapon )
 	}
 }
 
-void EL_Advancedammopack::ReloadOtherWeapons( byte WeaponID , edict_t *entWeapon , int Ammo_to_add , bool isWeaponReloading )
+void EL_AdvancedAmmopack::ReloadOtherWeapons( byte WeaponID , edict_t *entWeapon , int Ammo_to_add , bool isWeaponReloading )
 {
 	// when player has more ammo than normal and reloads, it will be set back to normal and rest is added to reserve
 	// so trick our method to think we got ammo and NOT lost some (by switching current reserve and old reserve)
 	if ( Current_Ammo < Ammo_before_reload )
 	{
 		bullets_stolen += ( Ammo_before_reload - Current_Ammo );
-		int cPT_temp_ammo = Reserve_before_reload;
+		int temp_ammo = Reserve_before_reload;
 		Reserve_before_reload = Reserve_Ammo;
-		Reserve_Ammo = cPT_temp_ammo;
+		Reserve_Ammo = temp_ammo;
 	}
 	
 	// if ammo is = basic max ammo ( +1 is a fix) AND weapon is not reloading
@@ -610,18 +632,22 @@ void EL_Advancedammopack::ReloadOtherWeapons( byte WeaponID , edict_t *entWeapon
 			
 			GL_ReloadTime_reducer = 0.0;
 		}
+	}else
+	{
+		// GL reloaded and no reserve ammo left
+		endReloadTime = 0.0;
 	}
 	
 	// reload is done so far, reset all unneeded vars
 	resetExtra();
 }
 
-void EL_Advancedammopack::addWeaponClip( edict_t *entWeapon , int ammo_to_add )
+void EL_AdvancedAmmopack::addWeaponClip( edict_t *entWeapon , int ammo_to_add )
 {
-	UTIL_setWeaponClip(entWeapon, UTIL_getWeaponClip(entWeapon) + ammo_to_add);
+	UTIL_addWeaponClip(entWeapon, ammo_to_add);
 }
 
-void EL_Advancedammopack::addWeaponReserve( byte WeaponID , int ammo_to_add )
+void EL_AdvancedAmmopack::addWeaponReserve( byte WeaponID , int ammo_to_add )
 {
 	int reserve_ammo = UTIL_getWeaponReserve(pEntity, WeaponID) + ammo_to_add;
 	if ( reserve_ammo > MAX_VISIBLE_AMMO )
@@ -634,7 +660,7 @@ void EL_Advancedammopack::addWeaponReserve( byte WeaponID , int ammo_to_add )
 		UTIL_setWeaponReserve(pEntity, WeaponID, reserve_ammo);
 }
 
-void EL_Advancedammopack::findWeaponData( byte mode )
+void EL_AdvancedAmmopack::findWeaponData( byte mode )
 {
 	byte foundID = 0;
 	byte foundNum = 0;
@@ -703,7 +729,7 @@ void EL_Advancedammopack::findWeaponData( byte mode )
 	}
 }
 
-void EL_Advancedammopack::setAmmoPickupMsg( byte AmmoType )
+void EL_AdvancedAmmopack::setAmmoPickupMsg( byte AmmoType )
 {
 	byte weapID = player_data[ID].curWeapon;
 	
@@ -715,7 +741,7 @@ void EL_Advancedammopack::setAmmoPickupMsg( byte AmmoType )
 	addWeaponReserve(weapID, bonusAmmo[weapID]);
 }
 
-bool EL_Advancedammopack::setHUDText( byte vID , bool is_marine , hudtextparms_t &hud_params , char *CoreT_GL_reload_Shift_text)
+bool EL_AdvancedAmmopack::setHUDText( byte vID , bool is_marine , hudtextparms_t &hud_params , char *CoreT_GL_reload_Shift_text)
 {
 	if ( cur_level == 0 )
 		return false;

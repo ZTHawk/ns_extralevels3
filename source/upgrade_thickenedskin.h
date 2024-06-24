@@ -25,7 +25,7 @@ class Upgrade_Thickenedskin : public base_upgrade_data
 	float health_add_per_class[13];
 	
 	void init( );
-	void add_to_menu( byte ID , int num , int &Keys , char *menu );
+	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
 	void show_upgrade_menu( edict_t *player );
 	void precache( );
 };
@@ -53,7 +53,7 @@ class EL_Thickenedskin : public base_upgrade_pl_data
 };
 
 extern Upgrade_Thickenedskin data_thickenedskin;
-extern EL_Thickenedskin player_thickenedskin[MAX_PLAYERS];
+extern EL_Thickenedskin player_thickenedskin[MAX_PLAYERS_PLUS1];
 
 
 static const float alien_regen_hp[13] =

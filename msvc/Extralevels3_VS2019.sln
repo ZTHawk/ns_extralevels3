@@ -1,0 +1,24 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32510.428
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "extralevels3", "Extralevels3_VS2019.vcxproj", "{E0C769CE-13BF-46C8-A870-775EEF0DF15E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0C769CE-13BF-46C8-A870-775EEF0DF15E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E0C769CE-13BF-46C8-A870-775EEF0DF15E}.Debug|Win32.Build.0 = Debug|Win32
+		{E0C769CE-13BF-46C8-A870-775EEF0DF15E}.Release|Win32.ActiveCfg = Release|Win32
+		{E0C769CE-13BF-46C8-A870-775EEF0DF15E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8A8B2D5D-7DE7-4B71-B2E1-CBBE2D2639F9}
+	EndGlobalSection
+EndGlobal

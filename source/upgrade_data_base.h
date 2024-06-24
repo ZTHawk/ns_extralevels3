@@ -7,7 +7,7 @@
 	public: \
 	void init( ); \
 	void precache( ); \
-	void add_to_menu( byte ID , int num , int &Keys , char *menu ); \
+	bool add_to_menu( byte ID , int num , int &Keys , char *menu ); \
 	void show_upgrade_menu( edict_t *player );
 
 #define UPGRADE_DATA_PLAYER \
@@ -43,6 +43,7 @@ enum
 	UP_AV,
 	UP_SOA,
 	UP_LS,
+	UP_CE,
 	
 	UP_END
 };
@@ -69,7 +70,7 @@ class base_upgrade_data
 	
 	virtual void init( );
 	virtual void precache( );
-	virtual void add_to_menu( byte ID , int num , int &Keys , char *menu );
+	virtual bool add_to_menu( byte ID , int num , int &Keys , char *menu );
 	virtual void show_upgrade_menu( edict_t *player );
 	
 	virtual ~base_upgrade_data( );
@@ -96,7 +97,7 @@ class base_upgrade_pl_data
 };
 
 extern base_upgrade_data *upgrade_data[UP_END];
-extern base_upgrade_pl_data *upgrade_pl_data[UP_END][MAX_PLAYERS];
+extern base_upgrade_pl_data *upgrade_pl_data[UP_END][MAX_PLAYERS_PLUS1];
 
 #endif
 

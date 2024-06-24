@@ -77,19 +77,19 @@ void plugin_quit( )
 
 void initCVARS( )
 {
-	static cvar_t el3_notifyme_cvar = {EL3_CVARNAME_NOTIFYME, EL3_CVAR_NOTIFYME_VALUE, 0, atof(EL3_CVAR_NOTIFYME_VALUE), NULL};		// Set to the number of times you want the "ExtraLevels 3" message to be displayed on spawn.
+	static cvar_t el3_notifyme_cvar = {EL3_CVARNAME_NOTIFYME, EL3_CVAR_NOTIFYME_VALUE, 0, (float)atof(EL3_CVAR_NOTIFYME_VALUE), NULL};		// Set to the number of times you want the "ExtraLevels 3" message to be displayed on spawn.
 	CVAR_REGISTER(&el3_notifyme_cvar);
 	CVAR_notify = CVAR_GET_POINTER(EL3_CVARNAME_NOTIFYME);
 	
-	static cvar_t el3_instruct_cvar = {EL3_CVARNAME_INSTRUCT, EL3_CVAR_INSTRUCT_VALUE, 0, atof(EL3_CVAR_INSTRUCT_VALUE), NULL};		// Set to the number of times you want the "type /xhelp for more info" message to be displayed on spawn.	
+	static cvar_t el3_instruct_cvar = {EL3_CVARNAME_INSTRUCT, EL3_CVAR_INSTRUCT_VALUE, 0, (float)atof(EL3_CVAR_INSTRUCT_VALUE), NULL};		// Set to the number of times you want the "type /xhelp for more info" message to be displayed on spawn.	
 	CVAR_REGISTER(&el3_instruct_cvar);
 	CVAR_instruct = CVAR_GET_POINTER(EL3_CVARNAME_INSTRUCT);
 	
-	static cvar_t el3_huddisplay_cvar = {EL3_CVARNAME_HUDDISPLAY, EL3_CVAR_HUDDISPLAY_VALUE, 0, atof(EL3_CVAR_HUDDISPLAY_VALUE), NULL};	// Set to 1 to get the normal levels display, set to 2 to get the alternate levels display. If you change from "2" to "1" in the same round, you may expirience some problems with the hud levels display for the round!
+	static cvar_t el3_huddisplay_cvar = {EL3_CVARNAME_HUDDISPLAY, EL3_CVAR_HUDDISPLAY_VALUE, 0, (float)atof(EL3_CVAR_HUDDISPLAY_VALUE), NULL};	// Set to 1 to get the normal levels display, set to 2 to get the alternate levels display. If you change from "2" to "1" in the same round, you may expirience some problems with the hud levels display for the round!
 	CVAR_REGISTER(&el3_huddisplay_cvar);
 	CVAR_huddisplay = CVAR_GET_POINTER(EL3_CVARNAME_HUDDISPLAY);
 	
-	static cvar_t el3_maxlevel_cvar = {EL3_CVARNAME_MAXLEVEL, EL3_CVAR_MAXLEVEL_VALUE, 0, atof(EL3_CVAR_MAXLEVEL_VALUE), NULL};
+	static cvar_t el3_maxlevel_cvar = {EL3_CVARNAME_MAXLEVEL, EL3_CVAR_MAXLEVEL_VALUE, 0, (float)atof(EL3_CVAR_MAXLEVEL_VALUE), NULL};
 	CVAR_REGISTER(&el3_maxlevel_cvar);
 	CVAR_maxlevel = CVAR_GET_POINTER(EL3_CVARNAME_MAXLEVEL);
 	

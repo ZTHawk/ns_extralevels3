@@ -22,7 +22,7 @@ class Upgrade_Nanoarmor : public base_upgrade_data
 	float ha_nanoarmor;
 	
 	void init( );
-	void add_to_menu( byte ID , int num , int &Keys , char *menu );
+	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
 	void show_upgrade_menu( edict_t *player );
 	void precache( );
 };
@@ -39,7 +39,7 @@ class EL_Nanoarmor : public base_upgrade_pl_data
 };
 
 extern Upgrade_Nanoarmor data_nanoarmor;
-extern EL_Nanoarmor player_nanoarmor[MAX_PLAYERS];
+extern EL_Nanoarmor player_nanoarmor[MAX_PLAYERS_PLUS1];
 
 
 enum NA_sounds

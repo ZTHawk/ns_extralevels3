@@ -24,9 +24,12 @@ class Upgrade_Blindingsurge : public base_upgrade_data
 	float range;
 	float blind_time;
 	
+	int FuseLight;
+	
 	void init( );
-	void add_to_menu( byte ID , int num , int &Keys , char *menu );
+	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
 	void show_upgrade_menu( edict_t *player );
+	void precache( );
 };
 
 class EL_Blindingsurge : public base_upgrade_pl_data
@@ -44,7 +47,7 @@ class EL_Blindingsurge : public base_upgrade_pl_data
 };
 
 extern Upgrade_Blindingsurge data_blindingsurge;
-extern EL_Blindingsurge player_blindingsurge[MAX_PLAYERS];
+extern EL_Blindingsurge player_blindingsurge[MAX_PLAYERS_PLUS1];
 
 #define FLASH_COLOR_R		255
 #define FLASH_COLOR_G		255

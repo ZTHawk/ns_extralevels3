@@ -36,12 +36,13 @@ void Upgrade_Hunger::init( )
 	max_alien_points += available * max_level * req_points;
 }
 
-void Upgrade_Hunger::add_to_menu( byte ID , int num , int &Keys , char *menu )
+bool Upgrade_Hunger::add_to_menu( byte ID , int num , int &Keys , char *menu )
 {
 	char dummy_string[MENU_OPTION_LEN];
 	if ( !available )
 	{
 		sprintf(dummy_string, "#. %s                      (Disabled)\n", upgrade_name);
+		//return false;
 	}else if ( player_hunger[ID].cur_level == max_level )
 	{
 		sprintf(dummy_string, "#. %s                      ( max / %3i )\n", upgrade_name, max_level);
@@ -51,6 +52,7 @@ void Upgrade_Hunger::add_to_menu( byte ID , int num , int &Keys , char *menu )
 		sprintf(dummy_string, "%d. %s                      ( %3i / %3i )\n", num, upgrade_name, player_hunger[ID].cur_level, max_level);
 	}
 	strcat(menu, dummy_string);
+	return true;
 }
 
 void Upgrade_Hunger::show_upgrade_menu( edict_t *pEntity )
@@ -85,6 +87,9 @@ void Upgrade_Hunger::show_upgrade_menu( edict_t *pEntity )
 
 void Upgrade_Hunger::precache( )
 {
+	if ( isAvA == true )
+		return;
+	
 	for ( int i = 0; i < H_MAX_SOUNDS; ++i )
 		PRECACHE_SOUND((char *)H_sound_files[i]);
 }

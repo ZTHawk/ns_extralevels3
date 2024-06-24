@@ -21,6 +21,7 @@
 #include "upgrade_senseofancients.h"
 #include "upgrade_blindingsurge.h"
 #include "upgrade_lifesheath.h"
+#include "upgrade_etherealshift.h"
 /*#include <sdk_util.h>	//pre-defined function definitions saves us a lot of work
 #include <cbase.h>
 
@@ -69,7 +70,7 @@ void UTIL_ServerPrint( const char *fmt , ... )
 }
 
 #ifdef _DEBUG
-bool debug_running = true;
+bool debug_running = false;
 int log_counter = 0;
 const static char *debug_file = "ns/addons/extralevels3/extralevels3_debug.txt";
 void UTIL_LogDebug( const char *text )
@@ -230,7 +231,6 @@ void UTIL_getUpgradeDataFromFile( Config_data upgrade_data[] , int array_size )
 void UTIL_getBanData( )
 {
 	FILE *file = fopen(ban_file, "r");
-	
 	if ( file == NULL )
 		return;
 	
@@ -247,7 +247,7 @@ void UTIL_getBanData( )
 		if ( pos < 7 )		// make sure at least containing "STEAM_"
 			continue;
 		
-		char *tmp = new char[64];
+		char *tmp = new char[pos + 1];
 		strncpy(tmp, buffer, pos);
 		tmp[pos] = '\0';
 		banList.push_back(tmp);
@@ -267,6 +267,7 @@ void UTIL_getConfigFilenames( )
 	char *last_slash_pos = strrchr(global_path, '/');
 	
 	strncpy(cfg_path_base, addons_path, last_slash_pos - addons_path);
+	//cfg_path_base[last_slash_pos - addons_path + 1] = '\0';
 	
 	// check if dll has special folder
 	char *c = strstr(cfg_path_base, "dll");

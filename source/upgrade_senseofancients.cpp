@@ -52,12 +52,13 @@ void Upgrade_Senseofancients::init( )
 	nextSporeTime = 0.0;
 }
 
-void Upgrade_Senseofancients::add_to_menu( byte ID , int num , int &Keys , char *menu )
+bool Upgrade_Senseofancients::add_to_menu( byte ID , int num , int &Keys , char *menu )
 {
 	char dummy_string[MENU_OPTION_LEN];
 	if ( !available )
 	{
 		sprintf(dummy_string, "#. %s   (Disabled)\n", upgrade_name);
+		//return false;
 	}else if ( player_senseofancients[ID].cur_level == max_level )
 	{
 		sprintf(dummy_string, "#. %s   ( max / %3i )\n", upgrade_name, max_level);
@@ -67,6 +68,7 @@ void Upgrade_Senseofancients::add_to_menu( byte ID , int num , int &Keys , char 
 		sprintf(dummy_string, "%d. %s   ( %3i / %3i )\n", num, upgrade_name, player_senseofancients[ID].cur_level, max_level);
 	}
 	strcat(menu, dummy_string);
+	return true;
 }
 
 void Upgrade_Senseofancients::show_upgrade_menu( edict_t *pEntity )
@@ -300,6 +302,9 @@ void EL_Senseofancients::respawned( )
 
 void EL_Senseofancients::Think( )
 {
+	if ( data_senseofancients.available == false )
+		return;
+	
 	// no level check here cause enemies are those who need the check
 	Parasite_Players();
 	
@@ -450,6 +455,9 @@ void EL_Senseofancients::Parasite_Players( )
 
 void EL_Senseofancients::check_Parasite( )
 {
+	if ( data_senseofancients.available == false )
+		return;
+	
 	// already parasited
 	if ( ParasiteMode > PARASITE_NONE )
 		return;

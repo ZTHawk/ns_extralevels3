@@ -22,7 +22,7 @@ class Upgrade_Cybernetics : public base_upgrade_data
 	float ha_jp_speed;
 	
 	void init( );
-	void add_to_menu( byte ID , int num , int &Keys , char *menu );
+	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
 	void show_upgrade_menu( edict_t *player );
 };
 

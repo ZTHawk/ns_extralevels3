@@ -163,6 +163,7 @@ inline void EVENT_DamageMsg( int Msg_receiver , int Msg_arg_num , int value )
 			{
 				player_bloodlust[Msg_receiver].drink_my_Blood();
 				player_senseofancients[Msg_receiver].check_Parasite();
+				player_combatevolution[Msg_receiver].check_Cripple();
 			}
 			break;
 		}
@@ -204,7 +205,11 @@ inline bool EVENT_TeamInfo_POST( byte Msg_receiver_Post , const char *TeamName )
 inline void EVENT_TeamInfo_END_POST( byte Msg_receiver_Post )
 {
 	if ( player_data[Msg_receiver_Post].team )
+	{
 		player_data[Msg_receiver_Post].showNotifyMsg();
+		
+		exp_controller.join_team(INDEXENT(Msg_receiver_Post));
+	}
 }
 
 inline void EVENT_SetTech_POST( byte Msg_receiver_Post , int value , byte Msg_arg_num_Post , int &Msg_stored_data_Post )
@@ -268,7 +273,8 @@ inline void EVENT_StatusValue_Short_POST( byte Msg_receiver_Post , int value )
 {
 	player_data[Msg_receiver_Post].statusvalue_pointing_at = value;
 	if ( 1 <= value
-		&& value <= gpGlobals->maxClients )
+		&& value <= gpGlobals->maxClients				// is player
+		&& player_data[value].team == player_data[Msg_receiver_Post].team )	// same team
 	{
 		player_data[Msg_receiver_Post].statusvalue_correct_level_of = value;
 	}else

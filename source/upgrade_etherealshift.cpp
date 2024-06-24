@@ -5,7 +5,7 @@
 #include "ns_const.h"
 
 Upgrade_Etherealshift data_etherealshift;
-EL_Etherealshift player_etherealshift[MAX_PLAYERS];
+EL_Etherealshift player_etherealshift[MAX_PLAYERS_PLUS1];
 
 void Upgrade_Etherealshift::init( )
 {
@@ -28,7 +28,7 @@ void Upgrade_Etherealshift::init( )
 	strcpy(upgrade_description, "Shifts you to ethereal state making you invisible until you attack, or your time runs out\n"
 					"Press flashlight key to activate ( costs energy! )\n"
 					"Max shift time of [%3.2f] second%s (for current life form)\n\n"
-					"Requires: Adrenaline , Cloaking , Level %d, %d point%s\n\n"
+					"Requires: Adrenaline , Cloaking , Level %d, %d Point%s\n\n"
 					"Next level [%d]\n\n"
 					"%s%s\n\n0. Exit\n\n\n\n\n\n\n\n");
 	
@@ -36,12 +36,13 @@ void Upgrade_Etherealshift::init( )
 	max_alien_points += available * max_level * req_points;
 }
 
-void Upgrade_Etherealshift::add_to_menu( byte ID , int num , int &Keys , char *menu )
+bool Upgrade_Etherealshift::add_to_menu( byte ID , int num , int &Keys , char *menu )
 {
 	char dummy_string[MENU_OPTION_LEN];
 	if ( !available )
 	{
 		sprintf(dummy_string, "#. %s           (Disabled)\n", upgrade_name);
+		//return false;
 	}else if ( player_etherealshift[ID].cur_level == max_level )
 	{
 		sprintf(dummy_string, "#. %s           ( max / %3i )\n", upgrade_name, max_level);
@@ -51,6 +52,7 @@ void Upgrade_Etherealshift::add_to_menu( byte ID , int num , int &Keys , char *m
 		sprintf(dummy_string, "%d. %s           ( %3i / %3i )\n", num, upgrade_name, player_etherealshift[ID].cur_level, max_level);
 	}
 	strcat(menu, dummy_string);
+	return true;
 }
 
 void Upgrade_Etherealshift::show_upgrade_menu( edict_t *pEntity )
@@ -89,6 +91,9 @@ void Upgrade_Etherealshift::show_upgrade_menu( edict_t *pEntity )
 
 void Upgrade_Etherealshift::precache( )
 {
+	if ( isMvM == true )
+		return;
+	
 	for ( int i = 0; i < ES_MAX_SOUNDS; ++i )
 		PRECACHE_SOUND((char *)ES_sound_files[i]);
 }
@@ -130,7 +135,7 @@ void EL_Etherealshift::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_etherealshift.req_points);
+	UTIL_addPoints(pEntity, data_etherealshift.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",
@@ -185,15 +190,37 @@ void EL_Etherealshift::start_EtherealShift( )
 
 void EL_Etherealshift::Think( )
 {
-	if ( !Shifting
-		|| ( gpGlobals->time < endShiftTime
-			&& ( !( pEntity->v.button & IN_ATTACK )
-				|| player_data[ID].curWeapon == WEAPON_METABOLIZE
-				|| player_data[ID].curWeapon == WEAPON_BLINK
-				|| player_data[ID].curWeapon == WEAPON_UMBRA
-				|| player_data[ID].curWeapon == WEAPON_PRIMALSCREAM
-				|| player_data[ID].curWeapon == WEAPON_LEAP ) ) )
+	if ( Shifting == false )
 		return;
+	
+	if ( gpGlobals->time < endShiftTime )
+	{
+		if ( pEntity->v.button & IN_ATTACK )
+		{
+			switch ( player_data[ID].curWeapon )
+			{
+				case WEAPON_METABOLIZE:
+				case WEAPON_BLINK:
+				case WEAPON_LEAP:
+				case WEAPON_UMBRA:
+				case WEAPON_PRIMALSCREAM:
+				{
+					return;
+				}
+			}
+		}else if ( pEntity->v.button & IN_ATTACK2 )
+		{
+			switch ( player_data[ID].pClass )
+			{
+				case CLASS_SKULK:
+				case CLASS_FADE:
+				{
+					return;
+				}
+			}
+		}else
+			return;
+	}
 	
 	pEntity->v.rendermode = kRenderNormal;		// = 0
 	UTIL_setMask(pEntity, MASK_CLOAKING, true);

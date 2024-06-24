@@ -4,7 +4,7 @@
 #include "ns_const.h"
 
 Upgrade_Thickenedskin data_thickenedskin;
-EL_Thickenedskin player_thickenedskin[MAX_PLAYERS];
+EL_Thickenedskin player_thickenedskin[MAX_PLAYERS_PLUS1];
 
 void Upgrade_Thickenedskin::init( )
 {
@@ -29,7 +29,7 @@ void Upgrade_Thickenedskin::init( )
 	strcpy(upgrade_name, "Thickened Skin");
 	strcpy(upgrade_description, "Thickens skin to increase health. Health bonus varies with life form\n"
 					"Max health of [%d] (for current life form)\n\n"
-					"Requires: Carapace , Regeneration , Level %d, %d point%s\n\n"
+					"Requires: Carapace , Regeneration , Level %d, %d Point%s\n\n"
 					"Next level [%d]\n\n"
 					"%s%s\n\n"
 					"0. Exit\n\n\n\n\n\n\n");
@@ -38,12 +38,13 @@ void Upgrade_Thickenedskin::init( )
 	max_alien_points += available * max_level * req_points;
 }
 
-void Upgrade_Thickenedskin::add_to_menu( byte ID , int num , int &Keys , char *menu )
+bool Upgrade_Thickenedskin::add_to_menu( byte ID , int num , int &Keys , char *menu )
 {
 	char dummy_string[MENU_OPTION_LEN];
 	if ( !available )
 	{
 		sprintf(dummy_string, "#. %s        (Disabled)\n", upgrade_name);
+		//return false;
 	}else if ( player_thickenedskin[ID].cur_level == max_level )
 	{
 		sprintf(dummy_string, "#. %s        ( max / %3i )\n", upgrade_name, max_level);
@@ -53,6 +54,7 @@ void Upgrade_Thickenedskin::add_to_menu( byte ID , int num , int &Keys , char *m
 		sprintf(dummy_string, "%d. %s        ( %3i / %3i )\n", num, upgrade_name, player_thickenedskin[ID].cur_level, max_level);
 	}
 	strcat(menu, dummy_string);
+	return true;
 }
 
 void Upgrade_Thickenedskin::show_upgrade_menu( edict_t *pEntity )
@@ -85,6 +87,9 @@ void Upgrade_Thickenedskin::show_upgrade_menu( edict_t *pEntity )
 
 void Upgrade_Thickenedskin::precache( )
 {
+	if ( isMvM == true )
+		return;
+	
 	for ( int i = 0; i < TS_MAX_SOUNDS; ++i )
 		PRECACHE_SOUND((char *)TS_sound_files[i]);
 }
@@ -123,7 +128,7 @@ void EL_Thickenedskin::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_thickenedskin.req_points);
+	UTIL_addPoints(pEntity, data_thickenedskin.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",

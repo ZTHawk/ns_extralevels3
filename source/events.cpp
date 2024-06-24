@@ -14,8 +14,10 @@
 #include "upgrade_senseofancients.h"
 #include "upgrade_blindingsurge.h"
 #include "upgrade_lifesheath.h"
+#include "upgrade_combatevolution.h"
 #include "utilfunctions.h"
 #include "player_data.h"
+#include "exp_controller.h"
 #include "events.h"
 
 int TextMsg_ID = -1;
@@ -47,10 +49,6 @@ int ParticleCount = 0;
 int Xenocide_Particle_ID = -1;
 int BileBomb_Particle_ID = -1;
 int AcidHit_Particle_ID = -1;
-
-int FuseLight = 0;
-
-
 
 
 

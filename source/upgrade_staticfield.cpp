@@ -4,7 +4,7 @@
 #include "ns_const.h"
 
 Upgrade_Staticfield data_staticfield;
-EL_Staticfield player_staticfield[MAX_PLAYERS];
+EL_Staticfield player_staticfield[MAX_PLAYERS_PLUS1];
 
 void Upgrade_Staticfield::init( )
 {
@@ -25,7 +25,7 @@ void Upgrade_Staticfield::init( )
 	strcpy(upgrade_name, "StaticField");
 	strcpy(upgrade_description, "Uses a special electric shock to weaken the natural toughness of enemies (cloacked aliens are ignored)\n"
 					"Enemies in range of [%d] are weakened by [%d%%] by lowering max health and max armor\n\n"
-					"Requires: Motion Tracking , Weapons 2 , Scan Area , Level %d, %d point%s\n\n"
+					"Requires: Motion Tracking , Weapons 2 , Scan Area , Level %d, %d Point%s\n\n"
 					"Next level [%d]\n\n"
 					"%s%s\n\n"
 					"0. Exit\n\n\n\n\n\n\n");
@@ -34,12 +34,13 @@ void Upgrade_Staticfield::init( )
 	max_alien_points += available * max_level * req_points;
 }
 
-void Upgrade_Staticfield::add_to_menu( byte ID , int num , int &Keys , char *menu )
+bool Upgrade_Staticfield::add_to_menu( byte ID , int num , int &Keys , char *menu )
 {
 	char dummy_string[MENU_OPTION_LEN];
 	if ( !available )
 	{
 		sprintf(dummy_string, "#. %s                       (Disabled)\n", upgrade_name);
+		//return false;
 	}else if ( player_staticfield[ID].cur_level == max_level )
 	{
 		sprintf(dummy_string, "#. %s                       ( max / %3i )\n", upgrade_name, max_level);
@@ -49,6 +50,7 @@ void Upgrade_Staticfield::add_to_menu( byte ID , int num , int &Keys , char *men
 		sprintf(dummy_string, "%d. %s                       ( %3i / %3i )\n", num, upgrade_name, player_staticfield[ID].cur_level, max_level);
 	}
 	strcat(menu, dummy_string);
+	return true;
 }
 
 void Upgrade_Staticfield::show_upgrade_menu( edict_t *pEntity )
@@ -86,8 +88,11 @@ void Upgrade_Staticfield::show_upgrade_menu( edict_t *pEntity )
 
 void Upgrade_Staticfield::precache( )
 {
+	if ( isAvA == true )
+		return;
+	
 	for ( int i = 0; i < SF_MAX_SOUNDS; ++i )
-		PRECACHE_SOUND((char *)SF_sound_files[i]);
+		PRECACHE_SOUND((char*)SF_sound_files[i]);
 }
 
 //////////
@@ -119,7 +124,7 @@ void EL_Staticfield::buy_upgrade( )
 	
 	set_upgrade_values();
 	
-	UTIL_setPoints(pEntity, UTIL_getPoints(pEntity) + data_staticfield.req_points);
+	UTIL_addPoints(pEntity, data_staticfield.req_points);
 	
 	char Msg[POPUP_MSG_LEN];
 	sprintf(Msg, "You got Level %d of %d levels of %s",

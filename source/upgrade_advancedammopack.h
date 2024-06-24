@@ -18,17 +18,17 @@ static const char *AA_config_names[] =
 	"AA_GL"
 };
 
-class Upgrade_Advancedammopack : public base_upgrade_data
+class Upgrade_AdvancedAmmopack : public base_upgrade_data
 {
 	public:
 	float Ammo_per_WeaponID[33];		// each WeaponID own entry
 	
 	void init( );
-	void add_to_menu( byte ID , int num , int &Keys , char *menu );
+	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
 	void show_upgrade_menu( edict_t *player );
 };
 
-class EL_Advancedammopack : public base_upgrade_pl_data
+class EL_AdvancedAmmopack : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
 	
@@ -87,8 +87,8 @@ class EL_Advancedammopack : public base_upgrade_pl_data
 	void ReloadOtherWeapons( byte WeaponID , edict_t *entWeapon , int Ammo_to_add , bool isWeaponReloading );
 };
 
-extern Upgrade_Advancedammopack data_advancedammopack;
-extern EL_Advancedammopack player_advancedammopack[MAX_PLAYERS];
+extern Upgrade_AdvancedAmmopack data_advancedammopack;
+extern EL_AdvancedAmmopack player_advancedammopack[MAX_PLAYERS_PLUS1];
 
 // No Weapon Equiped + 30 Weapons
 static const int BasicAmmo[31] =

@@ -20,7 +20,8 @@ const char *upgrade_symbols[UP_END] =
 	"H",
 	"AV",
 	"SOA",
-	"LS"
+	"LS",
+	"CE"
 };
 
 // default functions if they are not overloaded
@@ -40,9 +41,10 @@ void base_upgrade_data::precache( )
 	
 }
 
-void base_upgrade_data::add_to_menu( byte ID , int num , int &Keys , char *menu )
+bool base_upgrade_data::add_to_menu( byte ID , int num , int &Keys , char *menu )
 {
-	strcat(menu, "#. Unknown Upgrade. Contact Author.\n");
+	//strcat(menu, "#. Unknown Upgrade. Contact Author.\n");
+	return false;
 }
 
 void base_upgrade_data::show_upgrade_menu( edict_t *player )
