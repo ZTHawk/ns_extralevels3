@@ -198,87 +198,87 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\source\events.cpp"
+				RelativePath="..\source\events.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\hookedfunctions.cpp"
+				RelativePath="..\source\hookedfunctions.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\meta_api.cpp"
+				RelativePath="..\source\meta_api.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\player_data.cpp"
+				RelativePath="..\source\player_data.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\plugin.cpp"
+				RelativePath="..\source\plugin.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_acidicvengeance.cpp"
+				RelativePath="..\source\upgrade_acidicvengeance.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_advancedammopack.cpp"
+				RelativePath="..\source\upgrade_advancedammopack.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_blindingsurge.cpp"
+				RelativePath="..\source\upgrade_blindingsurge.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_bloodlust.cpp"
+				RelativePath="..\source\upgrade_bloodlust.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_cybernetics.cpp"
+				RelativePath="..\source\upgrade_cybernetics.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_data_base.cpp"
+				RelativePath="..\source\upgrade_data_base.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_etherealshift.cpp"
+				RelativePath="..\source\upgrade_etherealshift.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_hunger.cpp"
+				RelativePath="..\source\upgrade_hunger.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_lifesheath.cpp"
+				RelativePath="..\source\upgrade_lifesheath.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_nanoarmor.cpp"
+				RelativePath="..\source\upgrade_nanoarmor.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_reinforcedarmor.cpp"
+				RelativePath="..\source\upgrade_reinforcedarmor.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_senseofancients.cpp"
+				RelativePath="..\source\upgrade_senseofancients.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_staticfield.cpp"
+				RelativePath="..\source\upgrade_staticfield.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_thickenedskin.cpp"
+				RelativePath="..\source\upgrade_thickenedskin.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_uraniumammo.cpp"
+				RelativePath="..\source\upgrade_uraniumammo.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\utilfunctions.cpp"
+				RelativePath="..\source\utilfunctions.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -307,95 +307,95 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\source\events.h"
+				RelativePath="..\source\events.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\hookedfunctions.h"
+				RelativePath="..\source\hookedfunctions.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\hookedfunctions_table.h"
+				RelativePath="..\source\hookedfunctions_table.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\ns_const.h"
+				RelativePath="..\source\ns_const.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\ns_const_advanced.h"
+				RelativePath="..\source\ns_const_advanced.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\player_data.h"
+				RelativePath="..\source\player_data.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\plugin.h"
+				RelativePath="..\source\plugin.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_acidicvengeance.h"
+				RelativePath="..\source\upgrade_acidicvengeance.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_advancedammopack.h"
+				RelativePath="..\source\upgrade_advancedammopack.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_blindingsurge.h"
+				RelativePath="..\source\upgrade_blindingsurge.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_bloodlust.h"
+				RelativePath="..\source\upgrade_bloodlust.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_cybernetics.h"
+				RelativePath="..\source\upgrade_cybernetics.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_data_base.h"
+				RelativePath="..\source\upgrade_data_base.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_etherealshift.h"
+				RelativePath="..\source\upgrade_etherealshift.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_hunger.h"
+				RelativePath="..\source\upgrade_hunger.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_lifesheath.h"
+				RelativePath="..\source\upgrade_lifesheath.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_nanoarmor.h"
+				RelativePath="..\source\upgrade_nanoarmor.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_reinforcedarmor.h"
+				RelativePath="..\source\upgrade_reinforcedarmor.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_senseofancients.h"
+				RelativePath="..\source\upgrade_senseofancients.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_staticfield.h"
+				RelativePath="..\source\upgrade_staticfield.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_thickenedskin.h"
+				RelativePath="..\source\upgrade_thickenedskin.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\upgrade_uraniumammo.h"
+				RelativePath="..\source\upgrade_uraniumammo.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\utilfunctions.h"
+				RelativePath="..\source\utilfunctions.h"
 				>
 			</File>
 		</Filter>
