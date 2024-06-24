@@ -46,7 +46,7 @@ void Upgrade_Senseofancients::init( )
 					"0. Exit\n\n\n\n\n\n\n\n\n\n\n");
 	
 	team = ALIEN;
-	max_marine_points += available * max_level * req_points;
+	max_alien_points += available * max_level * req_points;
 	
 	Spore_Num = 0;
 	nextSporeTime = 0.0;

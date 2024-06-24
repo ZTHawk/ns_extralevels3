@@ -36,7 +36,7 @@ void Upgrade_Acidicvengeance::init( )
 					"0. Exit\n\n\n\n\n\n\n\n");
 	
 	team = ALIEN;
-	max_marine_points += available * max_level * req_points;
+	max_alien_points += available * max_level * req_points;
 }
 
 bool Upgrade_Acidicvengeance::add_to_menu( byte ID , int num , int &Keys , char *menu )
