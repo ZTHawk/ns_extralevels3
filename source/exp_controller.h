@@ -38,7 +38,4 @@ class EXP_Controller
 
 extern EXP_Controller exp_controller;
 
-
 #endif
-
-

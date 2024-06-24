@@ -103,37 +103,23 @@ int Spawn( edict_t *pEntity )
 	upgrade_data[UP_CE] = &data_combatevolution;
 	
 	// Init upgrade_player_data
-	int i = 0;
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
+	for ( int i = 0; i < MAX_PLAYERS_PLUS1; ++i ) {
 		upgrade_pl_data[UP_C][i] = &player_cybernetics[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_TS][i] = &player_thickenedskin[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_RA][i] = &player_reinforcedarmor[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_ES][i] = &player_etherealshift[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_NA][i] = &player_nanoarmor[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_BL][i] = &player_bloodlust[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_AA][i] = &player_advancedammopack[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_H][i] = &player_hunger[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_SF][i] = &player_staticfield[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_AV][i] = &player_acidicvengeance[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_UA][i] = &player_uraniumammo[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_SOA][i] = &player_senseofancients[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_BS][i] = &player_blindingsurge[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_LS][i] = &player_lifesheath[i];
-	for ( i = 0; i < MAX_PLAYERS_PLUS1; ++i )
 		upgrade_pl_data[UP_CE][i] = &player_combatevolution[i];
+	}
 	
 	// Find config path
 	UTIL_getConfigFilenames();
