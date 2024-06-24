@@ -1,0 +1,201 @@
+Author:
+	White Panther
+
+Credits:
+	- Testing:
+		- RichNet NS Community
+		- I-AM Clan
+		- Dragoon
+		- 187combat
+		- NS BAD Clan
+	
+	- Code help:
+		- Hippo Hippopotamus
+		- peachy
+	
+	- those i forgot
+
+
+History:
+
+v0.6.6: (internal beta) ( compared to Extralevels3 v1.3.6d Amx Mod X )
+	- fixed:
+		- Advanced Ammo:
+			- reloading could result in having more ammo than allowed
+			- reloading could result in not getting additional ammo
+	- added:
+		- Scoreboard will now be increased with each level-up
+		- no limitaion of banlist size
+		- "el3_config_reload" will reload the config manually (server command)
+	- changed:
+		- config file partly rewritten
+		- Staticfield:
+			- more accurate configuration
+		- config files are not parsed every mapchange
+	- (more things i forgot ...)
+
+v0.6.8: ( 02.06.2007 )
+	- initial release
+
+v0.6.9: ( 14.06.2007 )
+	- fixed:
+		- changing max level CVAR led to wrong display and miss calculations
+
+v0.7.0: ( 06.07.2007 )
+	- fixed:
+		- Staticfield:
+			- was active even when dead or while being digested
+		- Advanced Ammo:
+			- being bugged once a player died
+		- Sense of Ancients:
+			- Skulk + Gorge did not get damage/heal bonus
+			- some values been not displayed correctly
+		- level data was not calculated when changed max level CVAR
+		- possible crash when setting el3_maxlevel to a very high value
+	- added:
+		- little search for config files
+
+v0.7.1: ( 07.07.2007 )
+	- fixed:
+		- Advanced Ammo:
+			- GL was bugged when changing weapon while reloading
+			- when switching to GL no more fake reload animation
+
+v0.7.2: ( 27.07.2007 )
+	- fixed:
+		- additional EXP for players over level 10 was not given
+		- NS EXP bug ( victim level was ignored )
+	- added:
+		- support for NS 3.2.1 EXP bugfix via define "_PRE_NS_321" ( recompile will be needed )
+
+v0.7.3: ( 05.08.2007 )
+	- fixed:
+		- Advanced Ammo:
+			- bug where GL reload time was too short
+			- rare bug where ammo from GL clip could be moved to reserve
+			- wrong animation could be played when using GL
+		- Uranium Ammo:
+			- level requirement was ignored
+	- added:
+		- new upgrade: "Blinding Surge" will make marines to drop flashes whenever health is below 50%
+		- new upgrade: "Lifesheath" will make aliens to create umbra whenever health is below 50%
+	- changed:
+		- upgrade level requirement now rises with each purchased level of that upgrade
+		- disabled upgrades cannot be choosen anymore and they are indicated
+		- upgrades with max level cannot be choosen anymore and they are indicated
+
+v0.7.4: ( 21.08.2007 )
+	- fixed:
+		- Uranium Ammo:
+			- after death players damage was always lvl 1
+		- config files have been loaded every mapchange (use command "el3_config_reload" to reload)
+
+v0.7.5: ( 06.09.2007 )
+	- fixed:
+		- player could buy upgrades when being dead which could crash server
+		- Uranium Ammo:
+			- GL and Grenade damage boost was too high
+			- Grenade obtained while playing did not got any damage boost
+		- Sense of Ancients:
+			- after Onos redeemed, freed players were invisible
+			- after Onos redeemed, freed players weaponmodel was wrong
+			- after Onos redeemed, sound of freed players was muffled
+			- Onos was unable to buy upgrades
+		- Acidic Vengeance:
+			- was triggered by suicides too ( eg: Xenocide, falling down  )
+	- changed:
+		- Sense of Ancients:
+			- Gorge's Healing Spray now only affects teammates and team structures. No more damage boost against enemys
+
+v0.7.6: ( 11.10.2007 )
+	- fixed:
+		- removed some debug log messages
+		- being onos with Sense of Ancients and using menus other than EL3 could spam player with popup messages
+		- rare crash bug after player spawned and did some damage
+		- custom levels not working correctly and possibility to crash server
+		- Ethereal Shift:
+			- Fade and Onos could get the shift boost of lower lifeforms too (ES_CLASSMULTI)
+			- Eggs did not get a shift boost
+		- Sense of Ancients:
+			- number of players onos can devour was wrong
+			- rare crash bug where weapon damage could not be set after spawn
+			- rare crash bug with not correctly reseted data
+		- Uranium Ammo:
+			- rare crash bug when purchasing level two or higher
+	- added:
+		- default settings for all upgrades (EL3 will now work even if configfile was not found)
+		- "el3_set_upgrade <PlayerID> <UpgradeSymbol> <NewLevel>" will set players level for specified upgrade (server command)
+	- changed:
+		- all settings in configfile are now floats (except on/off, required level, required points, max levels) (old settings will still work fine)
+
+v0.7.7: ( 24.01.2008 )
+	- fixed:
+		- max points available would increase after config reload (internal limitation to avoid unneeded points)
+		- "el3_set_upgrade" not working for Ethereal Shift
+	- added:
+		- "el3_set_upgrade" with ID = 0 can enable and disable upgrades
+		- BloodLust:
+			- now gives several adreneline boots when killing enemy
+			- when doing damage with melee attacks, you will steal some lifepoints (BL_VAMPIRISM). Fade + Onos are limited to 50%
+	- changed:
+		- code changes (inheritance)
+		- Nano Armor:
+			- now welds every two seconds (old: one second)
+		- Thickened Skin:
+			- when TS starts healing and armor is still not maxed, then TS only heals HP for 30% (old value: 50%)
+
+v0.7.7b: ( 31.01.2008 )
+	- fixed:
+		- crash bug
+
+v0.7.7f: ( 18.06.2008)
+	- fixed:
+		- BloodLust:
+			- crash bug
+		- Sense of Ancients:
+			- crash bug
+
+v0.7.9: ( 11.11.2008)
+	- fixed:
+		- player received EXP when killing teammates
+		- level of enemy is not displayed anymore
+		- pointing at structures does not display a level anymore
+		- some upgrades have still been partly executed even if disabled
+		- EXP display could show 100% even though player did not get a level up
+		- default settings if no config file was found, have not been set
+		- config search did not work on first map load
+		- Onos could gestate while digesting a player
+		- CVARs containing level borders (el3_XlevelA, ...) had no string value set
+		- Thickened Skin:
+			- possible crash when starting a server with a NS map or AvA
+		- Reinforced Armor:
+			- fixed player with Reinforced Armor not being able to be welded by players without Reinforced Armor
+			- no more endless welding sounds
+			- WELD_RANGE was ignored
+			- ring around player displaying armor status was wrong
+		- Advanced Ammo:
+			- players could reload a GL even if they had no reserve ammo (no ammo gain, just animation)
+			- reloading GL could take longer than reserve ammo available
+		- Ethereal Shift:
+			- Shifting will end when Onos starts to charge
+		- Acidic Vengeance:
+			- was triggered right after respawn without diing
+	- added:
+		- new upgrade: "Combat Evolution" will give nearby aliens a support aura depending on owner's lifeform
+		- new command:
+			- "el3" which has four options: "on", "off", "config_reload" and "set_upgrades x y z"
+			- replaces the commands: "el3_config_reload" and "el3_set_upgrade"
+		- players remain EXP after a connection lose (there is a reconnect time limit)
+	- changed:
+		- disabled upgrades are now shown in help menu ( "/xhelp" )
+		- the old command "/menu" will no longer open a menu but only show a chat message
+		- Cybernetics:
+			- JPers now only get a boost of 33%
+		- Nano Armor:
+			- volume of background welding sound has been decreased
+		- Uranium Ammo:
+			- removed hardcode level requirement (new config option: UA_LEVEL)
+		- Hunger:
+			- Aliens will now receive a maximum of three boosts (HP, Speed, Primal Scream). Further kills will not extent time
+		- Sense of Ancients:
+			- removed hardcode level requirement (new config option: SOA_LEVEL)
