@@ -132,12 +132,12 @@ void EL_Cybernetics::Think_Post( )
 	
 	switch ( player_data[ID].pClass )
 	{
-		case CLASS_HEAVY:
+		case NS_CLASS_HEAVY:
 		{
 			pEntity->v.maxspeed += ha_jp_speed;
 			break;
 		}
-		case CLASS_JETPACK:
+		case NS_CLASS_JETPACK:
 		{
 			// get the time player touched ground
 			if ( pEntity->v.flags & FL_ONGROUND )

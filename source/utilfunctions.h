@@ -259,34 +259,34 @@ inline int UTIL_getHiveAbility( edict_t *pEntity , int HiveAbilityNum )
 inline int UTIL_getClass( edict_t *pEntity )
 {
 	if ( pEntity->v.deadflag )
-		return CLASS_DEAD;
+		return NS_CLASS_DEAD;
 	if ( !pEntity->v.team )
-		return CLASS_NOTEAM;
+		return NS_CLASS_NOTEAM;
 	switch ( pEntity->v.iuser3 )
 	{
 		case 1:
 			// Light armor marine..
-			if ( pEntity->v.iuser4 & MASK_HEAVYARMOR )
-				return CLASS_HEAVY;
-			if ( pEntity->v.iuser4 & MASK_JETPACK )
-				return CLASS_JETPACK;
-			return CLASS_MARINE;
+			if ( pEntity->v.iuser4 & NS_MASK_HEAVYARMOR )
+				return NS_CLASS_HEAVY;
+			if ( pEntity->v.iuser4 & NS_MASK_JETPACK )
+				return NS_CLASS_JETPACK;
+			return NS_CLASS_MARINE;
 		case 2:
-			return CLASS_COMMANDER;
+			return NS_CLASS_COMMANDER;
 		case 3:
-			return CLASS_SKULK;
+			return NS_CLASS_SKULK;
 		case 4:
-			return CLASS_GORGE;
+			return NS_CLASS_GORGE;
 		case 5:
-			return CLASS_LERK;
+			return NS_CLASS_LERK;
 		case 6:
-			return CLASS_FADE;
+			return NS_CLASS_FADE;
 		case 7:
-			return CLASS_ONOS;
+			return NS_CLASS_ONOS;
 		case 8:
-			return CLASS_GESTATE;
+			return NS_CLASS_GESTATE;
 	}
-	return CLASS_UNKNOWN;
+	return NS_CLASS_UNKNOWN;
 }
 
 inline bool UTIL_getMask( edict_t *pEntity , int Mask )
@@ -312,9 +312,9 @@ inline bool UTIL_hasWeapon( edict_t *pEntity , byte WeaponID )
 
 inline int UTIL_getArmorUpgrade( edict_t *pEntity )
 {
-	return ( pEntity->v.iuser4 & MASK_ARMOR3 ) ? 3
-		: ( ( pEntity->v.iuser4 & MASK_ARMOR2 ) ? 2
-		: ( ( pEntity->v.iuser4 & MASK_ARMOR1 ) ? 1
+	return ( pEntity->v.iuser4 & NS_MASK_ARMOR3 ) ? 3
+		: ( ( pEntity->v.iuser4 & NS_MASK_ARMOR2 ) ? 2
+		: ( ( pEntity->v.iuser4 & NS_MASK_ARMOR1 ) ? 1
 		: 0 ) );
 }
 

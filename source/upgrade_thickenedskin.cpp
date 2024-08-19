@@ -16,12 +16,12 @@ void Upgrade_Thickenedskin::init( )
 		{&(req_points = TS_COST), TYPE_INT, (char *)TS_config_names[1]},
 		{&(max_level = TS_MAX), TYPE_INT, (char *)TS_config_names[2]},
 		{&(req_level = TS_LEVEL), TYPE_INT, (char *)TS_config_names[3]},
-		{&(health_add_per_class[CLASS_SKULK] = TS_SKULK), TYPE_FLOAT, (char *)TS_config_names[4]},
-		{&(health_add_per_class[CLASS_GORGE] = TS_GORGE), TYPE_FLOAT, (char *)TS_config_names[5]},
-		{&(health_add_per_class[CLASS_LERK] = TS_LERK), TYPE_FLOAT, (char *)TS_config_names[6]},
-		{&(health_add_per_class[CLASS_FADE] = TS_FADE), TYPE_FLOAT, (char *)TS_config_names[7]},
-		{&(health_add_per_class[CLASS_ONOS] = TS_ONOS), TYPE_FLOAT, (char *)TS_config_names[8]},
-		{&(health_add_per_class[CLASS_GESTATE] = TS_GESTATE), TYPE_FLOAT, (char *)TS_config_names[9]}
+		{&(health_add_per_class[NS_CLASS_SKULK] = TS_SKULK), TYPE_FLOAT, (char *)TS_config_names[4]},
+		{&(health_add_per_class[NS_CLASS_GORGE] = TS_GORGE), TYPE_FLOAT, (char *)TS_config_names[5]},
+		{&(health_add_per_class[NS_CLASS_LERK] = TS_LERK), TYPE_FLOAT, (char *)TS_config_names[6]},
+		{&(health_add_per_class[NS_CLASS_FADE] = TS_FADE), TYPE_FLOAT, (char *)TS_config_names[7]},
+		{&(health_add_per_class[NS_CLASS_ONOS] = TS_ONOS), TYPE_FLOAT, (char *)TS_config_names[8]},
+		{&(health_add_per_class[NS_CLASS_GESTATE] = TS_GESTATE), TYPE_FLOAT, (char *)TS_config_names[9]}
 	};
 		
 	UTIL_getUpgradeDataFromFile(upgrade_data, ARRAYSIZE(upgrade_data));
@@ -113,8 +113,8 @@ bool EL_Thickenedskin::check_Requirements( )
 	return ( player_data[ID].level >= data_thickenedskin.req_level + cur_level
 		&& player_data[ID].points_available >= data_thickenedskin.req_points
 		&& cur_level < data_thickenedskin.max_level
-		&& UTIL_getMask(pEntity, MASK_REGENERATION)
-		&& UTIL_getMask(pEntity, MASK_CARAPACE));
+		&& UTIL_getMask(pEntity, NS_MASK_REGENERATION)
+		&& UTIL_getMask(pEntity, NS_MASK_CARAPACE));
 }
 
 void EL_Thickenedskin::buy_upgrade( )
@@ -167,7 +167,7 @@ void EL_Thickenedskin::BaseTS_heal( )
 	
 	RegenerateHealth(RegenHP);
 	
-	if ( !UTIL_getMask(pEntity, MASK_SILENCE) )
+	if ( !UTIL_getMask(pEntity, NS_MASK_SILENCE) )
 		EMIT_SOUND_DYN2(pEntity, CHAN_ITEM, TS_sound_files[TS_sound_regen], 0.5, ATTN_NORM, 0, PITCH_NORM);
 }
 
@@ -177,7 +177,7 @@ void EL_Thickenedskin::Metabolize_heal( )
 		|| pEntity->v.health >= player_data[ID].maxHP )
 		return;
 	
-	if ( player_data[ID].curWeapon != WEAPON_METABOLIZE
+	if ( player_data[ID].curWeapon != NS_WEAPON_METABOLIZE
 		|| !( pEntity->v.button & IN_ATTACK ) )
 		return;
 	
@@ -188,7 +188,7 @@ void EL_Thickenedskin::Metabolize_heal( )
 	
 	RegenerateHealth(METABOLIZE_HEAL_HP);
 	
-	if ( UTIL_getMask(pEntity, MASK_SILENCE) == true )
+	if ( UTIL_getMask(pEntity, NS_MASK_SILENCE) == true )
 		return;
 	
 	int random = RANDOM_LONG(TS_sound_metabolize1, TS_sound_metabolize3);
@@ -214,7 +214,7 @@ void EL_Thickenedskin::Hive_heal( )
 	
 	RegenerateHealth(HiveRegenHP);
 	
-	if ( !UTIL_getMask(pEntity, MASK_SILENCE) )
+	if ( !UTIL_getMask(pEntity, NS_MASK_SILENCE) )
 		EMIT_SOUND_DYN2(pEntity, CHAN_ITEM, TS_sound_files[TS_sound_regen], 0.5, ATTN_NORM, 0, PITCH_NORM);
 }
 

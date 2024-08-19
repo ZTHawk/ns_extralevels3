@@ -2,9 +2,7 @@
 #define _NS_CONST_ADVANCED_H_
 
 
-
-
-#define OFFSET_WIN_WEAPON_ID		324	// 81 * 4	--->>> Check the weapon ID of the weapon ( eg: WEAPON_PISTOL, WEAPON_LMG, ... )
+#define OFFSET_WIN_WEAPON_ID		324	// 81 * 4	--->>> Check the weapon ID of the weapon ( eg: NS_WEAPON_PISTOL, NS_WEAPON_LMG, ... )
 #define OFFSET_LIN_WEAPON_ID		340	// (81+4) * 4	--->>> linux offset
 
 #define OFFSET_WIN_WEAPON_RELOADING	376	// 94 * 4	--->>> this offset is needed to check if weapon is reloading
@@ -38,20 +36,13 @@
 
 enum
 {
-	PLAYMODE_UNDEFINED = 0,
-	PLAYMODE_READYROOM,
-	PLAYMODE_PLAYING,
-	PLAYMODE_AWAITINGREINFORCEMENT,		// Player is dead and waiting in line to get back in
-	PLAYMODE_REINFORCING,			// Player is in the process of coming back into the game
-	PLAYMODE_OBSERVER
+	NS_PLAYMODE_UNDEFINED = 0,
+	NS_PLAYMODE_READYROOM,
+	NS_PLAYMODE_PLAYING,
+	NS_PLAYMODE_AWAITINGREINFORCEMENT,		// Player is dead and waiting in line to get back in
+	NS_PLAYMODE_REINFORCING,			// Player is in the process of coming back into the game
+	NS_PLAYMODE_OBSERVER
 };
-
-
-
-
-
-
-
 
 
 #endif

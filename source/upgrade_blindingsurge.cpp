@@ -152,7 +152,7 @@ void EL_Blindingsurge::Think( )
 	if ( pEntity->v.health >= (player_data[ID].maxHP * data_blindingsurge.health_ratio) )
 		return;
 	
-	if ( UTIL_getMask(pEntity, MASK_DIGESTING) == true )
+	if ( UTIL_getMask(pEntity, NS_MASK_DIGESTING) == true )
 		return;
 	
 	if ( gpGlobals->time < nextBlindingsurge )

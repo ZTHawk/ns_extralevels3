@@ -153,7 +153,7 @@ void EL_Hunger::Think( )
 		return;
 	
 	if ( justKilled )		// keep this mask ON untill hungertime runs out
-		UTIL_setMask(pEntity, MASK_PRIMALSCREAM, true);
+		UTIL_setMask(pEntity, NS_MASK_PRIMALSCREAM, true);
 	
 	if ( pEntity->v.frags > lastFrags )
 	{
@@ -168,7 +168,7 @@ void EL_Hunger::Think( )
 			pEntity->v.health += ( player_data[ID].maxHP / 100.0 * data_hunger.bonusHealthPercentage );
 			SpeedBonus += data_hunger.bonusSpeed;
 			
-			if ( UTIL_getMask(pEntity, MASK_SILENCE) == false )
+			if ( UTIL_getMask(pEntity, NS_MASK_SILENCE) == false )
 				EMIT_SOUND_DYN2(pEntity, CHAN_ITEM, H_sound_files[H_sound_primalscream], 0.5, ATTN_NORM, 0, PITCH_NORM);
 		}
 	}else if ( gpGlobals->time >= HungerEndTime
@@ -181,7 +181,7 @@ void EL_Hunger::Think( )
 		SpeedBonus = 0.0;
 		amount_boosts_got = 0;
 		
-		if ( UTIL_getMask(pEntity, MASK_SILENCE) == false )
+		if ( UTIL_getMask(pEntity, NS_MASK_SILENCE) == false )
 			EMIT_SOUND_DYN2(pEntity, CHAN_ITEM, H_sound_files[H_sound_chargekill], 0.5, ATTN_NORM, 0, PITCH_NORM);
 	}
 }

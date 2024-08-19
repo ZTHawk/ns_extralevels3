@@ -159,7 +159,7 @@ void Upgrade_Senseofancients::SporeEmulationTimer( )
 			
 			// check if player is alive and heavy
 			if ( UTIL_isAlive(pEntity)
-				&& player_data[targetID].pClass == CLASS_HEAVY )
+				&& player_data[targetID].pClass == NS_CLASS_HEAVY )
 			{
 				pEntity->v.armorvalue -= ( (float)((int)(*iter).SporeLevel) * SporeDMG );
 				if ( pEntity->v.armorvalue < 0.0 )
@@ -245,16 +245,16 @@ bool EL_Senseofancients::check_Requirements( )
 	return ( player_data[ID].level >= data_senseofancients.req_level + cur_level
 		&& player_data[ID].points_available >= data_senseofancients.req_points
 		&& cur_level < data_senseofancients.max_level
-		&& ( UTIL_getMask(pEntity, MASK_CARAPACE)
-			|| UTIL_getMask(pEntity, MASK_REGENERATION)
-			|| UTIL_getMask(pEntity, MASK_REDEMPTION) )
-		&& ( UTIL_getMask(pEntity, MASK_CELERITY)
-			|| UTIL_getMask(pEntity, MASK_ADRENALINE)
-			|| UTIL_getMask(pEntity, MASK_SILENCE) )
-		&& ( ( UTIL_getMask(pEntity, MASK_CLOAKING)
+		&& ( UTIL_getMask(pEntity, NS_MASK_CARAPACE)
+			|| UTIL_getMask(pEntity, NS_MASK_REGENERATION)
+			|| UTIL_getMask(pEntity, NS_MASK_REDEMPTION) )
+		&& ( UTIL_getMask(pEntity, NS_MASK_CELERITY)
+			|| UTIL_getMask(pEntity, NS_MASK_ADRENALINE)
+			|| UTIL_getMask(pEntity, NS_MASK_SILENCE) )
+		&& ( ( UTIL_getMask(pEntity, NS_MASK_CLOAKING)
 				|| player_etherealshift[ID].Shifting )
-			|| UTIL_getMask(pEntity, MASK_FOCUS)
-			|| UTIL_getMask(pEntity, MASK_SCENTOFFEAR) ) );
+			|| UTIL_getMask(pEntity, NS_MASK_FOCUS)
+			|| UTIL_getMask(pEntity, NS_MASK_SCENTOFFEAR) ) );
 }
 
 void EL_Senseofancients::buy_upgrade( )
@@ -290,8 +290,8 @@ void EL_Senseofancients::set_upgrade_values( )
 	DevourMaxAmount = ((cur_level - 1) / data_senseofancients.DevourAdder) + 1;
 	DevourTime = data_senseofancients.DevourTimeInit - ( (float)DevourTimeMultiplier * data_senseofancients.DevourTimeBonus );
 	
-	if ( player_data[ID].pClass == CLASS_SKULK )
-		//|| player_data[ID].pClass == CLASS_GORGE )
+	if ( player_data[ID].pClass == NS_CLASS_SKULK )
+		//|| player_data[ID].pClass == NS_CLASS_GORGE )
 		setWeaponData_Dmg();
 }
 
@@ -312,7 +312,7 @@ void EL_Senseofancients::Think( )
 		Digest_Player();
 	else if ( JustFreed == true )
 		pEntity->v.takedamage = DAMAGE_AIM;
-	else if ( player_data[ID].pClass != CLASS_ONOS )
+	else if ( player_data[ID].pClass != NS_CLASS_ONOS )
 		find_Digester();
 	
 	if ( cur_level == 0 )
@@ -351,7 +351,7 @@ void EL_Senseofancients::Parasite_Players( )
 	{
 		case PARASITE_INIT:
 		{
-			if ( UTIL_getMask(pEntity, MASK_PARASITED) == false )
+			if ( UTIL_getMask(pEntity, NS_MASK_PARASITED) == false )
 				break;
 			
 			ParasiteMode = PARASITE_BY_SKULK_1;
@@ -397,7 +397,7 @@ void EL_Senseofancients::Parasite_Players( )
 						if ( rand_para_chance[chance] != player_chance )
 							continue;
 						
-						UTIL_setMask(targetEntity, MASK_PARASITED, true);
+						UTIL_setMask(targetEntity, NS_MASK_PARASITED, true);
 						player_senseofancients[targetID].ParasiteMode = PARASITE_BY_MARINE_1;
 						player_senseofancients[targetID].Infected_by = ID;
 					}
@@ -475,7 +475,7 @@ void EL_Senseofancients::check_Parasite( )
 	if ( strcmp(STRING(entAttackerWeapon->v.classname), "weapon_parasite") != 0 )
 		return;
 	
-	if ( get_private(entAttackerWeapon, MAKE_OFFSET(WEAPON_ID)) != WEAPON_PARASITE )
+	if ( get_private(entAttackerWeapon, MAKE_OFFSET(WEAPON_ID)) != NS_WEAPON_PARASITE )
 		return;
 	
 	ParasiteMode = PARASITE_INIT;
@@ -503,7 +503,7 @@ void EL_Senseofancients::setWeaponData_Dmg( )
 		WeaponID = get_private(Ent, MAKE_OFFSET(WEAPON_ID));
 		switch ( WeaponID )
 		{
-			case WEAPON_PARASITE:
+			case NS_WEAPON_PARASITE:
 			{
 				damage_to_set = BasicDmg[WeaponID] + (float)cur_level * ( BasicDmg[WeaponID] / 100.0 * data_senseofancients.ParasiteDMGPercentage );
 				foundID = WeaponID;
@@ -552,7 +552,7 @@ void EL_Senseofancients::check_HealingSpray( )
 		
 		switch ( targetEnt->v.iuser3 )
 		{
-			case AVH_USER3_ALIEN_PLAYER1:	// Skulk
+			case NS_AVH_USER3_ALIEN_PLAYER1:	// Skulk
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < OTHER_HEALSPRAY_RANGE )
 					add_hp_ap(targetEnt,
@@ -560,7 +560,7 @@ void EL_Senseofancients::check_HealingSpray( )
 						SKULK_HEALSPRAY_AP + (float)cur_level * (SKULK_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
 				break;
 			}
-			case AVH_USER3_ALIEN_PLAYER2:	// Gorge
+			case NS_AVH_USER3_ALIEN_PLAYER2:	// Gorge
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < OTHER_HEALSPRAY_RANGE )
 					add_hp_ap(targetEnt,
@@ -568,7 +568,7 @@ void EL_Senseofancients::check_HealingSpray( )
 						GORGE_HEALSPRAY_AP + (float)cur_level * (GORGE_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
 				break;
 			}
-			case AVH_USER3_ALIEN_PLAYER3:	// Lerk
+			case NS_AVH_USER3_ALIEN_PLAYER3:	// Lerk
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < OTHER_HEALSPRAY_RANGE )
 					add_hp_ap(targetEnt,
@@ -576,7 +576,7 @@ void EL_Senseofancients::check_HealingSpray( )
 						LERK_HEALSPRAY_AP + (float)cur_level * (LERK_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
 				break;
 			}
-			case AVH_USER3_ALIEN_PLAYER4:	// Fade
+			case NS_AVH_USER3_ALIEN_PLAYER4:	// Fade
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < OTHER_HEALSPRAY_RANGE )
 					add_hp_ap(targetEnt,
@@ -584,7 +584,7 @@ void EL_Senseofancients::check_HealingSpray( )
 						FADE_HEALSPRAY_AP + (float)cur_level * (FADE_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
 				break;
 			}
-			case AVH_USER3_ALIEN_PLAYER5:	// Onos
+			case NS_AVH_USER3_ALIEN_PLAYER5:	// Onos
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < ONOS_HEALSPRAY_RANGE )
 					add_hp_ap(targetEnt,
@@ -592,7 +592,7 @@ void EL_Senseofancients::check_HealingSpray( )
 						ONOS_HEALSPRAY_AP + (float)cur_level * (ONOS_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
 				break;
 			}
-			case AVH_USER3_ALIEN_EMBRYO:	// Gestate
+			case NS_AVH_USER3_ALIEN_EMBRYO:	// Gestate
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < OTHER_HEALSPRAY_RANGE )
 					add_hp_ap(targetEnt,
@@ -600,24 +600,24 @@ void EL_Senseofancients::check_HealingSpray( )
 						GESTATE_HEALSPRAY_AP + (float)cur_level * (GESTATE_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
 				break;
 			}
-			case AVH_USER3_HIVE:
+			case NS_AVH_USER3_HIVE:
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < HIVE_HEALSPRAY_RANGE )
 					add_hp_ap_structure(targetEnt,
 						STRUCTURE_HEALSPRAY_HP + (float)cur_level * (STRUCTURE_HEALSPRAY_HP / 100.0 * data_senseofancients.HealsprayPercentage));
 				break;
 			}
-			case AVH_USER3_DEFENSE_CHAMBER:
-			case AVH_USER3_MOVEMENT_CHAMBER:
-			case AVH_USER3_OFFENSE_CHAMBER:
-			case AVH_USER3_SENSORY_CHAMBER:
+			case NS_AVH_USER3_DEFENSE_CHAMBER:
+			case NS_AVH_USER3_MOVEMENT_CHAMBER:
+			case NS_AVH_USER3_OFFENSE_CHAMBER:
+			case NS_AVH_USER3_SENSORY_CHAMBER:
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < CHAMBER_HEALSPRAY_RANGE )
 					add_hp_ap_structure(targetEnt,
 						STRUCTURE_HEALSPRAY_HP + (float)cur_level * (STRUCTURE_HEALSPRAY_HP / 100.0 * data_senseofancients.HealsprayPercentage));
 				break;
 			}
-			case AVH_USER3_ALIENRESTOWER:
+			case NS_AVH_USER3_ALIENRESTOWER:
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < ALIEN_RT_HEALSPRAY_RANGE )
 					add_hp_ap_structure(targetEnt,
@@ -670,7 +670,7 @@ void EL_Senseofancients::add_Spore( const edict_t *sporeEntity )
 
 void EL_Senseofancients::Blink_Energy( )
 {
-	if ( player_data[ID].curWeapon != WEAPON_BLINK )
+	if ( player_data[ID].curWeapon != NS_WEAPON_BLINK )
 		return;
 	
 	if ( pEntity->v.button & IN_ATTACK
@@ -735,7 +735,7 @@ void EL_Senseofancients::Digest_Player( )
 
 void EL_Senseofancients::check_for_next_Devour( )
 {
-	if ( UTIL_getMask(pEntity, MASK_DIGESTING) )
+	if ( UTIL_getMask(pEntity, NS_MASK_DIGESTING) )
 	{
 		if ( JustDevoured == false )
 		{
@@ -745,7 +745,7 @@ void EL_Senseofancients::check_for_next_Devour( )
 		}else if ( gpGlobals->time - NextDevour > DevourTime
 			&& DevourPlayersNum < DevourMaxAmount + 1 )
 		{
-			UTIL_setMask(pEntity, MASK_DIGESTING, false);
+			UTIL_setMask(pEntity, NS_MASK_DIGESTING, false);
 			NextDevour = gpGlobals->time;
 			JustDevoured = false;
 		}
@@ -755,7 +755,7 @@ void EL_Senseofancients::check_for_next_Devour( )
 
 void EL_Senseofancients::find_Digester( )
 {
-	if ( UTIL_getMask(pEntity, MASK_DIGESTING) == false	// check if being digested
+	if ( UTIL_getMask(pEntity, NS_MASK_DIGESTING) == false	// check if being digested
 		|| !( pEntity->v.effects & EF_NODRAW ) )	// check if player is really being digested or devouring someone else
 		return;
 	
@@ -782,7 +782,7 @@ byte EL_Senseofancients::get_MyOnos( )
 		if ( targetID == ID )
 			continue;
 		
-		if ( player_data[targetID].pClass != CLASS_ONOS )
+		if ( player_data[targetID].pClass != NS_CLASS_ONOS )
 			continue;
 		
 		targetEntity = INDEXENT(targetID);
@@ -814,7 +814,7 @@ void EL_Senseofancients::free_digested_Players( )
 		if ( targetEntity->v.health < 1.0 )
 			continue;
 		
-		UTIL_setMask(targetEntity, MASK_DIGESTING, 0);
+		UTIL_setMask(targetEntity, NS_MASK_DIGESTING, 0);
 		targetEntity->v.controller[2] = 0;
 		targetEntity->v.solid = 3;
 		targetEntity->v.effects = 0;
@@ -849,21 +849,21 @@ void EL_Senseofancients::free_digested_Players( )
 
 void EL_Senseofancients::set_Player_Weaponmodel( )
 {
-	byte weapon_array = MODEL_KNIFE;	// default, WEAPON_KNIFE
+	byte weapon_array = MODEL_KNIFE;	// default, NS_WEAPON_KNIFE
 	int weapons = pEntity->v.weapons & ~(1<<31);
-	if ( weapons & (1<<WEAPON_GRENADE_GUN) )
+	if ( weapons & (1<<NS_WEAPON_GRENADE_GUN) )
 		weapon_array = MODEL_GL;
-	else if ( weapons & (1<<WEAPON_HMG) )
+	else if ( weapons & (1<<NS_WEAPON_HMG) )
 		weapon_array = MODEL_HMG;
-	else if ( weapons & (1<<WEAPON_SHOTGUN) )
+	else if ( weapons & (1<<NS_WEAPON_SHOTGUN) )
 		weapon_array = MODEL_SHOTGUN;
-	else if ( weapons & (1<<WEAPON_LMG) )
+	else if ( weapons & (1<<NS_WEAPON_LMG) )
 		weapon_array = MODEL_LMG;
-	else if ( weapons & (1<<WEAPON_PISTOL) )
+	else if ( weapons & (1<<NS_WEAPON_PISTOL) )
 		weapon_array = MODEL_PISTOL;
 	
 	int hl_strings_model_id = 0;
-	if ( player_data[ID].pClass == CLASS_HEAVY )
+	if ( player_data[ID].pClass == NS_CLASS_HEAVY )
 	{
 		//pEntity->v.viewmodel = ALLOC_STRING(View_Models_Heavy[weapon_array]);
 		hl_strings_model_id = hl_strings.find(View_Models_Heavy[weapon_array]);
@@ -885,7 +885,7 @@ void EL_Senseofancients::Player_Redeemed( float *Origin )
 	if ( cur_level == 0 )
 		return;
 	
-	if ( player_data[ID].pClass != CLASS_ONOS )
+	if ( player_data[ID].pClass != NS_CLASS_ONOS )
 		return;
 	
 	if ( JustRedeemed == false )
@@ -917,11 +917,11 @@ bool EL_Senseofancients::ImpulseCheckBlock( )
 	if ( cur_level == 0 )
 		return false;
 	
-	if ( player_data[ID].pClass != CLASS_ONOS )
+	if ( player_data[ID].pClass != NS_CLASS_ONOS )
 		return false;
 	
 	if ( DevourPlayersNum == 0
-		&& UTIL_getMask(pEntity, MASK_DIGESTING) == false )
+		&& UTIL_getMask(pEntity, NS_MASK_DIGESTING) == false )
 		return false;
 	
 	if ( gpGlobals->time >= EvolveMsgBlock_time )

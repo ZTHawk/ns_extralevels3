@@ -61,7 +61,7 @@ void Upgrade_Nanoarmor::show_upgrade_menu( edict_t *pEntity )
 	const char *dummy_description = upgrade_description;
 	
 	int nano_weld;
-	if ( player_data[ID].pClass == CLASS_HEAVY )
+	if ( player_data[ID].pClass == NS_CLASS_HEAVY )
 		nano_weld = (int)ha_nanoarmor * ( player_nanoarmor[ID].cur_level + 1 );
 	else
 		nano_weld = (int)ma_nanoarmor * ( player_nanoarmor[ID].cur_level + 1 );
@@ -168,10 +168,10 @@ void EL_Nanoarmor::Think( )
 		return;
 	
 	float nanoarmor_add = 0;
-	if ( player_data[ID].pClass == CLASS_MARINE
-		|| player_data[ID].pClass == CLASS_JETPACK )
+	if ( player_data[ID].pClass == NS_CLASS_MARINE
+		|| player_data[ID].pClass == NS_CLASS_JETPACK )
 		nanoarmor_add = ma_nanoarmor;
-	else if ( player_data[ID].pClass == CLASS_HEAVY )
+	else if ( player_data[ID].pClass == NS_CLASS_HEAVY )
 		nanoarmor_add = ha_nanoarmor;
 	
 	pEntity->v.armorvalue += nanoarmor_add;

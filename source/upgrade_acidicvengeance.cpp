@@ -124,7 +124,7 @@ bool EL_Acidicvengeance::check_Requirements( )
 	return ( player_data[ID].level >= data_acidicvengeance.req_level + cur_level
 		&& player_data[ID].points_available >= data_acidicvengeance.req_points
 		&& cur_level < data_acidicvengeance.max_level
-		&& UTIL_getMask(pEntity, MASK_SCENTOFFEAR)
+		&& UTIL_getMask(pEntity, NS_MASK_SCENTOFFEAR)
 		&& UTIL_getHiveAbility(pEntity, HIVE_3_WEAPONS) );
 }
 
@@ -178,8 +178,8 @@ void EL_Acidicvengeance::Think( )
 	float health_damage = 0.0;
 	float armor_damage = 0.0;
 	byte curClass = player_data[ID].pClass;
-	if ( curClass == CLASS_GESTATE )
-		curClass = CLASS_GORGE;
+	if ( curClass == NS_CLASS_GESTATE )
+		curClass = NS_CLASS_GORGE;
 	
 	edict_t *targetEntity = NULL;
 	for ( byte targetID = 1; targetID <= gpGlobals->maxClients; ++targetID )
@@ -210,9 +210,9 @@ void EL_Acidicvengeance::Think( )
 			continue;
 		
 		targetClass = UTIL_getClass(targetEntity);
-		if ( targetClass == CLASS_HEAVY
-			|| targetClass == CLASS_ONOS
-			|| targetClass == CLASS_FADE )
+		if ( targetClass == NS_CLASS_HEAVY
+			|| targetClass == NS_CLASS_ONOS
+			|| targetClass == NS_CLASS_FADE )
 		{
 			health_damage = ha_HealthDmg;
 			armor_damage = ha_ArmorDmg;
@@ -222,8 +222,8 @@ void EL_Acidicvengeance::Think( )
 			armor_damage = ma_ArmorDmg;
 		}
 		
-		// no need to check for CLASS_GESTATE as it has been done before
-		if ( curClass == CLASS_GORGE )
+		// no need to check for NS_CLASS_GESTATE as it has been done before
+		if ( curClass == NS_CLASS_GORGE )
 		{
 			health_damage += ( health_damage / 100.0 * data_acidicvengeance.GorgeGestateBonus );
 			armor_damage += ( armor_damage / 100.0 * data_acidicvengeance.GorgeGestateBonus );
@@ -231,7 +231,7 @@ void EL_Acidicvengeance::Think( )
 		
 		if ( targetEntity->v.health - health_damage < 1.0 )
 		{
-			// set players points + score before killing victim because victims class will change to CLASS_DEAD
+			// set players points + score before killing victim because victims class will change to NS_CLASS_DEAD
 			player_data[ID].givePoints(targetID);
 			player_data[targetID].killPlayer();
 			player_data[targetID].newDeahthMsg(ID, "nuke");

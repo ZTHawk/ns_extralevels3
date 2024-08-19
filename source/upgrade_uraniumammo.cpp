@@ -103,7 +103,7 @@ bool EL_Uraniumammo::check_Requirements( )
 	return ( player_data[ID].level >= data_uraniumammo.req_level + cur_level
 		&& player_data[ID].points_available >= data_uraniumammo.req_points
 		&& cur_level < data_uraniumammo.max_level
-		&& UTIL_getMask(pEntity, MASK_WEAPONS3) );
+		&& UTIL_getMask(pEntity, NS_MASK_WEAPONS3) );
 }
 
 void EL_Uraniumammo::buy_upgrade( )
@@ -141,7 +141,7 @@ void EL_Uraniumammo::set_upgrade_values( )
 		// Primary Weapon
 		if ( !FNullEnt((entWeapon = INDEXENT(entPrimaryGunID))) )
 		{
-			if ( PrimaryGunID == WEAPON_GRENADE_GUN )
+			if ( PrimaryGunID == NS_WEAPON_GRENADE_GUN )
 				dmg_to_set = BasicDmg[PrimaryGunID] + (float)cur_level * ( BasicDmg[PrimaryGunID] / 100.0 * data_uraniumammo.GrenadeDmgPercentage );
 			else
 				dmg_to_set = BasicDmg[PrimaryGunID] + (float)cur_level * ( BasicDmg[PrimaryGunID] / 100.0 * data_uraniumammo.BulletDmgPercentage );
@@ -152,14 +152,14 @@ void EL_Uraniumammo::set_upgrade_values( )
 		// Pistol
 		if ( !FNullEnt((entWeapon = INDEXENT(entPistolID))) )
 		{
-			dmg_to_set = BasicDmg[WEAPON_PISTOL] + (float)cur_level * ( BasicDmg[WEAPON_PISTOL] / 100.0 * data_uraniumammo.BulletDmgPercentage );
+			dmg_to_set = BasicDmg[NS_WEAPON_PISTOL] + (float)cur_level * ( BasicDmg[NS_WEAPON_PISTOL] / 100.0 * data_uraniumammo.BulletDmgPercentage );
 			UTIL_setWeaponDamage(entWeapon, dmg_to_set);
 		}
 		
 		// HandGrenade
 		if ( !FNullEnt((entWeapon = INDEXENT(entHandGrenadeID))) )
 		{
-			dmg_to_set = BasicDmg[WEAPON_GRENADE] + (float)cur_level * ( BasicDmg[WEAPON_GRENADE] / 100.0 * data_uraniumammo.GrenadeDmgPercentage );
+			dmg_to_set = BasicDmg[NS_WEAPON_GRENADE] + (float)cur_level * ( BasicDmg[NS_WEAPON_GRENADE] / 100.0 * data_uraniumammo.GrenadeDmgPercentage );
 			UTIL_setWeaponDamage(entWeapon, dmg_to_set);
 		}
 	}
@@ -194,7 +194,7 @@ void EL_Uraniumammo::Think( )
 	
 	bool get_new_data = false;
 	// check Pistol ID
-	if ( UTIL_hasWeapon(pEntity, WEAPON_PISTOL) == false )
+	if ( UTIL_hasWeapon(pEntity, NS_WEAPON_PISTOL) == false )
 	{
 		if ( entPistolID != 0 )
 			entPistolID = 0;
@@ -203,7 +203,7 @@ void EL_Uraniumammo::Think( )
 		get_new_data = true;
 	
 	// check Grenade ID
-	if ( UTIL_hasWeapon(pEntity, WEAPON_GRENADE) == false )
+	if ( UTIL_hasWeapon(pEntity, NS_WEAPON_GRENADE) == false )
 	{
 		if ( entHandGrenadeID != 0 )
 			entHandGrenadeID = 0;
@@ -212,10 +212,10 @@ void EL_Uraniumammo::Think( )
 		get_new_data = true;
 	
 	// check Primary Weapon ID
-	if ( UTIL_hasWeapon(pEntity, WEAPON_LMG) == false
-		&& UTIL_hasWeapon(pEntity, WEAPON_HMG) == false
-		&& UTIL_hasWeapon(pEntity, WEAPON_SHOTGUN) == false
-		&& UTIL_hasWeapon(pEntity, WEAPON_GRENADE_GUN) == false )
+	if ( UTIL_hasWeapon(pEntity, NS_WEAPON_LMG) == false
+		&& UTIL_hasWeapon(pEntity, NS_WEAPON_HMG) == false
+		&& UTIL_hasWeapon(pEntity, NS_WEAPON_SHOTGUN) == false
+		&& UTIL_hasWeapon(pEntity, NS_WEAPON_GRENADE_GUN) == false )
 	{
 		if ( entPrimaryGunID != 0 )
 			entPrimaryGunID = 0;
@@ -253,7 +253,7 @@ void EL_Uraniumammo::findWeaponData( byte mode )
 	byte foundID = 0;
 	byte foundNum = 0;
 	byte WeaponID = 0;
-	int weaponsAmount = UTIL_hasWeapon(pEntity, WEAPON_GRENADE) ? 3 : 2;
+	int weaponsAmount = UTIL_hasWeapon(pEntity, NS_WEAPON_GRENADE) ? 3 : 2;
 	edict_t *Ent = NULL;
 	for ( int entID = gpGlobals->maxClients + 1; entID <= gpGlobals->maxEntities; ++entID )
 	{
@@ -267,23 +267,23 @@ void EL_Uraniumammo::findWeaponData( byte mode )
 		WeaponID = get_private(Ent, MAKE_OFFSET(WEAPON_ID));
 		switch ( WeaponID )
 		{
-			case WEAPON_SHOTGUN:
-			case WEAPON_HMG:
-			case WEAPON_LMG:
-			case WEAPON_PISTOL:
+			case NS_WEAPON_SHOTGUN:
+			case NS_WEAPON_HMG:
+			case NS_WEAPON_LMG:
+			case NS_WEAPON_PISTOL:
 			{
 				// mode = 1 means player purchased new weapon
 				// in this case do not give extra ammo to pistol
 				if ( mode == UA_BOUGHT_NEW_WEAPON
-					&& WeaponID == WEAPON_PISTOL )
+					&& WeaponID == NS_WEAPON_PISTOL )
 					continue;
 				
 				damage_to_set = BasicDmg[WeaponID] + (float)cur_level * ( BasicDmg[WeaponID] / 100.0 * data_uraniumammo.BulletDmgPercentage );
 				foundID = WeaponID;
 				break;
 			}
-			case WEAPON_GRENADE_GUN:
-			case WEAPON_GRENADE:
+			case NS_WEAPON_GRENADE_GUN:
+			case NS_WEAPON_GRENADE:
 			{
 				damage_to_set = BasicDmg[WeaponID] + (float)cur_level * ( BasicDmg[WeaponID] / 100.0 * data_uraniumammo.GrenadeDmgPercentage );
 				foundID = WeaponID;
@@ -294,10 +294,10 @@ void EL_Uraniumammo::findWeaponData( byte mode )
 		if ( !foundID )
 			continue;
 		
-		if ( foundID == WEAPON_PISTOL )
+		if ( foundID == NS_WEAPON_PISTOL )
 		{
 			entPistolID = entID;
-		}else if ( foundID == WEAPON_GRENADE )
+		}else if ( foundID == NS_WEAPON_GRENADE )
 		{
 			entHandGrenadeID = entID;
 		}else

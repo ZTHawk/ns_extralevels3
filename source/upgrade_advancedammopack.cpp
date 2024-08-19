@@ -14,11 +14,11 @@ void Upgrade_AdvancedAmmopack::init( )
 		{&(req_points = AA_COST), TYPE_INT, (char *)AA_config_names[1]},
 		{&(max_level = AA_MAX), TYPE_INT, (char *)AA_config_names[2]},
 		{&(req_level = AA_LEVEL), TYPE_INT, (char *)AA_config_names[3]},
-		{&(Ammo_per_WeaponID[WEAPON_PISTOL] = AA_PISTOL), TYPE_FLOAT, (char *)AA_config_names[4]},
-		{&(Ammo_per_WeaponID[WEAPON_LMG] = AA_LMG), TYPE_FLOAT, (char *)AA_config_names[5]},
-		{&(Ammo_per_WeaponID[WEAPON_SHOTGUN] = AA_SHOTGUN), TYPE_FLOAT, (char *)AA_config_names[6]},
-		{&(Ammo_per_WeaponID[WEAPON_HMG] = AA_HMG), TYPE_FLOAT, (char *)AA_config_names[7]},
-		{&(Ammo_per_WeaponID[WEAPON_GRENADE_GUN] = AA_GL), TYPE_FLOAT, (char *)AA_config_names[8]}
+		{&(Ammo_per_WeaponID[NS_WEAPON_PISTOL] = AA_PISTOL), TYPE_FLOAT, (char *)AA_config_names[4]},
+		{&(Ammo_per_WeaponID[NS_WEAPON_LMG] = AA_LMG), TYPE_FLOAT, (char *)AA_config_names[5]},
+		{&(Ammo_per_WeaponID[NS_WEAPON_SHOTGUN] = AA_SHOTGUN), TYPE_FLOAT, (char *)AA_config_names[6]},
+		{&(Ammo_per_WeaponID[NS_WEAPON_HMG] = AA_HMG), TYPE_FLOAT, (char *)AA_config_names[7]},
+		{&(Ammo_per_WeaponID[NS_WEAPON_GRENADE_GUN] = AA_GL), TYPE_FLOAT, (char *)AA_config_names[8]}
 	};
 	
 	UTIL_getUpgradeDataFromFile(upgrade_data, ARRAYSIZE(upgrade_data));
@@ -62,16 +62,16 @@ void Upgrade_AdvancedAmmopack::show_upgrade_menu( edict_t *pEntity )
 	const char *dummy_description = upgrade_description;
 	
 	// max new Ammo = ( ( level + 1 ) * amount to increase per level ) + default max Ammo
-	int new_pistol_add = (int)( (float)( player_advancedammopack[ID].cur_level + 1 ) * Ammo_per_WeaponID[WEAPON_PISTOL]
-				+ (float)BasicAmmo[WEAPON_PISTOL] );
-	int new_lmg_add = (int)( (float)( player_advancedammopack[ID].cur_level + 1 ) * Ammo_per_WeaponID[WEAPON_LMG]
-				+ (float)BasicAmmo[WEAPON_LMG] );
-	int new_shotgun_add = (int)( (float)( player_advancedammopack[ID].cur_level + 1 ) * Ammo_per_WeaponID[WEAPON_SHOTGUN]
-				+ (float)BasicAmmo[WEAPON_SHOTGUN] );
-	int new_hmg_add = (int)( (float)( player_advancedammopack[ID].cur_level + 1 ) * Ammo_per_WeaponID[WEAPON_HMG]
-				+ (float)BasicAmmo[WEAPON_HMG] );
-	int new_gl_add = (int)( (float)( player_advancedammopack[ID].cur_level + 1 ) * Ammo_per_WeaponID[WEAPON_GRENADE_GUN]
-				+ (float)BasicAmmo[WEAPON_GRENADE_GUN] );
+	int new_pistol_add = (int)( (float)( player_advancedammopack[ID].cur_level + 1 ) * Ammo_per_WeaponID[NS_WEAPON_PISTOL]
+				+ (float)BasicAmmo[NS_WEAPON_PISTOL] );
+	int new_lmg_add = (int)( (float)( player_advancedammopack[ID].cur_level + 1 ) * Ammo_per_WeaponID[NS_WEAPON_LMG]
+				+ (float)BasicAmmo[NS_WEAPON_LMG] );
+	int new_shotgun_add = (int)( (float)( player_advancedammopack[ID].cur_level + 1 ) * Ammo_per_WeaponID[NS_WEAPON_SHOTGUN]
+				+ (float)BasicAmmo[NS_WEAPON_SHOTGUN] );
+	int new_hmg_add = (int)( (float)( player_advancedammopack[ID].cur_level + 1 ) * Ammo_per_WeaponID[NS_WEAPON_HMG]
+				+ (float)BasicAmmo[NS_WEAPON_HMG] );
+	int new_gl_add = (int)( (float)( player_advancedammopack[ID].cur_level + 1 ) * Ammo_per_WeaponID[NS_WEAPON_GRENADE_GUN]
+				+ (float)BasicAmmo[NS_WEAPON_GRENADE_GUN] );
 	
 	bool req_correct = player_advancedammopack[ID].check_Requirements();
 	sprintf(menu, dummy_description,
@@ -124,7 +124,7 @@ void EL_AdvancedAmmopack::resetGunPointer( )
 
 void EL_AdvancedAmmopack::resetExtra( )
 {
-	if ( curReloadingWeapon == WEAPON_SHOTGUN )
+	if ( curReloadingWeapon == NS_WEAPON_SHOTGUN )
 	{
 		if ( !FNullEnt(INDEXENT(entPrimaryGunID)) )
 		{
@@ -156,18 +156,18 @@ void EL_AdvancedAmmopack::reset_basic( )
 	if ( cur_level == 0 )
 		return;
 	
-	if ( player_data[ID].curWeapon == WEAPON_GRENADE_GUN
+	if ( player_data[ID].curWeapon == NS_WEAPON_GRENADE_GUN
 		&& endReloadTime > gpGlobals->time
 		&& UTIL_getWeaponClip(INDEXENT(entPrimaryGunID)) > 0 )
 	{
 		// round to ceil
 		int bullets_got_to_much = (int)ceil(( endReloadTime - gpGlobals->time ) / RELOAD_TIME_GL);
-		int correct_gl_ammo = (BasicAmmo[WEAPON_GRENADE_GUN] + bonusAmmo[WEAPON_GRENADE_GUN]) - bullets_got_to_much;
+		int correct_gl_ammo = (BasicAmmo[NS_WEAPON_GRENADE_GUN] + bonusAmmo[NS_WEAPON_GRENADE_GUN]) - bullets_got_to_much;
 		int ammo_corrector = UTIL_getWeaponClip(INDEXENT(entPrimaryGunID)) - correct_gl_ammo;
 		if ( ammo_corrector > 0 )
 		{
 			addWeaponClip(INDEXENT(entPrimaryGunID), -ammo_corrector);
-			addWeaponReserve(WEAPON_GRENADE_GUN, ammo_corrector);
+			addWeaponReserve(NS_WEAPON_GRENADE_GUN, ammo_corrector);
 		}
 	}
 	
@@ -181,7 +181,7 @@ void EL_AdvancedAmmopack::fixAnimation( )
 	if ( cur_level == 0 )
 		return;
 		
-	if ( player_data[ID].curWeapon == WEAPON_GRENADE_GUN
+	if ( player_data[ID].curWeapon == NS_WEAPON_GRENADE_GUN
 		&& endReloadTime < gpGlobals->time )
 	{
 		pEntity->v.weaponanim = ANIMATION_SWITCHED_TO_GL;
@@ -194,8 +194,8 @@ bool EL_AdvancedAmmopack::check_Requirements( )
 		&& player_data[ID].points_available >= data_advancedammopack.req_points
 		&& cur_level < data_advancedammopack.max_level
 		&& player_data[ID].got_resupply == true
-		&& UTIL_getMask(pEntity, MASK_ARMOR1)
-		&& UTIL_getMask(pEntity, MASK_WEAPONS1) );
+		&& UTIL_getMask(pEntity, NS_MASK_ARMOR1)
+		&& UTIL_getMask(pEntity, NS_MASK_WEAPONS1) );
 }
 
 void EL_AdvancedAmmopack::buy_upgrade( )
@@ -253,17 +253,17 @@ void EL_AdvancedAmmopack::set_upgrade_values( )
 		// Pistol
 		if ( !FNullEnt((entWeapon = INDEXENT(entPistolID))) )
 		{
-			ammo_per_Level = data_advancedammopack.Ammo_per_WeaponID[WEAPON_PISTOL];
+			ammo_per_Level = data_advancedammopack.Ammo_per_WeaponID[NS_WEAPON_PISTOL];
 			
 			if ( ammo_per_Level <= 1.0
-				&& ( bonusAmmo[WEAPON_PISTOL] - ammo_per_Level * freeAmmo_at_lvl[WEAPON_PISTOL] ) >= 1.0 )	// new bonus ammo - last bonus > 1, then give that extra ammo
+				&& ( bonusAmmo[NS_WEAPON_PISTOL] - ammo_per_Level * freeAmmo_at_lvl[NS_WEAPON_PISTOL] ) >= 1.0 )	// new bonus ammo - last bonus > 1, then give that extra ammo
 			{
-				freeAmmo_at_lvl[WEAPON_PISTOL] = cur_level;
+				freeAmmo_at_lvl[NS_WEAPON_PISTOL] = cur_level;
 				ammo_per_Level = 1.0;
 			}
 			
 			addWeaponClip(entWeapon, (int)ammo_per_Level);
-			addWeaponReserve(WEAPON_PISTOL, (int)(ammo_per_Level * 2.0));
+			addWeaponReserve(NS_WEAPON_PISTOL, (int)(ammo_per_Level * 2.0));
 		}
 	}
 }
@@ -313,11 +313,11 @@ void EL_AdvancedAmmopack::Think( )
 	byte WeaponID = player_data[ID].curWeapon;
 	switch ( WeaponID )
 	{
-		case WEAPON_PISTOL:
-		case WEAPON_LMG:
-		case WEAPON_SHOTGUN:
-		case WEAPON_HMG:
-		case WEAPON_GRENADE_GUN:
+		case NS_WEAPON_PISTOL:
+		case NS_WEAPON_LMG:
+		case NS_WEAPON_SHOTGUN:
+		case NS_WEAPON_HMG:
+		case NS_WEAPON_GRENADE_GUN:
 		{
 			break;
 		}
@@ -328,7 +328,7 @@ void EL_AdvancedAmmopack::Think( )
 		}
 	}
 	
-	int entWeaponID = ( WeaponID == WEAPON_PISTOL ) ? entPistolID : entPrimaryGunID;
+	int entWeaponID = ( WeaponID == NS_WEAPON_PISTOL ) ? entPistolID : entPrimaryGunID;
 	if ( FNullEnt(INDEXENT(entWeaponID)) )
 	{
 		// player has a weapon that is AdvAmmopack compatible but its ID is invalid
@@ -362,14 +362,14 @@ void EL_AdvancedAmmopack::Think( )
 	ReloadInitiate(WeaponID, Ammo_to_add, isWeaponReloading);
 	
 	// check if player's weapon is shotgun
-	if ( WeaponID == WEAPON_SHOTGUN )
+	if ( WeaponID == NS_WEAPON_SHOTGUN )
 		ReloadShotgun(entWeapon);
 	else if ( curReloadingWeapon )
 		ReloadOtherWeapons(WeaponID, entWeapon, Ammo_to_add, isWeaponReloading);
 	
 	// update HUD
 	//if ( gpGlobals->time - player_data[ID].lastHUD_display > DISPLAY_TIME
-	//	&& WeaponID == WEAPON_GRENADE_GUN )
+	//	&& WeaponID == NS_WEAPON_GRENADE_GUN )
 	//	player_data[ID].lastHUD_display = gpGlobals->time - 2.0;
 }
 
@@ -416,7 +416,7 @@ void EL_AdvancedAmmopack::checkReloadStarting( byte WeaponID , edict_t *entWeapo
 		pEntity->v.button = pEntity->v.button & ~IN_RELOAD;
 		
 		return;
-	}else if ( WeaponID == WEAPON_GRENADE_GUN
+	}else if ( WeaponID == NS_WEAPON_GRENADE_GUN
 		&& Current_Ammo >= BasicAmmo[WeaponID] )
 	{
 		if ( Reserve_Ammo <= 0 )
@@ -426,9 +426,9 @@ void EL_AdvancedAmmopack::checkReloadStarting( byte WeaponID , edict_t *entWeapo
 		// NS will only make animations if ammo is < default max
 		// so check how many grens we need to remove from clip and add to reserve
 		
-		GL_ReloadTime_reducer = ( ( ( Current_Ammo - BasicAmmo[WEAPON_GRENADE_GUN] ) + 1 ) * RELOAD_TIME_GL );
-		Reserve_Ammo += ( Current_Ammo - BasicAmmo[WEAPON_GRENADE_GUN] ) + 1;
-		Current_Ammo -= ( Current_Ammo - BasicAmmo[WEAPON_GRENADE_GUN] ) + 1;
+		GL_ReloadTime_reducer = ( ( ( Current_Ammo - BasicAmmo[NS_WEAPON_GRENADE_GUN] ) + 1 ) * RELOAD_TIME_GL );
+		Reserve_Ammo += ( Current_Ammo - BasicAmmo[NS_WEAPON_GRENADE_GUN] ) + 1;
+		Current_Ammo -= ( Current_Ammo - BasicAmmo[NS_WEAPON_GRENADE_GUN] ) + 1;
 		UTIL_setWeaponReserve(pEntity, WeaponID, Reserve_Ammo);
 		UTIL_setWeaponClip(entWeapon, Current_Ammo);
 	}
@@ -447,16 +447,16 @@ void EL_AdvancedAmmopack::checkReloadingFullAmmo( byte WeaponID , edict_t *entWe
 	if ( curReloadingWeapon != 0 )
 		return;
 	
-	if ( WeaponID == WEAPON_SHOTGUN
+	if ( WeaponID == NS_WEAPON_SHOTGUN
 		&& ( Current_Ammo < BasicAmmo[WeaponID]
 			|| Shotgun_bulltes_stolen != 0 ) )	// nothing  stolen yet, to prevent loops
 		return;
 	
-	if ( WeaponID != WEAPON_SHOTGUN
+	if ( WeaponID != NS_WEAPON_SHOTGUN
 		&& Current_Ammo != BasicAmmo[WeaponID] )
 		return;
 	
-	if ( WeaponID == WEAPON_SHOTGUN )
+	if ( WeaponID == NS_WEAPON_SHOTGUN )
 	{
 		// steal difference between basic and current ammo + 1
 		Shotgun_bulltes_xtra_stolen = Current_Ammo - BasicAmmo[WeaponID] + 1;
@@ -476,7 +476,7 @@ void EL_AdvancedAmmopack::ReloadInitiate( byte WeaponID , int Ammo_to_add , bool
 {
 	byte Player_WeaponAnimation = pEntity->v.weaponanim;
 	if ( isWeaponReloading == false
-		&& ( WeaponID != WEAPON_SHOTGUN		// shotgun does not set reload value
+		&& ( WeaponID != NS_WEAPON_SHOTGUN		// shotgun does not set reload value
 			|| Player_WeaponAnimation != 2 ) )
 		return;
 	
@@ -490,17 +490,17 @@ void EL_AdvancedAmmopack::ReloadInitiate( byte WeaponID , int Ammo_to_add , bool
 	endReloadTime = gpGlobals->time;
 	switch ( WeaponID )
 	{
-		case WEAPON_PISTOL:
+		case NS_WEAPON_PISTOL:
 		{
 			endReloadTime += RELOAD_TIME_PISTOL;
 			break;
 		}
-		case WEAPON_LMG:
+		case NS_WEAPON_LMG:
 		{
 			endReloadTime += RELOAD_TIME_LMG;
 			break;
 		}
-		case WEAPON_SHOTGUN:
+		case NS_WEAPON_SHOTGUN:
 		{
 			int additional_time = 0;
 			// shotgun reloads each bullet seperatly
@@ -523,12 +523,12 @@ void EL_AdvancedAmmopack::ReloadInitiate( byte WeaponID , int Ammo_to_add , bool
 			
 			break;
 		}
-		case WEAPON_HMG:
+		case NS_WEAPON_HMG:
 		{
 			endReloadTime += RELOAD_TIME_HMG;
 			break;
 		}
-		case WEAPON_GRENADE_GUN:
+		case NS_WEAPON_GRENADE_GUN:
 		{
 			endReloadTime += ( RELOAD_TIME_GL_INIT
 					+ ( ( Player_WeaponAnimation - 3 + Ammo_to_add ) * RELOAD_TIME_GL )	// 1 grenade => Player_WeaponAnimation = 4
@@ -550,7 +550,7 @@ void EL_AdvancedAmmopack::ReloadShotgun( edict_t *entWeapon )
 		
 		pEntity->v.weaponanim = 0;
 	// we reloaded shotgun to max OR reserve ammo is empty
-	}else if ( Current_Ammo == BasicAmmo[WEAPON_SHOTGUN] )
+	}else if ( Current_Ammo == BasicAmmo[NS_WEAPON_SHOTGUN] )
 	{
 		// this forces to play the "Reaload Done" animation
 		// cause Reload animation ( = 2 ) is a loop animation
@@ -564,7 +564,7 @@ void EL_AdvancedAmmopack::ReloadShotgun( edict_t *entWeapon )
 	{
 		// check if we reached MAX DEFAULT AMMO - 1 and if we still have bullets to steal
 		// steal bullets if needed
-		if ( Current_Ammo == BasicAmmo[WEAPON_SHOTGUN] - 1
+		if ( Current_Ammo == BasicAmmo[NS_WEAPON_SHOTGUN] - 1
 			&& Shotgun_bulltes_to_steal >= 1
 			&& Reserve_Ammo > 0 )
 		{
@@ -624,7 +624,7 @@ void EL_AdvancedAmmopack::ReloadOtherWeapons( byte WeaponID , edict_t *entWeapon
 		// GL is reloading grenade by grenade
 		// and animation is not syncronized with actual reload
 		// so block fire by setting time when player is able to shoot again
-		if ( WeaponID == WEAPON_GRENADE_GUN )
+		if ( WeaponID == NS_WEAPON_GRENADE_GUN )
 		{
 			set_private_f(pEntity, MAKE_OFFSET(WEAPON_RELOAD_TIME),
 					get_private_f(pEntity, MAKE_OFFSET(WEAPON_RELOAD_TIME))
@@ -678,16 +678,16 @@ void EL_AdvancedAmmopack::findWeaponData( byte mode )
 		WeaponID = get_private(Ent, MAKE_OFFSET(WEAPON_ID));
 		switch ( WeaponID )
 		{
-			case WEAPON_SHOTGUN:
-			case WEAPON_HMG:
-			case WEAPON_GRENADE_GUN:
-			case WEAPON_LMG:
-			case WEAPON_PISTOL:
+			case NS_WEAPON_SHOTGUN:
+			case NS_WEAPON_HMG:
+			case NS_WEAPON_GRENADE_GUN:
+			case NS_WEAPON_LMG:
+			case NS_WEAPON_PISTOL:
 			{
 				// mode = 1 means player purchased new weapon
 				// in this case do not give extra ammo to pistol
 				if ( mode == AA_BOUGHT_NEW_WEAPON
-					&& WeaponID == WEAPON_PISTOL )
+					&& WeaponID == NS_WEAPON_PISTOL )
 					continue;
 				
 				foundID = WeaponID;
@@ -698,7 +698,7 @@ void EL_AdvancedAmmopack::findWeaponData( byte mode )
 		if ( !foundID )
 			continue;
 		
-		if ( foundID == WEAPON_PISTOL )
+		if ( foundID == NS_WEAPON_PISTOL )
 		{
 			entPistolID = entID;
 		}else
@@ -749,7 +749,7 @@ bool EL_AdvancedAmmopack::setHUDText( byte vID , bool is_marine , hudtextparms_t
 	if ( endReloadTime <= gpGlobals->time )
 		return false;
 	
-	if ( player_data[vID].curWeapon == WEAPON_GRENADE_GUN )
+	if ( player_data[vID].curWeapon == NS_WEAPON_GRENADE_GUN )
 	{
 		sprintf(CoreT_GL_reload_Shift_text, "You are reloading your GL with Advanced Ammo\nReload done in %3.1f second%s\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", endReloadTime - gpGlobals->time, ( endReloadTime - gpGlobals->time >= 2.0 ) ? "s" : "");	// 21 * \n
 		UTIL_setHUD(hud_params
@@ -758,10 +758,10 @@ bool EL_AdvancedAmmopack::setHUDText( byte vID , bool is_marine , hudtextparms_t
 			, is_marine ? MARINE_HUD_COLOR_B : ALIEN_HUD_COLOR_B
 			, -1.0, UTIL_isAlive(INDEXENT(vID)) ? 0.46 : 0.39, 0, 0.0, 3600.0, 0.0, 0.0, HUD_CHANNEL);
 		return true;
-	}else if ( player_data[vID].curWeapon == WEAPON_SHOTGUN )
+	}else if ( player_data[vID].curWeapon == NS_WEAPON_SHOTGUN )
 	{
 		int current_ammo = UTIL_getWeaponClip(INDEXENT(entPrimaryGunID)) + Shotgun_bulltes_stolen - 1 + Shotgun_bulltes_xtra_stolen;
-		sprintf(CoreT_GL_reload_Shift_text, "You are reloading your Shotgun with Advanced Ammo\n%d of %d Bullets\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", current_ammo, BasicAmmo[WEAPON_SHOTGUN] + bonusAmmo[WEAPON_SHOTGUN]);	// 23 * \n
+		sprintf(CoreT_GL_reload_Shift_text, "You are reloading your Shotgun with Advanced Ammo\n%d of %d Bullets\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", current_ammo, BasicAmmo[NS_WEAPON_SHOTGUN] + bonusAmmo[NS_WEAPON_SHOTGUN]);	// 23 * \n
 		UTIL_setHUD(hud_params
 			, is_marine ? MARINE_HUD_COLOR_R : ALIEN_HUD_COLOR_R
 			, is_marine ? MARINE_HUD_COLOR_G : ALIEN_HUD_COLOR_G

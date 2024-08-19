@@ -111,8 +111,8 @@ bool EL_Staticfield::check_Requirements( )
 		&& player_data[ID].points_available >= data_staticfield.req_points
 		&& cur_level < data_staticfield.max_level
 		&& player_data[ID].got_scan == true
-		&& UTIL_getMask(pEntity, MASK_WEAPONS2)
-		&& UTIL_getMask(pEntity, MASK_MOTION) );
+		&& UTIL_getMask(pEntity, NS_MASK_WEAPONS2)
+		&& UTIL_getMask(pEntity, NS_MASK_MOTION) );
 }
 
 void EL_Staticfield::buy_upgrade( )
@@ -155,7 +155,7 @@ void EL_Staticfield::Think( )
 	if ( UTIL_isAlive(pEntity) == false )
 		return;
 	
-	if ( UTIL_getMask(pEntity, MASK_DIGESTING) == true )
+	if ( UTIL_getMask(pEntity, NS_MASK_DIGESTING) == true )
 		return;
 	
 	nextStaticfieldTime = gpGlobals->time + SF_TIME;

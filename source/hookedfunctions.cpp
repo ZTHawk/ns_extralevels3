@@ -638,7 +638,7 @@ void ClientPreThink( edict_t *pEntity )
 		player_data[ID].getMaxAP();
 		
 		// close menus
-		if ( newClass == CLASS_GESTATE )
+		if ( newClass == NS_CLASS_GESTATE )
 		{
 			CLIENT_COMMAND(pEntity, "slot10\n");
 			player_data[ID].player_gestate_extracheck = 0;
@@ -646,12 +646,12 @@ void ClientPreThink( edict_t *pEntity )
 			if ( pEntity->v.health > player_data[ID].maxHP )
 				pEntity->v.health = player_data[ID].maxHP;
 		}
-		if ( oldClass == CLASS_GESTATE )
+		if ( oldClass == NS_CLASS_GESTATE )
 		{
 			player_data[ID].player_gestate_extracheck = 0;
 			
-			if ( player_data[ID].pClass == CLASS_SKULK )
-				// || player_data[ID].pClass == CLASS_GORGE )
+			if ( player_data[ID].pClass == NS_CLASS_SKULK )
+				// || player_data[ID].pClass == NS_CLASS_GORGE )
 				player_senseofancients[ID].setWeaponData_Dmg();
 		}
 	}

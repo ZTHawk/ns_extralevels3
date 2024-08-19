@@ -107,7 +107,7 @@ bool EL_Bloodlust::check_Requirements( )
 	return ( player_data[ID].level >= data_bloodlust.req_level + cur_level
 		&& player_data[ID].points_available >= data_bloodlust.req_points
 		&& cur_level < data_bloodlust.max_level
-		&& UTIL_getMask(pEntity, MASK_ADRENALINE) );
+		&& UTIL_getMask(pEntity, NS_MASK_ADRENALINE) );
 }
 
 void EL_Bloodlust::buy_upgrade( )
@@ -146,7 +146,7 @@ void EL_Bloodlust::Think( )
 	
 	float energy_to_give = 0.0;
 	float base_energy_to_give = 0.0;
-	if ( player_data[ID].pClass == CLASS_ONOS )
+	if ( player_data[ID].pClass == NS_CLASS_ONOS )
 		base_energy_to_give = BloodlustRegenOnos;
 	else
 		base_energy_to_give = BloodlustRegen;
@@ -169,7 +169,7 @@ void EL_Bloodlust::Think( )
 		energy_to_give = MAX_ENERGY - pEntity->v.fuser3;
 	
 	// not needed anymore due to NS 3.2 charge change
-	/*else if ( player_data[ID].pClass == CLASS_ONOS
+	/*else if ( player_data[ID].pClass == NS_CLASS_ONOS
 		&& pEntity->v.fuser3 < ONOS_MIN_ADRENALINE )
 	{
 		energy_to_give = 0.0;
@@ -212,15 +212,15 @@ void EL_Bloodlust::drink_my_Blood( )
 	switch ( get_private(entAttackerWeapon, MAKE_OFFSET(WEAPON_ID)) )
 	{
 		// skulk + lerk
-		case WEAPON_BITE:
-		case WEAPON_BITE2:
+		case NS_WEAPON_BITE:
+		case NS_WEAPON_BITE2:
 		{
 			health_damage = player_bloodlust[attacker_ID].Vampirism;
 			break;
 		}
 		// fade + onos
-		case WEAPON_SWIPE:
-		case WEAPON_CLAWS:
+		case NS_WEAPON_SWIPE:
+		case NS_WEAPON_CLAWS:
 		{
 			health_damage = player_bloodlust[attacker_ID].Vampirism_Fade_Onos;
 			break;
@@ -231,13 +231,13 @@ void EL_Bloodlust::drink_my_Blood( )
 		}
 	}
 	
-	if ( player_data[ID].pClass == CLASS_HEAVY )
+	if ( player_data[ID].pClass == NS_CLASS_HEAVY )
 		health_damage *= BL_VAMPIRISM_HA_PERCENTAGE;
 	
 	float health_add = 0.0;
 	if ( pEntity->v.health - health_damage < 1.0 )
 	{
-		// set players points + score before killing victim because victims class will change to CLASS_DEAD
+		// set players points + score before killing victim because victims class will change to NS_CLASS_DEAD
 		//player_data[attacker_ID].givePoints(ID);
 		//player_data[ID].killPlayer();
 		

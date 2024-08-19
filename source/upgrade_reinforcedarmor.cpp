@@ -55,7 +55,7 @@ void Upgrade_Reinforcedarmor::show_upgrade_menu( edict_t *pEntity )
 	char menu[UPGRADE_DESCRIPTION_LEN];
 	const char *dummy_description = upgrade_description;
 	
-	float bonus = ( ( player_data[ID].pClass == CLASS_HEAVY ) ? ha_armor : ma_armor )
+	float bonus = ( ( player_data[ID].pClass == NS_CLASS_HEAVY ) ? ha_armor : ma_armor )
 			* ( player_reinforcedarmor[ID].cur_level + 1 );
 	int maxarmor = (int)(class_base_ap_lvl3[player_data[ID].pClass]
 				+ bonus + 0.5);		// + 0.5 to emulate round()
@@ -105,7 +105,7 @@ bool EL_Reinforcedarmor::check_Requirements( )
 	return ( player_data[ID].level >= data_reinforcedarmor.req_level + cur_level
 		&& player_data[ID].points_available >= data_reinforcedarmor.req_points
 		&& cur_level < data_reinforcedarmor.max_level
-		&& UTIL_getMask(pEntity, MASK_ARMOR3) );
+		&& UTIL_getMask(pEntity, NS_MASK_ARMOR3) );
 }
 
 void EL_Reinforcedarmor::buy_upgrade( )
@@ -133,14 +133,14 @@ void EL_Reinforcedarmor::set_upgrade_values( )
 	ha_armor = (float)cur_level * data_reinforcedarmor.ha_armor;
 	
 	setArmorInfo();
-	pEntity->v.armorvalue += ( player_data[ID].pClass == CLASS_HEAVY ?
+	pEntity->v.armorvalue += ( player_data[ID].pClass == NS_CLASS_HEAVY ?
 					data_reinforcedarmor.ha_armor : data_reinforcedarmor.ma_armor );
 }
 
 void EL_Reinforcedarmor::setArmorInfo( )
 {
 	player_data[ID].maxAP = class_base_ap_lvl3[player_data[ID].pClass]
-				+ ( ( player_data[ID].pClass == CLASS_HEAVY ) ? ha_armor : ma_armor );
+				+ ( ( player_data[ID].pClass == NS_CLASS_HEAVY ) ? ha_armor : ma_armor );
 }
 
 /*void EL_Reinforcedarmor::Think( )
@@ -152,7 +152,7 @@ void EL_Reinforcedarmor::setArmorInfo( )
 		|| pEntity->v.armorvalue >= player_data[ID].maxAP )
 		return;
 	
-	if ( player_data[ENTINDEX(pEntity)].curWeapon != WEAPON_WELDER
+	if ( player_data[ENTINDEX(pEntity)].curWeapon != NS_WEAPON_WELDER
 		|| !( pEntity->v.button & IN_ATTACK ) )
 		return;
 	
@@ -220,7 +220,7 @@ void EL_Reinforcedarmor::Think( )
 	//	|| pEntity->v.armorvalue >= player_data[ID].maxAP )
 	//	return;
 	
-	if ( player_data[ID].curWeapon == WEAPON_WELDER
+	if ( player_data[ID].curWeapon == NS_WEAPON_WELDER
 		&& pEntity->v.button & IN_ATTACK
 		&& !weldedRA )
 	{

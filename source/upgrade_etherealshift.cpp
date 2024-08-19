@@ -62,9 +62,9 @@ void Upgrade_Etherealshift::show_upgrade_menu( edict_t *pEntity )
 	const char *dummy_description = upgrade_description;
 	
 	float shift_level = ShiftLevel;
-	if ( player_data[ID].pClass == CLASS_SKULK
-		|| player_data[ID].pClass == CLASS_GORGE
-		|| player_data[ID].pClass == CLASS_LERK )
+	if ( player_data[ID].pClass == NS_CLASS_SKULK
+		|| player_data[ID].pClass == NS_CLASS_GORGE
+		|| player_data[ID].pClass == NS_CLASS_LERK )
 		shift_level += shift_level / 100.0 * ShiftClassMultiplier_percent;
 	
 	float newShiftTime = ShiftInitial + shift_level * ( player_etherealshift[ID].cur_level + 1 );
@@ -119,8 +119,8 @@ bool EL_Etherealshift::check_Requirements( )
 	return ( player_data[ID].level >= data_etherealshift.req_level + cur_level
 		&& player_data[ID].points_available >= data_etherealshift.req_points
 		&& cur_level < data_etherealshift.max_level
-		&& UTIL_getMask(pEntity, MASK_ADRENALINE)
-		&& ( UTIL_getMask(pEntity, MASK_CLOAKING)
+		&& UTIL_getMask(pEntity, NS_MASK_ADRENALINE)
+		&& ( UTIL_getMask(pEntity, NS_MASK_CLOAKING)
 			|| Shifting ) );
 }
 
@@ -160,13 +160,13 @@ void EL_Etherealshift::start_EtherealShift( )
 	
 	if ( gpGlobals->time - endShiftTime < data_etherealshift.ShiftDelay
 		|| pEntity->v.fuser3 < SHIFT_ENERGY_COST					// energy
-		|| ( data_etherealshift.OnosShift == false && player_data[ID].pClass == CLASS_ONOS ) )
+		|| ( data_etherealshift.OnosShift == false && player_data[ID].pClass == NS_CLASS_ONOS ) )
 		return;
 	
-	if ( player_data[ID].pClass == CLASS_SKULK
-		|| player_data[ID].pClass == CLASS_GORGE
-		|| player_data[ID].pClass == CLASS_LERK
-		|| player_data[ID].pClass == CLASS_GESTATE )
+	if ( player_data[ID].pClass == NS_CLASS_SKULK
+		|| player_data[ID].pClass == NS_CLASS_GORGE
+		|| player_data[ID].pClass == NS_CLASS_LERK
+		|| player_data[ID].pClass == NS_CLASS_GESTATE )
 		endShiftTime = gpGlobals->time + maxShiftTime;
 	else
 		endShiftTime = gpGlobals->time + maxShiftTime_FadeOnos;
@@ -174,14 +174,14 @@ void EL_Etherealshift::start_EtherealShift( )
 	// disable normal cloak so it will not disturb
 	set_private_f(pEntity, MAKE_OFFSET(UNCLOAKTIME), endShiftTime);
 	set_private_f(pEntity, MAKE_OFFSET(CLOAK), 1.0);
-	UTIL_setMask(pEntity, MASK_CLOAKING, false);
+	UTIL_setMask(pEntity, NS_MASK_CLOAKING, false);
 	
 	// make player realy invisible
 	pEntity->v.rendermode = kRenderTransTexture;	// = 2
 	
 	Shifting = true;
 	pEntity->v.fuser3 -= SHIFT_ENERGY_COST;
-	if ( !UTIL_getMask(pEntity, MASK_SILENCE) )
+	if ( !UTIL_getMask(pEntity, NS_MASK_SILENCE) )
 		EMIT_SOUND_DYN2(pEntity, CHAN_ITEM, ES_sound_files[ES_sound_cloakstart], 0.5, ATTN_NORM, 0, PITCH_NORM);
 	
 	// to force HUD update
@@ -199,11 +199,11 @@ void EL_Etherealshift::Think( )
 		{
 			switch ( player_data[ID].curWeapon )
 			{
-				case WEAPON_METABOLIZE:
-				case WEAPON_BLINK:
-				case WEAPON_LEAP:
-				case WEAPON_UMBRA:
-				case WEAPON_PRIMALSCREAM:
+				case NS_WEAPON_METABOLIZE:
+				case NS_WEAPON_BLINK:
+				case NS_WEAPON_LEAP:
+				case NS_WEAPON_UMBRA:
+				case NS_WEAPON_PRIMALSCREAM:
 				{
 					return;
 				}
@@ -212,8 +212,8 @@ void EL_Etherealshift::Think( )
 		{
 			switch ( player_data[ID].pClass )
 			{
-				case CLASS_SKULK:
-				case CLASS_FADE:
+				case NS_CLASS_SKULK:
+				case NS_CLASS_FADE:
 				{
 					return;
 				}
@@ -223,8 +223,8 @@ void EL_Etherealshift::Think( )
 	}
 	
 	pEntity->v.rendermode = kRenderNormal;		// = 0
-	UTIL_setMask(pEntity, MASK_CLOAKING, true);
-	if ( !UTIL_getMask(pEntity, MASK_SILENCE) )
+	UTIL_setMask(pEntity, NS_MASK_CLOAKING, true);
+	if ( !UTIL_getMask(pEntity, NS_MASK_SILENCE) )
 		EMIT_SOUND_DYN2(pEntity, CHAN_ITEM, ES_sound_files[ES_sound_cloakend], 0.5, ATTN_NORM, 0, PITCH_NORM);
 	
 	// reset shift time

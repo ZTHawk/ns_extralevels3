@@ -128,10 +128,10 @@ void Upgrade_CombatEvolution::ServerFrame_Think( )
 		if ( UTIL_isAlive(targetEntity) == false )
 			continue;
 		
-		if ( player_data[targetID].pClass == CLASS_GESTATE )
+		if ( player_data[targetID].pClass == NS_CLASS_GESTATE )
 			continue;
 		
-		auraID = player_data[targetID].pClass - CLASS_SKULK;
+		auraID = player_data[targetID].pClass - NS_CLASS_SKULK;
 		
 		for ( targetID2 = 1; targetID2 <= gpGlobals->maxClients; ++targetID2 )
 		{
@@ -171,7 +171,7 @@ void Upgrade_CombatEvolution::ServerFrame_Think( )
 		if ( UTIL_isAlive(targetEntity) == false )
 			continue;
 		
-		if ( player_data[targetID].pClass == CLASS_GESTATE )
+		if ( player_data[targetID].pClass == NS_CLASS_GESTATE )
 			continue;
 		
 		for ( auraID = 0; auraID < AURA_END; ++auraID )
@@ -325,7 +325,7 @@ void EL_CombatEvolution::heal_aura_tick( )
 	if ( next_heal_aura > gpGlobals->time )
 		return;
 	
-	if ( player_data[ID].pClass != CLASS_GORGE )
+	if ( player_data[ID].pClass != NS_CLASS_GORGE )
 		return;
 	
 	next_heal_aura = gpGlobals->time + CE_AURA_TIME;
@@ -443,10 +443,10 @@ void EL_CombatEvolution::check_Cripple( )
 	switch ( get_private(entAttackerWeapon, MAKE_OFFSET(WEAPON_ID)) )
 	{
 		// skulk + lerk
-		case WEAPON_BITE:
-		case WEAPON_BITE2:
-		case WEAPON_SWIPE:
-		case WEAPON_CLAWS:
+		case NS_WEAPON_BITE:
+		case NS_WEAPON_BITE2:
+		case NS_WEAPON_SWIPE:
+		case NS_WEAPON_CLAWS:
 		{
 			break;
 		}

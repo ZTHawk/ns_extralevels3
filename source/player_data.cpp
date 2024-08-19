@@ -106,7 +106,7 @@ void EL_Player::resetGestate( )
 	gestation_Emulation = GESTATE_NONE;
 	gestating_emu_msg = 0;
 	player_gestate_time_emu = 0.0;
-	player_gestate_emu_class = CLASS_SKULK;
+	player_gestate_emu_class = NS_CLASS_SKULK;
 	player_gestate_extracheck = 1;
 	player_gestate_hp = 0.0;
 	player_gestate_ap = 0.0;
@@ -207,8 +207,8 @@ void EL_Player::Core( )
 	int curlevel = player_data[vID].level;
 	
 	bool SpecialTextDisplay = ( player_advancedammopack[vID].endReloadTime > gpGlobals->time
-								&& ( player_data[vID].curWeapon == WEAPON_GRENADE_GUN
-									|| player_data[vID].curWeapon == WEAPON_SHOTGUN ) )
+								&& ( player_data[vID].curWeapon == NS_WEAPON_GRENADE_GUN
+									|| player_data[vID].curWeapon == NS_WEAPON_SHOTGUN ) )
 							|| player_etherealshift[vID].Shifting
 							|| ( PARASITE_BY_MARINE_1 <= player_senseofancients[vID].ParasiteMode
 								&& player_senseofancients[vID].ParasiteMode <= PARASITE_BY_MARINE_4
@@ -244,7 +244,7 @@ void EL_Player::Core( )
 		{
 			if( is_marine )
 				EMIT_SOUND_DYN2(vEntity, CHAN_AUTO, sound_files[sound_MarineLevelUP], 0.5, ATTN_NORM, 0, PITCH_NORM);
-			else if( !UTIL_getMask(vEntity, MASK_SILENCE) )
+			else if( !UTIL_getMask(vEntity, NS_MASK_SILENCE) )
 				EMIT_SOUND_DYN2(vEntity, CHAN_AUTO, sound_files[sound_AlienLevelUP], 0.5, ATTN_NORM, 0, PITCH_NORM);
 			
 			// Update Score
@@ -303,8 +303,8 @@ void EL_Player::gestate_emulation( )
 			player_gestate_hp_max = getMaxHP();
 			player_gestate_ap_max = getMaxAP();
 			
-			gestate_got_spikes = ( UTIL_hasWeapon(pEntity, WEAPON_SPIKE)
-						&& player_gestate_emu_class == CLASS_LERK );
+			gestate_got_spikes = ( UTIL_hasWeapon(pEntity, NS_WEAPON_SPIKE)
+						&& player_gestate_emu_class == NS_CLASS_LERK );
 			
 			if ( player_gestate_extracheck )		// if after spawn no real gestate was done, we need to set gestate class again (otherwise it will be buggy)
 				pEntity->v.iuser3 = IUSER3_CLASS_GESTATE;
@@ -319,7 +319,7 @@ void EL_Player::gestate_emulation( )
 		{
 			GESTATE_SOUND(pEntity);
 			
-			gestate_messages(true /*hide weapons*/, PLAYERCLASS_ALIVE_GESTATING, IUSER3_CLASS_GESTATE);
+			gestate_messages(true /*hide weapons*/, NS_PLAYERCLASS_ALIVE_GESTATING, IUSER3_CLASS_GESTATE);
 			
 			// Update Health and Armor Info
 			getMaxHP();
@@ -362,7 +362,7 @@ void EL_Player::gestate_emulation( )
 			if ( gestate_got_spikes )
 			{
 				MESSAGE_BEGIN(MSG_ONE, WeapPickup_ID, NULL, pEntity);
-				WRITE_BYTE(WEAPON_SPIKE);
+				WRITE_BYTE(NS_WEAPON_SPIKE);
 				MESSAGE_END();
 				
 				UTIL_giveItem(pEntity, "weapon_spikegun");
@@ -387,7 +387,7 @@ void EL_Player::gestate_emulation( )
 			// SoA armor add, cause 150 is not maxAP with SoA
 			//pEntity->v.armorvalue = maxAP / player_gestate_ap_max * pEntity->v.armorvalue;
 			
-			if ( pClass == CLASS_ONOS )
+			if ( pClass == NS_CLASS_ONOS )
 			{
 				if ( check_trace_hull_stuck(pEntity->v.origin) == TRACEHULL_STUCK )
 				{
@@ -455,7 +455,7 @@ void EL_Player::gestate_messages( bool hide_weapons , byte scoreboard_class , by
 {
 	pEntity->v.iuser3 = iuser3_class;
 	
-	pClass = CLASS_GESTATE;
+	pClass = NS_CLASS_GESTATE;
 	
 	MESSAGE_BEGIN(MSG_ONE, HideWeapon_ID, NULL, pEntity);
 	WRITE_BYTE(hide_weapons == true ? 1 : 0);
@@ -475,8 +475,8 @@ float EL_Player::getMaxHP( )
 	if ( player_thickenedskin[ID].cur_level > 0 )
 	{
 		player_thickenedskin[ID].setHealthInfo();
-		if ( CLASS_SKULK <= pClass
-			&& pClass <= CLASS_ONOS
+		if ( NS_CLASS_SKULK <= pClass
+			&& pClass <= NS_CLASS_ONOS
 			&& ( pEntity->v.health == class_base_hp[pClass]
 				|| pEntity->v.health > maxHP ) )
 			pEntity->v.health = maxHP;
@@ -490,8 +490,8 @@ float EL_Player::getMaxHP( )
 
 float EL_Player::getMaxAP( )
 {
-	if ( CLASS_MARINE <= pClass
-		&& pClass <= CLASS_COMMANDER )
+	if ( NS_CLASS_MARINE <= pClass
+		&& pClass <= NS_CLASS_COMMANDER )
 	{
 		if ( player_reinforcedarmor[ID].cur_level > 0 )
 		{
@@ -499,13 +499,13 @@ float EL_Player::getMaxAP( )
 			
 			if ( pEntity->v.armorvalue > maxAP )
 				pEntity->v.armorvalue = maxAP;
-		}else if ( pClass == CLASS_HEAVY )
+		}else if ( pClass == NS_CLASS_HEAVY )
 			maxAP = class_base_ap[pClass] + BASE_AP_ADDER_HA * UTIL_getArmorUpgrade(pEntity);
 		else
 			maxAP = class_base_ap[pClass] + BASE_AP_ADDER_MA_JP * UTIL_getArmorUpgrade(pEntity);
 	}else
 	{
-		if ( UTIL_getMask(pEntity, MASK_CARAPACE) )
+		if ( UTIL_getMask(pEntity, NS_MASK_CARAPACE) )
 			maxAP = class_base_ap_lvl3[pClass];
 		else
 			maxAP = class_base_ap[pClass];
@@ -731,12 +731,12 @@ void EL_Player::respawn_player( )
 	
 	gpGamedllFuncs->dllapi_table->pfnSpawn(pEntity);
 	
-	pEntity->v.health = class_base_hp[CLASS_SKULK];
-	pEntity->v.max_health = class_base_hp[CLASS_SKULK];
-	if ( UTIL_getMask(pEntity, MASK_CARAPACE) )
-		pEntity->v.armorvalue = class_base_ap_lvl3[CLASS_SKULK];
+	pEntity->v.health = class_base_hp[NS_CLASS_SKULK];
+	pEntity->v.max_health = class_base_hp[NS_CLASS_SKULK];
+	if ( UTIL_getMask(pEntity, NS_MASK_CARAPACE) )
+		pEntity->v.armorvalue = class_base_ap_lvl3[NS_CLASS_SKULK];
 	else
-		pEntity->v.armorvalue = class_base_ap[CLASS_SKULK];
+		pEntity->v.armorvalue = class_base_ap[NS_CLASS_SKULK];
 	
 	/*MESSAGE_BEGIN(MSG_ALL, ScoreInfo_ID);
 	WRITE_BYTE(ID);
@@ -752,10 +752,10 @@ void EL_Player::respawn_player( )
 	MESSAGE_END();*/
 	
 	player_data[ID].scoreinfo_data[SCORE_INFO_ID] = ID;
-	player_data[ID].scoreinfo_data[SCORE_INFO_CLASS] = PLAYERCLASS_ALIVE_LEVEL1;
+	player_data[ID].scoreinfo_data[SCORE_INFO_CLASS] = NS_PLAYERCLASS_ALIVE_LEVEL1;
 	UTIL_sendScoreInfo(ID);
 	
-	pEntity->v.playerclass = PLAYMODE_PLAYING;
+	pEntity->v.playerclass = NS_PLAYMODE_PLAYING;
 	pEntity->v.iuser3 = IUSER3_CLASS_SKULK;		// set class
 }
 
@@ -763,9 +763,9 @@ int EL_Player::getScoreByClass( )
 {
 	if ( pEntity->v.iuser3 < IUSER3_CLASS_SKULK )
 	{
-		if ( pEntity->v.iuser4 & MASK_JETPACK )
+		if ( pEntity->v.iuser4 & NS_MASK_JETPACK )
 			return 3;
-		if ( pEntity->v.iuser4 & MASK_HEAVYARMOR )
+		if ( pEntity->v.iuser4 & NS_MASK_HEAVYARMOR )
 			return 4;
 		return 1;
 	}else if ( pEntity->v.iuser3 == IUSER3_CLASS_GESTATE )
@@ -901,7 +901,7 @@ void EL_Player::showMenu( )
 		RETURN_META(MRES_IGNORED);
 	
 	if ( UTIL_isAlive(pEntity) == false		// dead
-		|| pClass == CLASS_GESTATE		// gestating
+		|| pClass == NS_CLASS_GESTATE		// gestating
 		|| ( pEntity->v.effects & EF_NODRAW	// NO Draw ( eg: being digested )
 			&& player_etherealshift[ID].Shifting == false ) )	// make sure palyer is not using Ethereal Shift
 		RETURN_META(MRES_IGNORED);
@@ -1026,11 +1026,11 @@ void EL_Player::MenuSelection( int key )
 			upgrade_data[in_upgrade_menu]->show_upgrade_menu(pEntity);
 	}else if ( in_upgrade_menu != -1 )
 	{
-		if ( pClass == CLASS_ONOS )
+		if ( pClass == NS_CLASS_ONOS )
 		{
 			if ( ( player_senseofancients[ID].cur_level > 0
 					&& player_senseofancients[ID].DevourPlayersNum > 0 )
-				|| UTIL_getMask(pEntity, MASK_DIGESTING) )
+				|| UTIL_getMask(pEntity, NS_MASK_DIGESTING) )
 			{
 				UTIL_showPopup(pEntity, "You can't gestate while digesting a player.");
 				in_upgrade_menu = -1;

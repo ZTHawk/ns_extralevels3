@@ -113,17 +113,17 @@ int UTIL_getWeaponReserve( edict_t *pEntity , byte WeaponID )
 {
 	switch ( WeaponID )
 	{
-		case WEAPON_PISTOL:
+		case NS_WEAPON_PISTOL:
 			return get_private(pEntity, MAKE_OFFSET(AMMO_PISTOL));
-		case WEAPON_LMG:
+		case NS_WEAPON_LMG:
 			return get_private(pEntity, MAKE_OFFSET(AMMO_LMG));
-		case WEAPON_SHOTGUN:
+		case NS_WEAPON_SHOTGUN:
 			return get_private(pEntity, MAKE_OFFSET(AMMO_SHOTGUN));
-		case WEAPON_HMG:
+		case NS_WEAPON_HMG:
 			return get_private(pEntity, MAKE_OFFSET(AMMO_HMG));
-		case WEAPON_GRENADE_GUN:
+		case NS_WEAPON_GRENADE_GUN:
 			return get_private(pEntity, MAKE_OFFSET(AMMO_GL));
-		case WEAPON_GRENADE:
+		case NS_WEAPON_GRENADE:
 			return get_private(pEntity, MAKE_OFFSET(AMMO_HG));
 		default:
 			return 0;
@@ -136,32 +136,32 @@ void UTIL_setWeaponReserve( edict_t *pEntity , byte WeaponID , int ReserveSize )
 {
 	switch ( WeaponID )
 	{
-		case WEAPON_PISTOL:
+		case NS_WEAPON_PISTOL:
 		{
 			set_private(pEntity, MAKE_OFFSET(AMMO_PISTOL), ReserveSize);
 			break;
 		}
-		case WEAPON_LMG:
+		case NS_WEAPON_LMG:
 		{
 			set_private(pEntity, MAKE_OFFSET(AMMO_LMG), ReserveSize);
 			break;
 		}
-		case WEAPON_SHOTGUN:
+		case NS_WEAPON_SHOTGUN:
 		{
 			set_private(pEntity, MAKE_OFFSET(AMMO_SHOTGUN), ReserveSize);
 			break;
 		}
-		case WEAPON_HMG:
+		case NS_WEAPON_HMG:
 		{
 			set_private(pEntity, MAKE_OFFSET(AMMO_HMG), ReserveSize);
 			break;
 		}
-		case WEAPON_GRENADE_GUN:
+		case NS_WEAPON_GRENADE_GUN:
 		{
 			set_private(pEntity, MAKE_OFFSET(AMMO_GL), ReserveSize);
 			break;
 		}
-		case WEAPON_GRENADE:
+		case NS_WEAPON_GRENADE:
 		{
 			set_private(pEntity, MAKE_OFFSET(AMMO_HG), ReserveSize);
 			break;
