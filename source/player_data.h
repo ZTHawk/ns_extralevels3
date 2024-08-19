@@ -45,7 +45,6 @@ public:
 	bool banned;
 	bool isBot;
 
-
 	byte gestation_Emulation;
 	bool gestating_emu_msg;
 	float player_gestate_time_emu;

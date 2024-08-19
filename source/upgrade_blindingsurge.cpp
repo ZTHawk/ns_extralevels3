@@ -1,4 +1,3 @@
-
 #include "upgrade_blindingsurge.h"
 #include "utilfunctions.h"
 #include "player_data.h"
@@ -25,7 +24,7 @@ void Upgrade_Blindingsurge::init()
 	UTIL_getUpgradeDataFromFile(upgrade_data, ARRAYSIZE(upgrade_data));
 
 	strcpy(upgrade_name, "BlindingSurge");
-	strcpy(upgrade_description, "Whenever your health is below 50%% a flash will be spawned.\n"
+	strcpy(upgrade_description, "Whenever your health is below [%d]%% a flash will be spawned.\n"
 		"Every enemy in range of [%d] will be blinded for [%2.1f] second%s.\n"
 		"After each flash there is a [%2.1f] second%s cooldown time.\n\n"
 		"Requires: Resupply , Scan Area , Level %d, %d Point%s\n\n"
@@ -66,6 +65,7 @@ void Upgrade_Blindingsurge::show_upgrade_menu(edict_t* pEntity)
 
 	bool req_correct = player_blindingsurge[ID].check_Requirements();
 	sprintf(menu, dummy_description,
+		(int)health_ratio,
 		(int)range,
 		blind_time,
 		blind_time != 1.0 ? "s" : "",
@@ -209,4 +209,3 @@ void EL_Blindingsurge::flash_effect()
 	WRITE_BYTE(200);		// brightness
 	MESSAGE_END();
 }
-

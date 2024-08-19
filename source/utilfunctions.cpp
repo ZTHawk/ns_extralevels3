@@ -3,7 +3,6 @@
 
 //REMEMBER: to keep your DLL size down, remove functions you don't need from this file
 
-
 #include "plugin.h"
 #include "utilfunctions.h"
 #include "player_data.h"
@@ -316,9 +315,6 @@ bool UTIL_isCloaked(edict_t* pEntity)
 		|| player_etherealshift[ENTINDEX(pEntity)].Shifting == true);
 }
 
-
-
-
 unsigned short FixedUnsigned16(float value, float scale)
 {
 	int output;
@@ -346,8 +342,3 @@ short FixedSigned16(float value, float scale)
 
 	return (short)output;
 }
-
-
-
-
-

@@ -1,4 +1,3 @@
-
 #include "upgrade_combatevolution.h"
 #include "utilfunctions.h"
 #include "player_data.h"

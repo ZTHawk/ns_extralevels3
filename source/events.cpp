@@ -48,7 +48,3 @@ int ParticleCount = 0;
 int Xenocide_Particle_ID = -1;
 int BileBomb_Particle_ID = -1;
 int AcidHit_Particle_ID = -1;
-
-
-
-

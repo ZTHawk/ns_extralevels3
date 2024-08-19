@@ -5,7 +5,6 @@
 #include <dllapi.h>
 #include <h_export.h>
 
-
 #include "hookedfunctions_table.h" //all the listed functions we want to intercept
 #include "hookedfunctions.h"
 #include "utilfunctions.h"
@@ -101,7 +100,6 @@ C_DLLEXPORT int GetNewDLLFunctions(NEW_DLL_FUNCTIONS* pNewFunctionTable, int* in
 	return TRUE;
 }
 
-
 C_DLLEXPORT int GetNewDLLFunctions_Post(NEW_DLL_FUNCTIONS* pNewFunctionTable, int* interfaceVersion)
 {
 	LOG_DEVELOPER(PLID, "called: GetNewDLLFunctions_Post; version=%d", *interfaceVersion);
@@ -164,7 +162,6 @@ C_DLLEXPORT int GetEngineFunctions_Post(enginefuncs_t* pengfuncsFromEngine, int*
 
 	return TRUE;
 }
-
 
 // Metamod requesting info about this plugin
 //  ifvers			(given) interface_version metamod is using
@@ -246,7 +243,6 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME now, META_FUNCTIONS* pFunctionTable,
 		return(FALSE);
 	}
 
-
 	META_FUNCTIONS gMetaFunctionTable = {
 		NULL,						// pfnGetEntityAPI				HL SDK; called before game DLL
 		NULL,						// pfnGetEntityAPI_Post			META; called after game DLL
@@ -257,8 +253,6 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME now, META_FUNCTIONS* pFunctionTable,
 		NULL,						// pfnGetEngineFunctions		META; called before HL engine
 		NULL,						// pfnGetEngineFunctions_Post	META; called after HL engine
 	};
-
-
 
 	//START - Analyzing our function tables to eliminate unused ones
 	void** pMem;
@@ -331,8 +325,6 @@ C_DLLEXPORT int Meta_Attach(PLUG_LOADTIME now, META_FUNCTIONS* pFunctionTable,
 	}
 	//END - Analyzing our function tables to eliminate unused ones
 
-
-
 	memcpy(pFunctionTable, &gMetaFunctionTable, sizeof(META_FUNCTIONS));
 	gpGamedllFuncs = pGamedllFuncs;
 
@@ -372,5 +364,3 @@ void WINAPI GiveFnptrsToDll(enginefuncs_t* pengfuncsFromEngine, globalvars_t* pG
 	gpGlobals = pGlobals;
 	plugin_init();
 }
-
-

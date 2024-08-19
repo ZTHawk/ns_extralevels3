@@ -1,4 +1,3 @@
-
 #include "upgrade_bloodlust.h"
 #include "upgrade_senseofancients.h"
 #include "utilfunctions.h"
@@ -257,9 +256,3 @@ void EL_Bloodlust::drink_my_Blood()
 	if ( attackerEntity->v.health > player_data[attacker_ID].maxHP )
 		attackerEntity->v.health = player_data[attacker_ID].maxHP;
 }
-
-
-
-
-
-

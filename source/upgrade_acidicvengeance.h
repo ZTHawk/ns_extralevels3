@@ -57,7 +57,6 @@ private:
 extern Upgrade_Acidicvengeance data_acidicvengeance;
 extern EL_Acidicvengeance player_acidicvengeance[MAX_PLAYERS_PLUS1];
 
-
 enum AV_sounds
 {
 	AV_xenocide_explode = 0,
@@ -88,4 +87,3 @@ static const char* AV_sound_files[AV_MAX_SOUNDS] =
 #define AV_CLASSRANGE			50.0
 
 #endif
-

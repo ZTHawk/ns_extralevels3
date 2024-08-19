@@ -217,6 +217,3 @@ void EL_Staticfield::Think()
 	if ( play_static_sound )
 		EMIT_SOUND_DYN2(pEntity, CHAN_ITEM, SF_sound_files[SF_sound_elecspark], 0.5, ATTN_NORM, 0, PITCH_NORM);
 }
-
-
-

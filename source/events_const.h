@@ -1,7 +1,6 @@
 #ifndef _EVENTS_CONST_H_
 #define _EVENTS_CONST_H_
 
-
 #define CURWEAPON_NO_WEAPON		0
 #define CURWEAPON_TO_WEAPON		6
 #define SETTECH_MSG_ARG_ON		4
@@ -62,5 +61,3 @@ extern unsigned short HealingSpray_Event_ID;
 static const char* HealingSpray_Event_Name = "events/HealingSpray.sc";
 
 #endif
-
-

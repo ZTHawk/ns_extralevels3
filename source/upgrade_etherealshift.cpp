@@ -1,4 +1,3 @@
-
 #include "upgrade_etherealshift.h"
 #include "utilfunctions.h"
 #include "player_data.h"
@@ -254,6 +253,3 @@ bool EL_Etherealshift::setHUDText(byte vID, bool is_marine, hudtextparms_t& hud_
 
 	return true;
 }
-
-
-

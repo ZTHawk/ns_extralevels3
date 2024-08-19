@@ -49,10 +49,8 @@ public:
 extern Upgrade_Bloodlust data_bloodlust;
 extern EL_Bloodlust player_bloodlust[MAX_PLAYERS_PLUS1];
 
-
 #define BASE_ADRENELINE_REGEN		15.5	// adreneline player gets with lvl 3 adren per 0.1 sec ( not 100% exact value )
 #define ONOS_MIN_ADRENALINE		64.0
-
 
 #define BL_TIME				0.1
 
@@ -70,4 +68,3 @@ extern EL_Bloodlust player_bloodlust[MAX_PLAYERS_PLUS1];
 #define BL_VAMPIRISM			1.0
 
 #endif
-

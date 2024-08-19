@@ -44,7 +44,6 @@ private:
 extern Upgrade_Staticfield data_staticfield;
 extern EL_Staticfield player_staticfield[MAX_PLAYERS_PLUS1];
 
-
 enum SF_sounds
 {
 	SF_sound_elecspark = 0,
@@ -71,4 +70,3 @@ static const char* SF_sound_files[SF_MAX_SOUNDS] =
 #define SF_SHOCKADDER		5.0
 
 #endif
-

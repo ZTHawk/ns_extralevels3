@@ -61,4 +61,3 @@ extern EL_Uraniumammo player_uraniumammo[MAX_PLAYERS_PLUS1];
 #define UA_GRENDMG			7.0
 
 #endif
-

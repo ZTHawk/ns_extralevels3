@@ -950,4 +950,3 @@ bool EL_Senseofancients::setHUDText(byte vID, bool is_marine, hudtextparms_t& hu
 
 	return true;
 }
-

@@ -290,8 +290,6 @@ void EL_AdvancedAmmopack::setWeaponData_Ammo(byte mode)
 	findWeaponData(mode);
 }
 
-
-
 void EL_AdvancedAmmopack::Think()
 {
 	if ( cur_level == 0 )
@@ -772,5 +770,3 @@ bool EL_AdvancedAmmopack::setHUDText(byte vID, bool is_marine, hudtextparms_t& h
 
 	return false;
 }
-
-

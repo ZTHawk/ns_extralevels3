@@ -941,18 +941,6 @@ void EL_Player::showMenu()
 
 void EL_Player::showMenuOLD()
 {
-	/*static char MenuBody[MENU_CONTENT_LEN] = "Help:\nThis server is running "
-			PLUGIN_NAME
-			" v"
-			PLUGIN_VERSION
-			" by "
-			PLUGIN_AUTHOR
-			"\n\n"
-			"Your input /menu and menu is not used anymore.\nUse /xmenu or xmenu instead.\n"
-			"Or type /xhelp in chat.\n\n0. Exit\n\n\n\n";
-
-	UTIL_ShowMenu(pEntity, (1<<9), -1, MenuBody);
-	*/
 	static char old_menu_text[NOTIFY_MSG_LEN] = "Your input /menu and menu is not used anymore. Use /xmenu or xmenu instead.\n";
 	UTIL_ClientPrint(pEntity, PRINT_CHAT, old_menu_text);
 }

@@ -49,7 +49,7 @@ void EXP_Controller::disconnect(edict_t* pEntity)
 		|| strcmp(player_data[ID].SteamID, "4294967295") == 0 )		// this ID is taken from amxX (2^32 - 1)
 		return;
 
-	EXP_Data_t new_data;
+	EXP_Data_t new_data{};
 	new_data.exp = UTIL_getEXP(pEntity);
 	new_data.next_reconnect_time = gpGlobals->time + RECONNECT_TIME;
 	new_data.team = player_data[ID].team;
@@ -113,4 +113,3 @@ void EXP_Controller::Think()
 		++iter;
 	}
 }
-

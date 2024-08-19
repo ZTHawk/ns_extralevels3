@@ -1,4 +1,3 @@
-
 #include "upgrade_uraniumammo.h"
 #include "utilfunctions.h"
 #include "player_data.h"
@@ -328,9 +327,3 @@ void EL_Uraniumammo::findWeaponData(byte mode)
 		}
 	}
 }
-
-
-
-
-
-

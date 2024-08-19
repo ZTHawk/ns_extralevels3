@@ -43,13 +43,10 @@ struct Config_data
 	char* config_name;
 };
 
-
 //just declare extra helper functions you need here
 
 void UTIL_ServerPrint(const char* fmt, ...);
 void UTIL_ClientPrint(edict_t* pEntity, int Msg_Type, char* Msg);
-
-
 
 void UTIL_clearMenu(edict_t* pEdict);
 void UTIL_ShowMenu(edict_t* pEdict, int slots, int displaytime, char* pText);
@@ -96,7 +93,6 @@ bool UTIL_hasWeapon(edict_t* pEntity, byte WeaponID);
 
 int UTIL_getArmorUpgrade(edict_t* pEntity);
 
-
 void UTIL_showPopup(edict_t* pEntity, char* Msg, int ObeyAutohelp = 0);
 void UTIL_setHUD(hudtextparms_t& hud_params, byte R, byte G, byte B, float X, float Y, int Effects, float FXTime, float HoldTime, float FadeInTime, float FadeOutTime, int Channel);
 void UTIL_HudMessage(edict_t* pEntity, const hudtextparms_t& textparms, const char* pMessage);
@@ -119,10 +115,6 @@ void UTIL_LogDebug(const char* text);
 void UTIL_ClearLog();
 int UTIL_getLogCount();
 #endif
-
-
-
-
 
 inline void SAFE_USER_MSG(int& gmsgvar, const char* szMsgName, const int& iSize)
 {
@@ -543,8 +535,5 @@ inline void add_private_f(edict_t* pEntity, int offset, float value)
 {
 	*(float*)((char*)(pEntity->pvPrivateData) + offset) += value;
 }
-
-
-
 
 #endif

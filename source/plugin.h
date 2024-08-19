@@ -21,7 +21,6 @@
 #define PLUGIN_LOADABLE		PT_CHANGELEVEL
 #define PLUGIN_UNLOADABLE	PT_ANYPAUSE
 
-
 #define PLUGIN_VERS_DWORD	0, 7, 9, 1
 #define PLUGIN_COMMENTS		"Enjoy"
 #define PLUGIN_DESC		"More than 10 levels + new upgrades"
@@ -204,7 +203,6 @@ extern cvar_t* CVAR_huddisplay;
 extern cvar_t* CVAR_maxlevel;
 extern cvar_t* CVAR_upgrade_levels[19];
 
-
 enum sounds
 {
 	sound_AlienLevelUP,
@@ -249,4 +247,3 @@ extern hl_string_base hl_strings;
 
 #endif // #ifndef VERS_PLUGIN_H
 #endif // #ifndef _PLUGIN_H_
-

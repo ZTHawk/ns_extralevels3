@@ -1,4 +1,3 @@
-
 #include "upgrade_lifesheath.h"
 #include "utilfunctions.h"
 #include "player_data.h"
@@ -152,11 +151,3 @@ void EL_Lifesheath::Think()
 	MDLL_Spawn(pUmbraCloud);
 	PLAYBACK_EVENT_FULL(0, pUmbraCloud, Umbra_Event_ID, 0.0, Vector(0, 0, 0), Vector(0, 0, 0), 0.0, 0.0, 0, 0, 0, 0);
 }
-
-
-
-
-
-
-
-

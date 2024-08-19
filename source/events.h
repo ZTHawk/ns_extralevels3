@@ -152,7 +152,6 @@ inline void EVENT_DeathMsg_END(int Msg_receiver /*victim*/, int Msg_stored_data 
 	}
 }
 
-
 inline void EVENT_DamageMsg(int Msg_receiver, int Msg_arg_num, int value)
 {
 	switch ( Msg_arg_num )
@@ -317,16 +316,4 @@ inline void EVENT_Particles(const char* Name)
 	++ParticleCount;
 }
 
-
-
-
-
-
-
-
-
-
-
 #endif
-
-

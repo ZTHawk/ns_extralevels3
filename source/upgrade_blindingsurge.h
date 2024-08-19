@@ -68,4 +68,3 @@ extern EL_Blindingsurge player_blindingsurge[MAX_PLAYERS_PLUS1];
 #define BS_BLIND_TIME		1.0
 
 #endif
-

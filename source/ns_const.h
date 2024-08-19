@@ -3,7 +3,6 @@
 
 #include "ns_const_advanced.h"
 
-
 // Offsets (used in utilfunctions.cpp)
 
 #define		OFFSET_WIN_RESOURCES		1816	//454 * 4
@@ -248,6 +247,4 @@ enum
 	NS_PLAYERCLASS_READY,
 };
 
-
 #endif
-

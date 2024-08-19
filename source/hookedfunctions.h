@@ -19,7 +19,6 @@ void ClientPreThink(edict_t* pEntity);
 void ServerFrame(void);
 void CmdStart(const edict_t* player, const struct usercmd_s* _cmd, unsigned int random_seed);
 
-
 // forwards POST
 qboolean ClientConnect_Post(edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128]);
 void ClientPutInServer_Post(edict_t* pEntity);

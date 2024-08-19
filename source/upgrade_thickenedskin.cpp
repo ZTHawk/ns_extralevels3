@@ -8,8 +8,6 @@ EL_Thickenedskin player_thickenedskin[MAX_PLAYERS_PLUS1];
 
 void Upgrade_Thickenedskin::init()
 {
-
-
 	Config_data upgrade_data[] =
 	{
 		{&(available = THICKENEDSKIN), TYPE_BOOL, (char*)TS_config_names[0]},
@@ -250,5 +248,3 @@ void EL_Thickenedskin::setHealthInfo()
 	bonusHP *= cur_level;
 	player_data[ID].maxHP = baseHP + bonusHP;
 }
-
-

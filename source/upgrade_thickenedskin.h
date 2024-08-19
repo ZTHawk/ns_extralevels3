@@ -55,7 +55,6 @@ private:
 extern Upgrade_Thickenedskin data_thickenedskin;
 extern EL_Thickenedskin player_thickenedskin[MAX_PLAYERS_PLUS1];
 
-
 static const float alien_regen_hp[13] =
 {
 	0.0,
@@ -113,6 +112,4 @@ static const char* TS_sound_files[TS_MAX_SOUNDS] =
 #define TS_ONOS			30.0
 #define TS_GESTATE		20.0
 
-
 #endif
-

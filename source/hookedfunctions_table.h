@@ -82,8 +82,6 @@ static DLL_FUNCTIONS gFunctionTable =
 	NULL,					// pfnAllowLagCompensation
 };
 
-
-
 static DLL_FUNCTIONS gFunctionTable_Post =
 {
 	NULL,					// pfnGameInit
@@ -148,10 +146,6 @@ static DLL_FUNCTIONS gFunctionTable_Post =
 	NULL,					// pfnAllowLagCompensation
 };
 
-
-
-
-
 static NEW_DLL_FUNCTIONS gNewFunctionTable =
 {
 	NULL,					//! pfnOnFreeEntPrivateData()	Called right before the object's memory is freed.  Calls its destructor.
@@ -161,8 +155,6 @@ static NEW_DLL_FUNCTIONS gNewFunctionTable =
 	NULL,					// pfnCvarValue2()
 };
 
-
-
 static NEW_DLL_FUNCTIONS gNewFunctionTable_Post =
 {
 	NULL,					//! pfnOnFreeEntPrivateData()	Called right before the object's memory is freed.  Calls its destructor.
@@ -171,10 +163,6 @@ static NEW_DLL_FUNCTIONS gNewFunctionTable_Post =
 	NULL,					// pfnCvarValue()
 	NULL,					// pfnCvarValue2()
 };
-
-
-
-
 
 enginefuncs_t meta_engfuncs = {
 	NULL,					// pfnPrecacheModel()
@@ -382,9 +370,6 @@ enginefuncs_t meta_engfuncs = {
 	NULL,					// pfnQueryClientCvarValue2()
 };
 
-
-
-
 enginefuncs_t meta_engfuncs_post = {
 	NULL,					// pfnPrecacheModel()
 	NULL,					// pfnPrecacheSound()
@@ -590,7 +575,5 @@ enginefuncs_t meta_engfuncs_post = {
 	NULL,					// pfnQueryClientCvarValue()
 	NULL,					// pfnQueryClientCvarValue2()
 };
-
-
 
 #endif

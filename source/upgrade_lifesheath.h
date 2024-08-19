@@ -46,4 +46,3 @@ extern EL_Lifesheath player_lifesheath[MAX_PLAYERS_PLUS1];
 #define LS_HEALTH		50.0
 
 #endif
-

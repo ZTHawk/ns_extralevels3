@@ -140,4 +140,3 @@ static const int BasicAmmo[31] =
 #define AA_GL					1.0
 
 #endif
-

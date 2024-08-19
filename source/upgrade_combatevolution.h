@@ -67,7 +67,6 @@ public:
 	int got_aura_level[AURA_END];
 	float got_aura_value[AURA_END];
 
-
 	void Think_Post();
 	void reset_basic();
 
@@ -78,7 +77,6 @@ public:
 
 extern Upgrade_CombatEvolution data_combatevolution;
 extern EL_CombatEvolution player_combatevolution[MAX_PLAYERS_PLUS1];
-
 
 #define CE_RANGE			400.0	// 170.0
 #define CE_DRAIN_RANGE			100.0
@@ -98,6 +96,4 @@ extern EL_CombatEvolution player_combatevolution[MAX_PLAYERS_PLUS1];
 #define CE_FADE_CRIPPLE_RATE		10.0
 #define CE_ONOS_ARMOR_BOOST		10.0
 
-
 #endif
-

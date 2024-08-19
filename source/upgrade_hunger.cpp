@@ -1,4 +1,3 @@
-
 #include "upgrade_hunger.h"
 #include "upgrade_bloodlust.h"
 #include "utilfunctions.h"
@@ -194,6 +193,3 @@ void EL_Hunger::Think_Post()
 	if ( justKilled )
 		pEntity->v.maxspeed += SpeedBonus;
 }
-
-
-

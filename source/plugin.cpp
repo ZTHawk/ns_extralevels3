@@ -209,4 +209,3 @@ void pre_calc_level_data()
 		}
 	}
 }
-

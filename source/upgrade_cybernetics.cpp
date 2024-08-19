@@ -1,4 +1,3 @@
-
 #include "plugin.h"
 #include "upgrade_cybernetics.h"
 #include "utilfunctions.h"
@@ -122,7 +121,6 @@ void EL_Cybernetics::set_upgrade_values()
 
 void EL_Cybernetics::Think()
 {
-
 }
 
 void EL_Cybernetics::Think_Post()

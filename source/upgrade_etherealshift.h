@@ -55,7 +55,6 @@ private:
 extern Upgrade_Etherealshift data_etherealshift;
 extern EL_Etherealshift player_etherealshift[MAX_PLAYERS_PLUS1];
 
-
 enum ES_sounds
 {
 	ES_sound_cloakstart = 0,
@@ -84,4 +83,3 @@ static const char* ES_sound_files[ES_MAX_SOUNDS] =
 #define ES_DELAY			2.0
 
 #endif
-

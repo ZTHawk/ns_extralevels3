@@ -47,7 +47,6 @@ private:
 extern Upgrade_Reinforcedarmor data_reinforcedarmor;
 extern EL_Reinforcedarmor player_reinforcedarmor[MAX_PLAYERS_PLUS1];
 
-
 enum RA_sounds
 {
 	RA_sound_welderidle = 0,
@@ -82,4 +81,3 @@ static const char* RA_sound_files[RA_MAX_SOUNDS] =
 #define RA_HA				25.0
 
 #endif
-

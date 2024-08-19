@@ -1,4 +1,3 @@
-
 #include "upgrade_acidicvengeance.h"
 #include "utilfunctions.h"
 #include "player_data.h"
@@ -253,4 +252,3 @@ void EL_Acidicvengeance::initAV()
 
 	startedAV = AV_INIT;
 }
-

@@ -1,4 +1,3 @@
-
 #include "upgrade_nanoarmor.h"
 #include "upgrade_reinforcedarmor.h"
 #include "utilfunctions.h"
@@ -178,11 +177,3 @@ void EL_Nanoarmor::Think()
 	if ( pEntity->v.armorvalue > player_data[ID].maxAP )
 		pEntity->v.armorvalue = player_data[ID].maxAP;
 }
-
-
-
-
-
-
-
-

@@ -54,4 +54,3 @@ extern EL_Cybernetics player_cybernetics[MAX_PLAYERS_PLUS1];
 #define C_HA_JP			8.0
 
 #endif
-

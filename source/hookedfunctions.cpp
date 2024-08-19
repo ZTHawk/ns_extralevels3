@@ -82,8 +82,6 @@ int Spawn(edict_t* pEntity)
 		RETURN_META_VALUE(MRES_IGNORED, 0);
 
 	REG_SVR_COMMAND("el3", el3_main);
-	//REG_SVR_COMMAND("el3_config_reload", el3_config_reload);
-	//REG_SVR_COMMAND("el3_set_upgrade", el3_set_upgrade);
 
 	// Init upgrade_data
 	upgrade_data[UP_C] = &data_cybernetics;
@@ -678,7 +676,7 @@ void ClientPreThink(edict_t* pEntity)
 				pEntity->v.armorvalue = player_data[ID].maxAP;
 
 				// player spawned and got new weapons ( new entities )
-				// so regive ammo and update data
+				// so re-give ammo and update data
 				for ( int upgrade_ID = UP_START; upgrade_ID < UP_END; ++upgrade_ID )
 					upgrade_pl_data[upgrade_ID][ID]->respawned();
 			}
@@ -1430,7 +1428,6 @@ void Cleanup_Init()
 
 void Set_Hooks()
 {
-
 	g_pFunctionTable_Post->pfnServerActivate = ServerActivate_Post;
 	//g_pFunctionTable_Post->pfnServerDeactivate = ServerDeactivate_Post;		// should not have been cleaned
 

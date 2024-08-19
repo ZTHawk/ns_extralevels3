@@ -41,7 +41,6 @@ private:
 extern Upgrade_Nanoarmor data_nanoarmor;
 extern EL_Nanoarmor player_nanoarmor[MAX_PLAYERS_PLUS1];
 
-
 enum NA_sounds
 {
 	NA_sound_welderidle = 0,
@@ -56,7 +55,6 @@ static const char* NA_sound_files[NA_MAX_SOUNDS] =
 	"weapons/welderstop.wav"	// selfweld done
 };
 
-
 #define NANO_TIME		2.0
 
 // default config settings
@@ -68,4 +66,3 @@ static const char* NA_sound_files[NA_MAX_SOUNDS] =
 #define NA_HA			6.0
 
 #endif
-

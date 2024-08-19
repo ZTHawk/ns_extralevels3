@@ -28,17 +28,14 @@ const char* upgrade_symbols[UP_END] =
 
 base_upgrade_data::~base_upgrade_data()
 {
-
 }
 
 void base_upgrade_data::init()
 {
-
 }
 
 void base_upgrade_data::precache()
 {
-
 }
 
 bool base_upgrade_data::add_to_menu(byte ID, int num, int& Keys, char* menu)
@@ -49,32 +46,26 @@ bool base_upgrade_data::add_to_menu(byte ID, int num, int& Keys, char* menu)
 
 void base_upgrade_data::show_upgrade_menu(edict_t* player)
 {
-
 }
 
 base_upgrade_pl_data::~base_upgrade_pl_data()
 {
-
 }
 
 void base_upgrade_pl_data::init(edict_t* player)
 {
-
 }
 
 void base_upgrade_pl_data::Think()
 {
-
 }
 
 void base_upgrade_pl_data::Think_Post()
 {
-
 }
 
 void base_upgrade_pl_data::respawned()
 {
-
 }
 
 void base_upgrade_pl_data::reset()
@@ -86,7 +77,6 @@ void base_upgrade_pl_data::reset()
 
 void base_upgrade_pl_data::reset_basic()
 {
-
 }
 
 bool base_upgrade_pl_data::check_Requirements()
@@ -96,12 +86,8 @@ bool base_upgrade_pl_data::check_Requirements()
 
 void base_upgrade_pl_data::buy_upgrade()
 {
-
 }
 
 void base_upgrade_pl_data::set_upgrade_values()
 {
-
 }
-
-

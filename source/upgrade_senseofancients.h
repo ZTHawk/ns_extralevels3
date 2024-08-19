@@ -129,9 +129,7 @@ private:
 extern Upgrade_Senseofancients data_senseofancients;
 extern EL_Senseofancients player_senseofancients[MAX_PLAYERS_PLUS1];
 
-
 #define MAX_PARASITE_CHANCE		40
-
 
 // Sense of Ancients Skulk parasite chances
 static const byte rand_para_chance[50] =
@@ -174,7 +172,6 @@ static const char* Weapon_Models[SOA_MODEL_MAX] =
 };
 
 static const char No_Gestate_Digest_Msg[POPUP_MSG_LEN] = "You can't gestate while digesting a player.";
-
 
 #define PARASITE_RANGE			250.0
 #define SPORE_RANGE			250.0
@@ -237,4 +234,3 @@ static const char No_Gestate_Digest_Msg[POPUP_MSG_LEN] = "You can't gestate whil
 #define SOA_GESTATE_ARMOR_ADD		15.0
 
 #endif
-

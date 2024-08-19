@@ -52,7 +52,6 @@ private:
 extern Upgrade_Hunger data_hunger;
 extern EL_Hunger player_hunger[MAX_PLAYERS_PLUS1];
 
-
 enum H_sounds
 {
 	H_sound_primalscream = 0,
@@ -80,4 +79,3 @@ static const char* H_sound_files[H_MAX_SOUNDS] =
 #define H_LEVELTIME		1.0
 
 #endif
-
