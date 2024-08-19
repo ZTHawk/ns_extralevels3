@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{3589E8D9-898B-4D81-A4C0-292AE27A3396}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
+		..\doc\version_history.txt = ..\doc\version_history.txt
 	EndProjectSection
 EndProject
 Global
