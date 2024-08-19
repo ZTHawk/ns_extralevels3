@@ -429,7 +429,7 @@ inline void UTIL_HudMessage(edict_t* pEntity, const hudtextparms_t& textparms, c
 
 inline void UTIL_resetHUD(edict_t* pEntity)
 {
-	hudtextparms_t dummy;
+	hudtextparms_t dummy{};
 	dummy.channel = HUD_CHANNEL;
 	UTIL_HudMessage(pEntity, dummy, "");
 }

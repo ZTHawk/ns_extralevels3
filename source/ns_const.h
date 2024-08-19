@@ -3,58 +3,15 @@
 
 #include "ns_const_advanced.h"
 
-// Offsets (used in utilfunctions.cpp)
-
-#define		OFFSET_WIN_RESOURCES		1820	//454 * 4
-#define		OFFSET_LIN_RESOURCES		1840	//459 * 4
-
-#define		OFFSET_WIN_WEAPDMG		416	//102 * 4
-#define		OFFSET_LIN_WEAPDMG		432	//106 * 4
-
-#define		OFFSET_WIN_WEAPRANGE		412	//101 * 4
-#define		OFFSET_LIN_WEAPRANGE		428	//105 * 4
-
-#define		OFFSET_WIN_WEAPCLIP		364	//91 * 4
-#define		OFFSET_LIN_WEAPCLIP		380	//95 * 4
-
-#define		OFFSET_WIN_HIVE_TRAIT		512	//488	//122 * 4
-#define		OFFSET_LIN_HIVE_TRAIT		528	//504	//126 * 4
-
-#define		OFFSET_WIN_SCORE		6644	//6588	//1647 * 4
-#define		OFFSET_LIN_SCORE		6744	//6608	//1652 * 4
-
-#define		OFFSET_WIN_EXP			6576	//6512	//1628 * 4
-#define		OFFSET_LIN_EXP			6644	//6532	//1633 * 4
-
-#define		OFFSET_WIN_POINTS		6584	//6520	//1630 * 4
-#define		OFFSET_LIN_POINTS		6652	//6540	//1635 * 4
-
-#define		OFFSET_WIN_AMMO_LMG		1116	//279 * 4
-#define		OFFSET_LIN_AMMO_LMG		1136	//284 * 4
-
-#define		OFFSET_WIN_AMMO_PISTOL		1120	//280 * 4
-#define		OFFSET_LIN_AMMO_PISTOL		1140	//285 * 4
-
-#define		OFFSET_WIN_AMMO_SHOTGUN		1124	//281 * 4
-#define		OFFSET_LIN_AMMO_SHOTGUN		1144	//286 * 4
-
-#define		OFFSET_WIN_AMMO_HMG		1128	//282 * 4
-#define		OFFSET_LIN_AMMO_HMG		1148	//287 * 4
-
-#define		OFFSET_WIN_AMMO_GL		1132	//283 * 4
-#define		OFFSET_LIN_AMMO_GL		1152	//288 * 4
-
-#define		OFFSET_WIN_AMMO_HG		1136	//284 * 4
-#define		OFFSET_LIN_AMMO_HG		1156	//289 * 4
-
-#define		OFFSET_WIN_DEATHS		1380	//345 * 4
-#define		OFFSET_LIN_DEATHS		1400	//350 * 4
-
-#define		OFFSET_WIN_STRUCTOWNER		324	//81 * 4
-#define		OFFSET_LIN_STRUCTOWNER		340	//85 * 4
-
-#define		OFFSET_WIN_HIVEABILITY		6276	//6248	//1562 * 4
-#define		OFFSET_LIN_HIVEABILITY		6344	//6268	//1567 * 4
+enum
+{
+	NS_PLAYMODE_UNDEFINED = 0,
+	NS_PLAYMODE_READYROOM,
+	NS_PLAYMODE_PLAYING,
+	NS_PLAYMODE_AWAITINGREINFORCEMENT,		// Player is dead and waiting in line to get back in
+	NS_PLAYMODE_REINFORCING,			// Player is in the process of coming back into the game
+	NS_PLAYMODE_OBSERVER
+};
 
 enum
 {
