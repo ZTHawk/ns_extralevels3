@@ -11,14 +11,14 @@
 #include "hookedfunctions.h" //so these tables dont whine about functions that they think don't exist
 
 // Global vars from metamod:
-meta_globals_t *gpMetaGlobals;		// metamod globals
-gamedll_funcs_t *gpGamedllFuncs;	// gameDLL function tables
-mutil_funcs_t *gpMetaUtilFuncs;		// metamod utility functions
+meta_globals_t* gpMetaGlobals;		// metamod globals
+gamedll_funcs_t* gpGamedllFuncs;	// gameDLL function tables
+mutil_funcs_t* gpMetaUtilFuncs;		// metamod utility functions
 
 enginefuncs_t g_engfuncs;
-globalvars_t  *gpGlobals;
+globalvars_t* gpGlobals;
 
-static DLL_FUNCTIONS gFunctionTable = 
+static DLL_FUNCTIONS gFunctionTable =
 {
 	NULL,					// pfnGameInit
 	Spawn,					// pfnSpawn
@@ -60,13 +60,13 @@ static DLL_FUNCTIONS gFunctionTable =
 	NULL,					// pfnSpectatorConnect
 	NULL,					// pfnSpectatorDisconnect
 	NULL,					// pfnSpectatorThink
-	
+
 	NULL,					// pfnSys_Error
 
 	NULL,					// pfnPM_Move
 	NULL,					// pfnPM_Init
 	NULL,					// pfnPM_FindTextureType
-	
+
 	NULL,					// pfnSetupVisibility
 	NULL,					// pfnUpdateClientData
 	NULL,					// pfnAddToFullPack
@@ -82,9 +82,7 @@ static DLL_FUNCTIONS gFunctionTable =
 	NULL,					// pfnAllowLagCompensation
 };
 
-
-
-static DLL_FUNCTIONS gFunctionTable_Post = 
+static DLL_FUNCTIONS gFunctionTable_Post =
 {
 	NULL,					// pfnGameInit
 	NULL,					// pfnSpawn
@@ -126,13 +124,13 @@ static DLL_FUNCTIONS gFunctionTable_Post =
 	NULL,					// pfnSpectatorConnect
 	NULL,					// pfnSpectatorDisconnect
 	NULL,					// pfnSpectatorThink
-	
+
 	NULL,					// pfnSys_Error
 
 	NULL,					// pfnPM_Move
 	NULL,					// pfnPM_Init
 	NULL,					// pfnPM_FindTextureType
-	
+
 	NULL,					// pfnSetupVisibility
 	NULL,					// pfnUpdateClientData
 	NULL,					// pfnAddToFullPack
@@ -148,11 +146,7 @@ static DLL_FUNCTIONS gFunctionTable_Post =
 	NULL,					// pfnAllowLagCompensation
 };
 
-
-
-
-
-static NEW_DLL_FUNCTIONS gNewFunctionTable = 
+static NEW_DLL_FUNCTIONS gNewFunctionTable =
 {
 	NULL,					//! pfnOnFreeEntPrivateData()	Called right before the object's memory is freed.  Calls its destructor.
 	NULL,					//! pfnGameShutdown()
@@ -161,9 +155,7 @@ static NEW_DLL_FUNCTIONS gNewFunctionTable =
 	NULL,					// pfnCvarValue2()
 };
 
-
-
-static NEW_DLL_FUNCTIONS gNewFunctionTable_Post = 
+static NEW_DLL_FUNCTIONS gNewFunctionTable_Post =
 {
 	NULL,					//! pfnOnFreeEntPrivateData()	Called right before the object's memory is freed.  Calls its destructor.
 	NULL,					//! pfnGameShutdown()
@@ -171,10 +163,6 @@ static NEW_DLL_FUNCTIONS gNewFunctionTable_Post =
 	NULL,					// pfnCvarValue()
 	NULL,					// pfnCvarValue2()
 };
-
-
-
-
 
 enginefuncs_t meta_engfuncs = {
 	NULL,					// pfnPrecacheModel()
@@ -234,7 +222,7 @@ enginefuncs_t meta_engfuncs = {
 	NULL,					// pfnLightStyle()
 	NULL,					// pfnDecalIndex()
 	NULL,					// pfnPointContents()
-	
+
 	pfnMessageBegin,					// pfnMessageBegin()
 	pfnMessageEnd,					// pfnMessageEnd()
 
@@ -366,7 +354,7 @@ enginefuncs_t meta_engfuncs = {
 
 	// Added for HL 1109 (no SDK update):
 	NULL,					// pfnGetPlayerAuthId()
-	
+
 	NULL,					// pfnSequenceGet()
 	NULL,					// pfnSequencePickSentence()
 	NULL,					// pfnGetFileSize()
@@ -381,9 +369,6 @@ enginefuncs_t meta_engfuncs = {
 	NULL,					// pfnQueryClientCvarValue()
 	NULL,					// pfnQueryClientCvarValue2()
 };
-
-
-
 
 enginefuncs_t meta_engfuncs_post = {
 	NULL,					// pfnPrecacheModel()
@@ -443,7 +428,7 @@ enginefuncs_t meta_engfuncs_post = {
 	NULL,					// pfnLightStyle()
 	NULL,					// pfnDecalIndex()
 	NULL,					// pfnPointContents()
-	
+
 	pfnMessageBegin_Post,					// pfnMessageBegin()
 	pfnMessageEnd_Post,					// pfnMessageEnd()
 
@@ -575,7 +560,7 @@ enginefuncs_t meta_engfuncs_post = {
 
 	// Added for HL 1109 (no SDK update):
 	NULL,					// pfnGetPlayerAuthId()
-	
+
 	NULL,					// pfnSequenceGet()
 	NULL,					// pfnSequencePickSentence()
 	NULL,					// pfnGetFileSize()
@@ -590,7 +575,5 @@ enginefuncs_t meta_engfuncs_post = {
 	NULL,					// pfnQueryClientCvarValue()
 	NULL,					// pfnQueryClientCvarValue2()
 };
-
-
 
 #endif

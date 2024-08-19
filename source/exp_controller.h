@@ -13,14 +13,14 @@ using namespace std;
 
 class EXP_Controller
 {
-	public:
-	void init( );
-	void put_in_server( edict_t *pEntity );
-	void disconnect( edict_t *pEntity );
-	void join_team( edict_t *player );
-	void Think( );
-	
-	private:
+public:
+	void init();
+	void put_in_server(edict_t* pEntity);
+	void disconnect(edict_t* pEntity);
+	void join_team(edict_t* player);
+	void Think();
+
+private:
 	typedef struct EXP_Data_s
 	{
 		float exp;
@@ -29,11 +29,11 @@ class EXP_Controller
 		byte pTeam;
 		char SteamID[32];
 	}EXP_Data_t;
-	
+
 	vector<EXP_Data_t> exp_data;
-	
+
 	float next_think;
-	
+
 };
 
 extern EXP_Controller exp_controller;

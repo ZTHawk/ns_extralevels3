@@ -5,7 +5,7 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 
-static const char *TS_config_names[] =
+static const char* TS_config_names[] =
 {
 	"THICKENEDSKIN",
 	"TS_COST",
@@ -21,31 +21,31 @@ static const char *TS_config_names[] =
 
 class Upgrade_Thickenedskin : public base_upgrade_data
 {
-	public:
+public:
 	float health_add_per_class[13];
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
-	void precache( );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
+	void precache();
 };
 
 class EL_Thickenedskin : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	public:
-	void BaseTS_heal( );
-	void Metabolize_heal( );
-	void Hive_heal( );
-	void setHealthInfo( );
-	void RegenerateHealth( float Regen_Amount );
-	
-	private:
+
+public:
+	void BaseTS_heal();
+	void Metabolize_heal();
+	void Hive_heal();
+	void setHealthInfo();
+	void RegenerateHealth(float Regen_Amount);
+
+private:
 	float nextRegen;		// check when player was healed with Thickened Skin
 	float nextHiveRegen;		// check when player was healed with Thickened Skin due to hive
 	float nextMetabolizeRegen;	// check when player was healed with Thickened Skin due to metabolize
-	
+
 	float baseHP;
 	float bonusHP;
 	float HiveRegenHP;
@@ -54,7 +54,6 @@ class EL_Thickenedskin : public base_upgrade_pl_data
 
 extern Upgrade_Thickenedskin data_thickenedskin;
 extern EL_Thickenedskin player_thickenedskin[MAX_PLAYERS_PLUS1];
-
 
 static const float alien_regen_hp[13] =
 {
@@ -80,11 +79,11 @@ enum TS_sounds
 	TS_sound_metabolize2,
 	TS_sound_metabolize3,
 	TS_sound_regen,
-	
+
 	TS_MAX_SOUNDS
 };
 
-static const char *TS_sound_files[TS_MAX_SOUNDS] =
+static const char* TS_sound_files[TS_MAX_SOUNDS] =
 {
 	"weapons/metabolize1.wav",
 	"weapons/metabolize2.wav",
@@ -113,6 +112,4 @@ static const char *TS_sound_files[TS_MAX_SOUNDS] =
 #define TS_ONOS			30.0
 #define TS_GESTATE		20.0
 
-
 #endif
-

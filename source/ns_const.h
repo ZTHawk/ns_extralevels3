@@ -3,7 +3,6 @@
 
 #include "ns_const_advanced.h"
 
-
 // Offsets (used in utilfunctions.cpp)
 
 #define		OFFSET_WIN_RESOURCES		1820	//454 * 4
@@ -194,7 +193,7 @@ typedef enum
 	NS_AVH_USER3_ARMORY,
 	NS_AVH_USER3_ADVANCED_ARMORY,
 	NS_AVH_USER3_ARMSLAB,
-	NS_AVH_USER3_PROTOTYPE_LAB, 
+	NS_AVH_USER3_PROTOTYPE_LAB,
 	NS_AVH_USER3_OBSERVATORY,
 	NS_AVH_USER3_CHEMLAB,
 	NS_AVH_USER3_MEDLAB,
@@ -248,6 +247,4 @@ enum
 	NS_PLAYERCLASS_READY,
 };
 
-
 #endif
-

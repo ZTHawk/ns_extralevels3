@@ -5,7 +5,7 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 
-static const char *LS_config_names[] =
+static const char* LS_config_names[] =
 {
 	"LIFESHEATH",
 	"LS_COST",
@@ -16,23 +16,23 @@ static const char *LS_config_names[] =
 
 class Upgrade_Lifesheath : public base_upgrade_data
 {
-	public:
+public:
 	float cooldown_time;
 	float health_ratio;
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
 };
 
 class EL_Lifesheath : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	public:
+
+public:
 	float nextLifesteath;
-	
-	void respawned( );
+
+	void respawned();
 };
 
 extern Upgrade_Lifesheath data_lifesheath;
@@ -46,4 +46,3 @@ extern EL_Lifesheath player_lifesheath[MAX_PLAYERS_PLUS1];
 #define LS_HEALTH		50.0
 
 #endif
-

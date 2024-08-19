@@ -5,7 +5,7 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 
-static const char *BS_config_names[] =
+static const char* BS_config_names[] =
 {
 	"BLINDINGSURGE",
 	"BS_COST",
@@ -18,32 +18,32 @@ static const char *BS_config_names[] =
 
 class Upgrade_Blindingsurge : public base_upgrade_data
 {
-	public:
+public:
 	float cooldown_time;
 	float health_ratio;
 	float range;
 	float blind_time;
-	
+
 	int FuseLight;
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
-	void precache( );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
+	void precache();
 };
 
 class EL_Blindingsurge : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	public:
+
+public:
 	float nextBlindingsurge;
-	
-	void respawned( );
-	
-	private:
-	void blind_player( edict_t *target );
-	void flash_effect( );
+
+	void respawned();
+
+private:
+	void blind_player(edict_t* target);
+	void flash_effect();
 };
 
 extern Upgrade_Blindingsurge data_blindingsurge;
@@ -68,4 +68,3 @@ extern EL_Blindingsurge player_blindingsurge[MAX_PLAYERS_PLUS1];
 #define BS_BLIND_TIME		1.0
 
 #endif
-

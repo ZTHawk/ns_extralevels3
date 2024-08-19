@@ -1,8 +1,7 @@
 #ifndef _NS_CONST_ADVANCED_H_
 #define _NS_CONST_ADVANCED_H_
 
-
-#define OFFSET_WIN_WEAPON_ID		324	// 81 * 4	--->>> Check the weapon ID of the weapon ( eg: WEAPON_PISTOL, WEAPON_LMG, ... )
+#define OFFSET_WIN_WEAPON_ID		324	// 81 * 4	--->>> Check the weapon ID of the weapon ( eg: NS_WEAPON_PISTOL, NS_WEAPON_LMG, ... )
 #define OFFSET_LIN_WEAPON_ID		340	// (81+4) * 4	--->>> linux offset
 
 #define OFFSET_WIN_WEAPON_RELOADING	376	// 94 * 4	--->>> this offset is needed to check if weapon is reloading
@@ -26,13 +25,11 @@
 #define OFFSET_WIN_SOUND_EFFECTS	6504	//6452	// 1613 * 4	--->>> this offset is needed to check if the player has sound effects running (eg: when being digested) (at least setting to 0 it disables things like that)
 #define OFFSET_LIN_SOUND_EFFECTS	6572	//6472	// (1613+5) * 4	--->>> linux offset
 
-
 #ifdef __linux__
 #define MAKE_OFFSET( name )	OFFSET_LIN_##name
 #else
 #define MAKE_OFFSET( name )	OFFSET_WIN_##name
 #endif
-
 
 enum
 {
@@ -44,6 +41,4 @@ enum
 	NS_PLAYMODE_OBSERVER
 };
 
-
 #endif
-

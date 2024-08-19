@@ -33,23 +33,23 @@ void EVENT_DeathMsg_END_POST( int Msg_receiver_Post );
 */
 
 // Events
-inline bool EVENT_HUDText2( int Msg_receiver , const char *Msg )
+inline bool EVENT_HUDText2(int Msg_receiver, const char* Msg)
 {
 	if ( strcmp(Msg, "ReadyRoomMessage") != 0 )
 		return false;
-	
+
 	player_senseofancients[Msg_receiver].ReadyRoom();
 	player_data[Msg_receiver].resetData(RESET_INGAME);
-	
+
 	return true;
 }
 
-inline bool EVENT_HUDText2_POST( const char *Msg )
+inline bool EVENT_HUDText2_POST(const char* Msg)
 {
-	return ( strcmp(Msg, "ReadyRoomMessage") == 0 );
+	return (strcmp(Msg, "ReadyRoomMessage") == 0);
 }
 
-inline void EVENT_HUDText2_END_POST( int Msg_receiver )
+inline void EVENT_HUDText2_END_POST(int Msg_receiver)
 {
 	if ( player_data[Msg_receiver].join_time_10 < gpGlobals->time )	// at least 10 seconds there
 	{
@@ -57,7 +57,7 @@ inline void EVENT_HUDText2_END_POST( int Msg_receiver )
 	}
 }
 
-inline void EVENT_CurWeapon( int Msg_receiver , int value , int Msg_arg_num , bool &Msg_correct_data )
+inline void EVENT_CurWeapon(int Msg_receiver, int value, int Msg_arg_num, bool& Msg_correct_data)
 {
 	switch ( Msg_arg_num )
 	{
@@ -79,11 +79,11 @@ inline void EVENT_CurWeapon( int Msg_receiver , int value , int Msg_arg_num , bo
 				{
 					// weapon changed so old weapon cannot be reloading anymore
 					player_advancedammopack[Msg_receiver].reset_basic();
-					
+
 					player_senseofancients[Msg_receiver].JustBlinked = false;
-					
+
 					player_data[Msg_receiver].curWeapon = value;
-					
+
 					// this function has to be after curWeapon was set
 					player_advancedammopack[Msg_receiver].fixAnimation();
 				}
@@ -91,24 +91,24 @@ inline void EVENT_CurWeapon( int Msg_receiver , int value , int Msg_arg_num , bo
 			break;
 		}
 	}
-	
+
 	Msg_correct_data = false;
 }
 
-inline void EVENT_ScoreInfo( int Msg_receiver , int Msg_arg_num )
+inline void EVENT_ScoreInfo(int Msg_receiver, int Msg_arg_num)
 {
 	switch ( Msg_arg_num )
 	{
 		case SCORE_INFO_LEVEL:
 		{
 			player_data[Msg_receiver].scoreinfo_data[SCORE_INFO_LEVEL] = player_data[Msg_receiver].level;
-			
+
 			break;
 		}
 	}
 }
 
-inline void EVENT_DeathMsg( byte &Msg_receiver , int Msg_arg_num , int &Msg_stored_data , int value )
+inline void EVENT_DeathMsg(byte& Msg_receiver, int Msg_arg_num, int& Msg_stored_data, int value)
 {
 	switch ( Msg_arg_num )
 	{
@@ -125,25 +125,25 @@ inline void EVENT_DeathMsg( byte &Msg_receiver , int Msg_arg_num , int &Msg_stor
 	}
 }
 
-inline void EVENT_DeathMsg_END( int Msg_receiver /*victim*/ , int Msg_stored_data /*killer*/ , char *Msg_stored_string )
+inline void EVENT_DeathMsg_END(int Msg_receiver /*victim*/, int Msg_stored_data /*killer*/, char* Msg_stored_string)
 {
 	CLIENT_COMMAND(INDEXENT(Msg_receiver), "slot10\n");
-	
+
 	if ( player_data[Msg_receiver].gestation_Emulation )
 	{
 		player_data[Msg_receiver].resetGestate();
 		player_data[Msg_receiver].died_during_gestate = true;
 	}
-	
+
 	if ( player_data[Msg_stored_data].ingame == true	// killer connected
-		&& ( Msg_receiver != Msg_stored_data		// not suicide
-		|| strcmp(Msg_stored_string, "turret") == 0
-		|| strcmp(Msg_stored_string, "siegeturret") == 0 ) )
+		&& (Msg_receiver != Msg_stored_data		// not suicide
+			|| strcmp(Msg_stored_string, "turret") == 0
+			|| strcmp(Msg_stored_string, "siegeturret") == 0) )
 		player_acidicvengeance[Msg_receiver].initAV();
-	
+
 	for ( int upgrade_ID = UP_START; upgrade_ID < UP_END; ++upgrade_ID )
 		upgrade_pl_data[upgrade_ID][Msg_receiver]->reset_basic();
-	
+
 	if ( Msg_stored_data != Msg_receiver	// ignore suicide
 		&& player_data[Msg_receiver].pTeam != player_data[Msg_stored_data].pTeam )	// ignore team killing
 	{
@@ -152,8 +152,7 @@ inline void EVENT_DeathMsg_END( int Msg_receiver /*victim*/ , int Msg_stored_dat
 	}
 }
 
-
-inline void EVENT_DamageMsg( int Msg_receiver , int Msg_arg_num , int value )
+inline void EVENT_DamageMsg(int Msg_receiver, int Msg_arg_num, int value)
 {
 	switch ( Msg_arg_num )
 	{
@@ -171,7 +170,7 @@ inline void EVENT_DamageMsg( int Msg_receiver , int Msg_arg_num , int value )
 }
 
 // Events POST
-inline void EVENT_DeathMsg_POST( byte &Msg_receiver_Post , int Msg_arg_num_Post , int &Msg_stored_data_Post , int value )
+inline void EVENT_DeathMsg_POST(byte& Msg_receiver_Post, int Msg_arg_num_Post, int& Msg_stored_data_Post, int value)
 {
 	switch ( Msg_arg_num_Post )
 	{
@@ -188,7 +187,7 @@ inline void EVENT_DeathMsg_POST( byte &Msg_receiver_Post , int Msg_arg_num_Post 
 	}
 }
 
-inline bool EVENT_TeamInfo_POST( byte Msg_receiver_Post , const char *TeamName )
+inline bool EVENT_TeamInfo_POST(byte Msg_receiver_Post, const char* TeamName)
 {
 	if ( strcmp(TeamName, "alien1team") == 0
 		|| strcmp(TeamName, "alien2team") == 0 )
@@ -198,21 +197,21 @@ inline bool EVENT_TeamInfo_POST( byte Msg_receiver_Post , const char *TeamName )
 		player_data[Msg_receiver_Post].team = MARINE;
 	else
 		player_data[Msg_receiver_Post].team = 0;
-	
-	return ( player_data[Msg_receiver_Post].team != 0 );
+
+	return (player_data[Msg_receiver_Post].team != 0);
 }
 
-inline void EVENT_TeamInfo_END_POST( byte Msg_receiver_Post )
+inline void EVENT_TeamInfo_END_POST(byte Msg_receiver_Post)
 {
 	if ( player_data[Msg_receiver_Post].team )
 	{
 		player_data[Msg_receiver_Post].showNotifyMsg();
-		
+
 		exp_controller.join_team(INDEXENT(Msg_receiver_Post));
 	}
 }
 
-inline void EVENT_SetTech_POST( byte Msg_receiver_Post , int value , byte Msg_arg_num_Post , int &Msg_stored_data_Post )
+inline void EVENT_SetTech_POST(byte Msg_receiver_Post, int value, byte Msg_arg_num_Post, int& Msg_stored_data_Post)
 {
 	switch ( Msg_arg_num_Post )
 	{
@@ -221,11 +220,11 @@ inline void EVENT_SetTech_POST( byte Msg_receiver_Post , int value , byte Msg_ar
 			Msg_stored_data_Post = value;
 			break;
 		}
-		case 7:	
+		case 7:
 		{
 			if ( value != SETTECH_MSG_ARG_ON )
 				break;
-			
+
 			switch ( Msg_stored_data_Post )
 			{
 				case IMPULSE_RESUPPLY:
@@ -257,7 +256,7 @@ inline void EVENT_SetTech_POST( byte Msg_receiver_Post , int value , byte Msg_ar
 	}
 }
 
-inline bool EVENT_StatusValue_Byte_POST( int value )
+inline bool EVENT_StatusValue_Byte_POST(int value)
 {
 	switch ( value )
 	{
@@ -269,7 +268,7 @@ inline bool EVENT_StatusValue_Byte_POST( int value )
 	return false;
 }
 
-inline void EVENT_StatusValue_Short_POST( byte Msg_receiver_Post , int value )
+inline void EVENT_StatusValue_Short_POST(byte Msg_receiver_Post, int value)
 {
 	player_data[Msg_receiver_Post].statusvalue_pointing_at = value;
 	if ( 1 <= value
@@ -277,13 +276,13 @@ inline void EVENT_StatusValue_Short_POST( byte Msg_receiver_Post , int value )
 		&& player_data[value].team == player_data[Msg_receiver_Post].team )	// same team
 	{
 		player_data[Msg_receiver_Post].statusvalue_correct_level_of = value;
-	}else
+	} else
 	{
 		player_data[Msg_receiver_Post].statusvalue_correct_level_of = 0;
 	}
 }
 
-inline void EVENT_StatusValue_END_POST( byte Msg_receiver_Post )
+inline void EVENT_StatusValue_END_POST(byte Msg_receiver_Post)
 {
 	if ( player_data[Msg_receiver_Post].statusvalue_correct_level_of )
 	{
@@ -294,11 +293,11 @@ inline void EVENT_StatusValue_END_POST( byte Msg_receiver_Post )
 	}
 }
 
-inline void EVENT_Particles( const char *Name )
+inline void EVENT_Particles(const char* Name)
 {
 	if ( Xenocide_Particle_ID == -1
 		|| BileBomb_Particle_ID == -1
-		|| AcidHit_Particle_ID == - 1)
+		|| AcidHit_Particle_ID == -1 )
 	{
 		for ( int i = 0; i < ParticleCount; ++i )
 		{
@@ -317,16 +316,4 @@ inline void EVENT_Particles( const char *Name )
 	++ParticleCount;
 }
 
-
-
-
-
-
-
-
-
-
-
 #endif
-
-
