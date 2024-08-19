@@ -5,7 +5,7 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 
-static const char *ES_config_names[] =
+static const char* ES_config_names[] =
 {
 	"ETHEREALSHIFT",
 	"ES_COST",
@@ -20,33 +20,33 @@ static const char *ES_config_names[] =
 
 class Upgrade_Etherealshift : public base_upgrade_data
 {
-	public:
+public:
 	float ShiftInitial;
 	float ShiftLevel;
 	float ShiftClassMultiplier_percent;
 	bool OnosShift;
 	float ShiftDelay;
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
-	void precache( );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
+	void precache();
 };
 
 class EL_Etherealshift : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	public:
+
+public:
 	bool Shifting;		// check if player is using Ethereal Shift
-	
-	void reset_basic( );
-	
-	void start_EtherealShift( );
-	
-	bool setHUDText( byte vID , bool is_marine , hudtextparms_t &hud_params , char *CoreT_GL_reload_Shift_text);
-	
-	private:
+
+	void reset_basic();
+
+	void start_EtherealShift();
+
+	bool setHUDText(byte vID, bool is_marine, hudtextparms_t& hud_params, char* CoreT_GL_reload_Shift_text);
+
+private:
 	float endShiftTime;	// check when player can make next shift
 	float maxShiftTime;
 	float maxShiftTime_FadeOnos;
@@ -60,11 +60,11 @@ enum ES_sounds
 {
 	ES_sound_cloakstart = 0,
 	ES_sound_cloakend,
-	
+
 	ES_MAX_SOUNDS
 };
 
-static const char *ES_sound_files[ES_MAX_SOUNDS] =
+static const char* ES_sound_files[ES_MAX_SOUNDS] =
 {
 	"misc/startcloak.wav",
 	"misc/endcloak.wav"

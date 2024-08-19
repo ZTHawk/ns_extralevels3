@@ -5,7 +5,7 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 
-static const char *CE_config_names[] =
+static const char* CE_config_names[] =
 {
 	"COMBATEVOLUTION",
 	"CE_COST",
@@ -16,7 +16,7 @@ static const char *CE_config_names[] =
 	"CE_LERK_DRAIN_RATE",
 	"CE_FADE_CRIPPLE_RATE",
 	"CE_ONOS_ARMOR_RATE",
-	
+
 };
 
 enum CE_aura_types
@@ -26,54 +26,54 @@ enum CE_aura_types
 	AURA_DRAIN,
 	AURA_CRIPPLE,
 	AURA_ARMOR,
-	
+
 	AURA_END
 };
 
 class Upgrade_CombatEvolution : public base_upgrade_data
 {
-	public:
+public:
 	float base_speed_boost;
 	float base_heal_rate;
 	float base_drain_rate;
 	float base_cripple_rate;
 	float base_armor_rate;
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
-	
-	void ServerFrame_Think( );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
+
+	void ServerFrame_Think();
 };
 
 class EL_CombatEvolution : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	private:
+
+private:
 	float next_heal_aura;
 	float next_drain_aura;
 	float next_cripple_aura;	// next time player can be crippled again
 	float cripple_rate;		// how much he has been crippled
-	
+
 	float aura_data[AURA_END];
 	float aura_time[AURA_END];
-	
-	void heal_aura_tick( );
-	void drain_aura_tick( );
-	
-	public:
+
+	void heal_aura_tick();
+	void drain_aura_tick();
+
+public:
 	int got_aura_by[AURA_END];
 	int got_aura_level[AURA_END];
 	float got_aura_value[AURA_END];
-	
-	
-	void Think_Post( );
-	void reset_basic( );
-	
-	void set_Aura( int auraID , byte owner );
-	void remove_Aura( int auraID );
-	void check_Cripple( );
+
+
+	void Think_Post();
+	void reset_basic();
+
+	void set_Aura(int auraID, byte owner);
+	void remove_Aura(int auraID);
+	void check_Cripple();
 };
 
 extern Upgrade_CombatEvolution data_combatevolution;

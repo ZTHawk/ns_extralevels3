@@ -51,15 +51,15 @@ extern int BileBomb_Particle_ID;
 extern int AcidHit_Particle_ID;
 
 extern unsigned short Spore_Event_ID;
-static const char *Spore_Event_Name = "events/SporeCloud.sc";
+static const char* Spore_Event_Name = "events/SporeCloud.sc";
 extern unsigned short Cloak_Event_ID;
-static const char *Cloak_Event_Name = "events/StartCloak.sc";
+static const char* Cloak_Event_Name = "events/StartCloak.sc";
 extern unsigned short Umbra_Event_ID;
-static const char *Umbra_Event_Name = "events/UmbraCloud.sc";
+static const char* Umbra_Event_Name = "events/UmbraCloud.sc";
 extern unsigned short Particle_Event_ID;
-static const char *Particle_Event_Name = "events/Particle.sc";
+static const char* Particle_Event_Name = "events/Particle.sc";
 extern unsigned short HealingSpray_Event_ID;
-static const char *HealingSpray_Event_Name = "events/HealingSpray.sc";
+static const char* HealingSpray_Event_Name = "events/HealingSpray.sc";
 
 #endif
 

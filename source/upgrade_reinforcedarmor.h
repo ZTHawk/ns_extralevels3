@@ -5,7 +5,7 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 
-static const char *RA_config_names[] =
+static const char* RA_config_names[] =
 {
 	"REINFORCEDARMOR",
 	"RA_COST",
@@ -17,28 +17,28 @@ static const char *RA_config_names[] =
 
 class Upgrade_Reinforcedarmor : public base_upgrade_data
 {
-	public:
+public:
 	float ma_armor;
 	float ha_armor;
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
-	void precache( );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
+	void precache();
 };
 
 class EL_Reinforcedarmor : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	public:
-	void setArmorInfo( );
-	void Think_Post( );
-	
-	private:
+
+public:
+	void setArmorInfo();
+	void Think_Post();
+
+private:
 	float ma_armor;
 	float ha_armor;
-	
+
 	bool weldingRA;
 	bool weldedRA;
 	float nextWeld;
@@ -53,11 +53,11 @@ enum RA_sounds
 	RA_sound_welderidle = 0,
 	RA_sound_welderstop,
 	RA_sound_welderhit,
-	
+
 	RA_MAX_SOUNDS
 };
 
-static const char *RA_sound_files[RA_MAX_SOUNDS] =
+static const char* RA_sound_files[RA_MAX_SOUNDS] =
 {
 	"weapons/welderidle.wav",	// selfweld in progress
 	"weapons/welderstop.wav",	// selfweld done

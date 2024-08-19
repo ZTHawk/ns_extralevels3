@@ -36,17 +36,17 @@
 */
 #include "string.h"
 
-vector<char *> banList;
+vector<char*> banList;
 
 //=========================================================
 // UTIL_LogPrintf - Prints a logged message to console.
 // Preceded by LOG: ( timestamp ) < message >
 //=========================================================
-void UTIL_LogPrintf( char *fmt , ... )
+void UTIL_LogPrintf(char* fmt, ...)
 {
 	va_list argptr;
 	static char string[1024];
-	
+
 	va_start(argptr, fmt);
 	vsnprintf(string, sizeof(string), fmt, argptr);
 	va_end(argptr);
@@ -56,47 +56,47 @@ void UTIL_LogPrintf( char *fmt , ... )
 }
 
 // same as above but to server console
-void UTIL_ServerPrint( const char *fmt , ... )
+void UTIL_ServerPrint(const char* fmt, ...)
 {
 	va_list argptr;
 	static char pszMessage[1024];
-	
+
 	// concatenate all the arguments in one string
 	va_start(argptr, fmt);
 	vsnprintf(pszMessage, sizeof(pszMessage), fmt, argptr);
 	va_end(argptr);
-	
+
 	SERVER_PRINT(pszMessage);
 }
 
 #ifdef _DEBUG
 bool debug_running = false;
 int log_counter = 0;
-const static char *debug_file = "ns/addons/extralevels3/extralevels3_debug.txt";
-void UTIL_LogDebug( const char *text )
+const static char* debug_file = "ns/addons/extralevels3/extralevels3_debug.txt";
+void UTIL_LogDebug(const char* text)
 {
 	if ( debug_running == false )
 		return;
-	
-	FILE *file = fopen(debug_file, "a");
+
+	FILE* file = fopen(debug_file, "a");
 	if ( file == NULL )
 		return;
-	
+
 	fprintf(file, "%s", text);
 	fclose(file);
-	
+
 	++log_counter;
 }
 
-void UTIL_ClearLog( )
+void UTIL_ClearLog()
 {
 	if ( remove(debug_file) != 0 )
 		UTIL_LogDebug("Error deleting Logfile");
-	
+
 	log_counter = 0;
 }
 
-int UTIL_getLogCount( )
+int UTIL_getLogCount()
 {
 	return log_counter;
 }
@@ -109,7 +109,7 @@ int UTIL_getLogCount( )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int UTIL_getWeaponReserve( edict_t *pEntity , byte WeaponID )
+int UTIL_getWeaponReserve(edict_t* pEntity, byte WeaponID)
 {
 	switch ( WeaponID )
 	{
@@ -128,11 +128,11 @@ int UTIL_getWeaponReserve( edict_t *pEntity , byte WeaponID )
 		default:
 			return 0;
 	}
-	
+
 	return 0;
 }
 
-void UTIL_setWeaponReserve( edict_t *pEntity , byte WeaponID , int ReserveSize )
+void UTIL_setWeaponReserve(edict_t* pEntity, byte WeaponID, int ReserveSize)
 {
 	switch ( WeaponID )
 	{
@@ -176,51 +176,51 @@ void UTIL_setWeaponReserve( edict_t *pEntity , byte WeaponID , int ReserveSize )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void UTIL_getUpgradeDataFromFile( Config_data upgrade_data[] , int array_size )
+void UTIL_getUpgradeDataFromFile(Config_data upgrade_data[], int array_size)
 {
-	FILE *file = fopen(config_file, "r");
+	FILE* file = fopen(config_file, "r");
 	if ( file == NULL )
 		return;
-	
+
 	char buffer[128];
 	int config_num = 0;
 	while ( fgets(buffer, 127, file) != NULL )
 	{
 		if ( buffer[0] == '\n'					// empty line
-			|| ( buffer[0] == '/' && buffer[1] == '/' ) )	// comment
+			|| (buffer[0] == '/' && buffer[1] == '/') )	// comment
 			continue;
-		
-		char *c = strstr(buffer, upgrade_data[config_num].config_name);
+
+		char* c = strstr(buffer, upgrade_data[config_num].config_name);
 		if ( c == NULL )
 			continue;
-		
-		char *buffer_start = (char *)buffer;
-		int found_at_pos = ( c - buffer_start ) + strlen(upgrade_data[config_num].config_name);
-		
-		const char *dummy = &buffer[found_at_pos];
+
+		char* buffer_start = (char*)buffer;
+		int found_at_pos = (c - buffer_start) + strlen(upgrade_data[config_num].config_name);
+
+		const char* dummy = &buffer[found_at_pos];
 		switch ( upgrade_data[config_num].data_type )
 		{
 			case TYPE_INT:
 			{
-				*((int *)upgrade_data[config_num].address) = atoi(dummy);
+				*((int*)upgrade_data[config_num].address) = atoi(dummy);
 				break;
 			}
 			case TYPE_FLOAT:
 			{
-				*((float *)upgrade_data[config_num].address) = atof(dummy);
+				*((float*)upgrade_data[config_num].address) = atof(dummy);
 				break;
 			}
 			case TYPE_BOOL:
 			{
-				*((bool *)upgrade_data[config_num].address) = ( atoi(dummy) > 0 ) ? true : false;
+				*((bool*)upgrade_data[config_num].address) = (atoi(dummy) > 0) ? true : false;
 				break;
 			}
 			case TYPE_BYTE:
 			{
-				*((byte *)upgrade_data[config_num].address) = atoi(dummy);
+				*((byte*)upgrade_data[config_num].address) = atoi(dummy);
 			}
 		}
-		
+
 		++config_num;
 		if ( config_num == array_size )
 			break;
@@ -228,75 +228,75 @@ void UTIL_getUpgradeDataFromFile( Config_data upgrade_data[] , int array_size )
 	fclose(file);
 }
 
-void UTIL_getBanData( )
+void UTIL_getBanData()
 {
-	FILE *file = fopen(ban_file, "r");
+	FILE* file = fopen(ban_file, "r");
 	if ( file == NULL )
 		return;
-	
+
 	char buffer[64];
 	int ban_num = 0;
 	while ( fgets(buffer, 63, file) != NULL )
 	{
 		if ( (buffer[0] == '\n')					// empty line
-			|| ( (buffer[0] == '/') && (buffer[1] == '/') ) )	// comment
+			|| ((buffer[0] == '/') && (buffer[1] == '/')) )	// comment
 			continue;
-		
+
 		int pos = strspn(buffer, "STEAM_:0123456789");
-		
+
 		if ( pos < 7 )		// make sure at least containing "STEAM_"
 			continue;
-		
-		char *tmp = new char[pos + 1];
+
+		char* tmp = new char[pos + 1];
 		strncpy(tmp, buffer, pos);
 		tmp[pos] = '\0';
 		banList.push_back(tmp);
-		
+
 		++ban_num;
 	}
 	fclose(file);
 }
 
-void UTIL_getConfigFilenames( )
+void UTIL_getConfigFilenames()
 {
-	char *global_path = (char*)GET_PLUGIN_PATH(PLID);
-	char *addons_path = strstr(global_path, "addons");
-	
+	char* global_path = (char*)GET_PLUGIN_PATH(PLID);
+	char* addons_path = strstr(global_path, "addons");
+
 	char cfg_path_base[128];
 	memset(cfg_path_base, 0, 128);
-	char *last_slash_pos = strrchr(global_path, '/');
-	
+	char* last_slash_pos = strrchr(global_path, '/');
+
 	strncpy(cfg_path_base, addons_path, last_slash_pos - addons_path);
 	//cfg_path_base[last_slash_pos - addons_path + 1] = '\0';
-	
+
 	// check if dll has special folder
-	char *c = strstr(cfg_path_base, "dll");
+	char* c = strstr(cfg_path_base, "dll");
 	if ( c != NULL )
 		cfg_path_base[c - cfg_path_base - 1] = '\0';
-	
-	FILE *file_cfg = fopen(config_file, "r");
+
+	FILE* file_cfg = fopen(config_file, "r");
 	if ( file_cfg == NULL )
 	{
 		char cfg_file_main[128];
 		sprintf(cfg_file_main, "ns/%s/configs/extralevels3.cfg", cfg_path_base);
-		
-		char *temp = new char[strlen(cfg_file_main) + 1];
+
+		char* temp = new char[strlen(cfg_file_main) + 1];
 		strcpy(temp, cfg_file_main);
-		
+
 		delete[] config_file;
 		config_file = temp;
 		config_file[strlen(cfg_file_main)] = 0;
 	}
-	
-	FILE *file_ban = fopen(ban_file, "r");
+
+	FILE* file_ban = fopen(ban_file, "r");
 	if ( file_ban == NULL )
 	{
 		char cfg_file_bandata[128];
 		sprintf(cfg_file_bandata, "ns/%s/configs/el3_ban.cfg", cfg_path_base);
-		
-		char *temp = new char[strlen(cfg_file_bandata) + 1];
+
+		char* temp = new char[strlen(cfg_file_bandata) + 1];
 		strcpy(temp, cfg_file_bandata);
-		
+
 		delete[] ban_file;
 		ban_file = temp;
 		ban_file[strlen(cfg_file_bandata)] = 0;
@@ -310,16 +310,16 @@ void UTIL_getConfigFilenames( )
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool UTIL_isCloaked( edict_t *pEntity )
+bool UTIL_isCloaked(edict_t* pEntity)
 {
-	return ( get_private(pEntity, MAKE_OFFSET(CLOAK)) < 0.5
-		|| player_etherealshift[ENTINDEX(pEntity)].Shifting == true );
+	return (get_private(pEntity, MAKE_OFFSET(CLOAK)) < 0.5
+		|| player_etherealshift[ENTINDEX(pEntity)].Shifting == true);
 }
 
 
 
 
-unsigned short FixedUnsigned16( float value, float scale )
+unsigned short FixedUnsigned16(float value, float scale)
 {
 	int output;
 
@@ -332,7 +332,7 @@ unsigned short FixedUnsigned16( float value, float scale )
 	return (unsigned short)output;
 }
 
-short FixedSigned16( float value, float scale )
+short FixedSigned16(float value, float scale)
 {
 	int output;
 

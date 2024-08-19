@@ -145,35 +145,35 @@ using std::pair;
 //=================================================================
 //helper functions
 //=================================================================
-void plugin_init( );
-void plugin_quit( );
+void plugin_init();
+void plugin_quit();
 
-void initCVARS( );
-void initCVARS_values( );
-void precacheSounds( );
-void init_xplevel_data( );
-void pre_calc_level_data( );
+void initCVARS();
+void initCVARS_values();
+void precacheSounds();
+void init_xplevel_data();
+void pre_calc_level_data();
 
-extern char *config_file;
-extern char *ban_file;
+extern char* config_file;
+extern char* ban_file;
 
 extern bool Custom_Levels;
 extern float Base_XP_Custom;
 extern float Base_XP_Custom_modifier;
-extern int *Base_XP_at_Level;
-extern int *Next_Level_XP_modifier;
+extern int* Base_XP_at_Level;
+extern int* Next_Level_XP_modifier;
 
 extern int max_level;
 
-static const char *Custom_config_names[] =
+static const char* Custom_config_names[] =
 {
 	"CUSTOM_LEVELS",
 	"BASE_XP_TO_NEXT_LEVEL",
 	"NEXT_LEVEL_XP_MODIFIER"
 };
 
-extern edict_t *Hive_ID;
-extern edict_t *Hive_ID2;
+extern edict_t* Hive_ID;
+extern edict_t* Hive_ID2;
 extern bool isMvA;
 extern bool isMvM;
 extern bool isAvA;
@@ -181,16 +181,16 @@ extern bool isAvA;
 extern bool gBlockMsgPlayer;
 extern bool gBlockLog;
 
-extern enginefuncs_t *g_pEngTable;
-extern enginefuncs_t *g_pengfuncsTable;
-extern enginefuncs_t *g_pengfuncsTable_Post;
-extern DLL_FUNCTIONS *g_pFunctionTable;
-extern DLL_FUNCTIONS *g_pFunctionTable_Post;
+extern enginefuncs_t* g_pEngTable;
+extern enginefuncs_t* g_pengfuncsTable;
+extern enginefuncs_t* g_pengfuncsTable_Post;
+extern DLL_FUNCTIONS* g_pFunctionTable;
+extern DLL_FUNCTIONS* g_pFunctionTable_Post;
 
 extern bool gIgnore_Self_Send_Msg;
 
 #define CVAR_LEVELNAMES_NUM			19
-static const char *level_cvar_list[CVAR_LEVELNAMES_NUM] =
+static const char* level_cvar_list[CVAR_LEVELNAMES_NUM] =
 {
 	"el3_XlevelS", "el3_XlevelR", "el3_XlevelQ", "el3_XlevelP", "el3_XlevelO",
 	"el3_XlevelN", "el3_XlevelM", "el3_XlevelL", "el3_XlevelK", "el3_XlevelJ",
@@ -198,22 +198,22 @@ static const char *level_cvar_list[CVAR_LEVELNAMES_NUM] =
 	"el3_XlevelD", "el3_XlevelC", "el3_XlevelB", "el3_XlevelA"
 };
 
-extern cvar_t *CVAR_notify;
-extern cvar_t *CVAR_instruct;
-extern cvar_t *CVAR_huddisplay;
-extern cvar_t *CVAR_maxlevel;
-extern cvar_t *CVAR_upgrade_levels[19];
+extern cvar_t* CVAR_notify;
+extern cvar_t* CVAR_instruct;
+extern cvar_t* CVAR_huddisplay;
+extern cvar_t* CVAR_maxlevel;
+extern cvar_t* CVAR_upgrade_levels[19];
 
 
 enum sounds
 {
 	sound_AlienLevelUP,
 	sound_MarineLevelUP,
-	
+
 	MAX_SOUNDS
 };
 
-static const char *sound_files[MAX_SOUNDS] =
+static const char* sound_files[MAX_SOUNDS] =
 {
 	"misc/a-levelup.wav",	// levelup sound aliens
 	"misc/levelup.wav"	// levelup sound marines
@@ -221,11 +221,11 @@ static const char *sound_files[MAX_SOUNDS] =
 
 class hl_string_base
 {
-	private:
+private:
 	map<string, int> hl_string_map;
-	
-	public:
-	int find( const char *item )
+
+public:
+	int find(const char* item)
 	{
 		int id = 0;
 		map<string, int>::iterator iter = hl_string_map.find(item);
@@ -233,13 +233,13 @@ class hl_string_base
 		{
 			id = ALLOC_STRING(item);
 			hl_string_map.insert(pair<string, int>(item, id));
-		}else
+		} else
 			id = iter->second;
-		
+
 		return id;
 	};
-	
-	void insert( const char *item , int value )
+
+	void insert(const char* item, int value)
 	{
 		hl_string_map.insert(pair<string, int>(item, value));
 	};

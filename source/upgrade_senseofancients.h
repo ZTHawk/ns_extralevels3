@@ -7,7 +7,7 @@
 #include <vector>
 using namespace std;
 
-static const char *SOA_config_names[] =
+static const char* SOA_config_names[] =
 {
 	"SENSEOFANCIENTS",
 	"SOA_COST",
@@ -34,7 +34,7 @@ typedef struct SporeData_s
 
 class Upgrade_Senseofancients : public base_upgrade_data
 {
-	public:
+public:
 	float ParasiteChanceInit;
 	float ParasiteChanceBonus;
 	float ParasiteDMGPercentage;
@@ -45,61 +45,61 @@ class Upgrade_Senseofancients : public base_upgrade_data
 	float DevourTimeInit;
 	float DevourTimeBonus;
 	float GestateArmorBonus;
-	
+
 	vector<SporeData_t> SporeData;
 	int Spore_Num;
 	float nextSporeTime;
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
-	
-	void SporeEmulationTimer( );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
+
+	void SporeEmulationTimer();
 };
 
 class EL_Senseofancients : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	public:
+
+public:
 	float nextParasiteTime;			// check when a parasited player due to SoA will do next parasite in range
 	byte ParasiteMode;			// check if player got parasited by skulk or due to SoA and current status of SoA parasite
 	byte Infected_by;			// check which player infected you with SoA parasite
 	byte MyParasiter;
-	
+
 	bool In_Spore;				// check if player is inside spore
-	
+
 	bool JustBlinked;			// check if Fade just did a Blink
 	float got_BloodLust;			// check if and how much BloodLust a player got
 	int DevourTimeMultiplier;		// multiplier for SoA Onos Multi Devour
 	int DevourPlayersNum;			// amount of players Onos is digesting right now
-	
+
 	Vector Origin_before_Redeem;
-	
-	void Think_Post( );
-	void respawned( );
-	void reset_basic( );
-	
-	void check_Parasite( );
-	void setWeaponData_Dmg( );
-	void check_HealingSpray( );
-	void add_Spore( const edict_t *sporeEntity );
-	void Blink_Energy( );
-	void free_digested_Players( );
-	void Player_Redeemed( float *Origin );
-	void setGestateAP( );
-	
-	void ReadyRoom( );
-	bool ImpulseCheckBlock( );
-	
-	bool setHUDText( byte vID , bool is_marine , hudtextparms_t &hud_params , char *CoreT_GL_reload_Shift_text);
-	
-	private:
+
+	void Think_Post();
+	void respawned();
+	void reset_basic();
+
+	void check_Parasite();
+	void setWeaponData_Dmg();
+	void check_HealingSpray();
+	void add_Spore(const edict_t* sporeEntity);
+	void Blink_Energy();
+	void free_digested_Players();
+	void Player_Redeemed(float* Origin);
+	void setGestateAP();
+
+	void ReadyRoom();
+	bool ImpulseCheckBlock();
+
+	bool setHUDText(byte vID, bool is_marine, hudtextparms_t& hud_params, char* CoreT_GL_reload_Shift_text);
+
+private:
 	byte ParasiteChance;
-	
+
 	float Fade_Energy;			// last stored energy
 	float BlinkEnergyReducer;
-	
+
 	float DigestTime;			// check when a digesting player is ready for next health decrease
 	float NextDevour;			// check when Onos is able to devour next player
 	float EvolveMsgBlock_time;		// check when player gets a popup telling not being able to gestate
@@ -111,19 +111,19 @@ class EL_Senseofancients : public base_upgrade_pl_data
 	bool JustFreed;				// check if player just got released from digestion ( needed to prevent instant deaths )
 	float DevourTime;			// amount of time player needs to wait between two player when doing SoA Multi Devour
 	float SpawnTime;
-	
-	void reset_parasite_vars( );
-	void reset_devour_vars( );
-	
-	void Parasite_Players( );
-	void Digest_Player( );
-	void check_for_next_Devour( );
-	void find_Digester( );
-	byte get_MyOnos( );
-	void set_Player_Weaponmodel( );
-	
-	void add_hp_ap( edict_t *targetEntity , float health , float armor );
-	void add_hp_ap_structure( edict_t *targetEntity , float health );
+
+	void reset_parasite_vars();
+	void reset_devour_vars();
+
+	void Parasite_Players();
+	void Digest_Player();
+	void check_for_next_Devour();
+	void find_Digester();
+	byte get_MyOnos();
+	void set_Player_Weaponmodel();
+
+	void add_hp_ap(edict_t* targetEntity, float health, float armor);
+	void add_hp_ap_structure(edict_t* targetEntity, float health);
 };
 
 extern Upgrade_Senseofancients data_senseofancients;
@@ -151,23 +151,23 @@ enum Model_Index
 	MODEL_SHOTGUN,
 	MODEL_HMG,
 	MODEL_GL,
-	
+
 	SOA_MODEL_MAX
 };
 
-static const char *View_Models[SOA_MODEL_MAX] =
+static const char* View_Models[SOA_MODEL_MAX] =
 {
 	"models/v_kn.mdl", "models/v_hg.mdl", "models/v_mg.mdl",
 	"models/v_sg.mdl", "models/v_hmg.mdl", "models/v_gg.mdl",
 };
 
-static const char *View_Models_Heavy[SOA_MODEL_MAX] =
-{	
+static const char* View_Models_Heavy[SOA_MODEL_MAX] =
+{
 	"models/v_kn_hv.mdl", "models/v_hg_hv.mdl", "models/v_mg_hv.mdl",
 	"models/v_sg_hv.mdl", "models/v_hmg_hv.mdl", "models/v_gg_hv.mdl"
 };
 
-static const char *Weapon_Models[SOA_MODEL_MAX] =
+static const char* Weapon_Models[SOA_MODEL_MAX] =
 {
 	"models/p_kn.mdl", "models/p_hg.mdl", "models/p_mg.mdl",
 	"models/p_sg.mdl", "models/p_hmg.mdl", "models/p_gg.mdl"

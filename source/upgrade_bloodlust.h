@@ -5,7 +5,7 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 
-static const char *BL_config_names[] =
+static const char* BL_config_names[] =
 {
 	"BLOODLUST",
 	"BL_COST",
@@ -18,32 +18,32 @@ static const char *BL_config_names[] =
 
 class Upgrade_Bloodlust : public base_upgrade_data
 {
-	public:
+public:
 	float baseAdrenalineRegen;
 	float OnosPercentage;
 	float baseVampirism;
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
 };
 
 class EL_Bloodlust : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	private:
+
+private:
 	float BloodlustRegen;
 	float BloodlustRegenOnos;
 	float nextBloodlust;	// check time player gets next Bloodlust
-	
+
 	float lastFrags;	// last saved frags
-	
-	public:
+
+public:
 	float Vampirism;
 	float Vampirism_Fade_Onos;
-	
-	void drink_my_Blood( );
+
+	void drink_my_Blood();
 };
 
 extern Upgrade_Bloodlust data_bloodlust;

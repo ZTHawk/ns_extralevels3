@@ -5,7 +5,7 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 
-static const char *C_config_names[] =
+static const char* C_config_names[] =
 {
 	"CYBERNETICS",
 	"C_COST",
@@ -17,26 +17,26 @@ static const char *C_config_names[] =
 
 class Upgrade_Cybernetics : public base_upgrade_data
 {
-	public:
+public:
 	float ma_speed;
 	float ha_jp_speed;
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
 };
 
 class EL_Cybernetics : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	private:
+
+private:
 	float ma_speed;
 	float ha_jp_speed;
 	float jp_air_speed;
 	float in_air_time_check;
-	
-	void Think_Post( );
+
+	void Think_Post();
 };
 
 extern Upgrade_Cybernetics data_cybernetics;

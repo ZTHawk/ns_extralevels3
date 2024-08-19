@@ -5,7 +5,7 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 
-static const char *SF_config_names[] =
+static const char* SF_config_names[] =
 {
 	"STATICFIELD",
 	"SF_COST",
@@ -19,23 +19,23 @@ static const char *SF_config_names[] =
 
 class Upgrade_Staticfield : public base_upgrade_data
 {
-	public:
+public:
 	float baseRange;
 	float bonusRange;
 	float base_shock;
 	float shock_adder;
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
-	void precache( );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
+	void precache();
 };
 
 class EL_Staticfield : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	private:
+
+private:
 	float nextStaticfieldTime;
 	float StaticfieldRange;
 	float StaticfieldPercentage;
@@ -48,11 +48,11 @@ extern EL_Staticfield player_staticfield[MAX_PLAYERS_PLUS1];
 enum SF_sounds
 {
 	SF_sound_elecspark = 0,
-	
+
 	SF_MAX_SOUNDS
 };
 
-static const char *SF_sound_files[SF_MAX_SOUNDS] =
+static const char* SF_sound_files[SF_MAX_SOUNDS] =
 {
 	"misc/elecspark3.wav"
 };

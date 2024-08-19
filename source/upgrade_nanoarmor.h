@@ -5,7 +5,7 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 
-static const char *NA_config_names[] =
+static const char* NA_config_names[] =
 {
 	"NANOARMOR",
 	"NA_COST",
@@ -17,21 +17,21 @@ static const char *NA_config_names[] =
 
 class Upgrade_Nanoarmor : public base_upgrade_data
 {
-	public:
+public:
 	float ma_nanoarmor;
 	float ha_nanoarmor;
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
-	void precache( );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
+	void precache();
 };
 
 class EL_Nanoarmor : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	private:
+
+private:
 	float ma_nanoarmor;
 	float ha_nanoarmor;
 	bool welding_self;	// check if Nano Armor is welding player
@@ -46,11 +46,11 @@ enum NA_sounds
 {
 	NA_sound_welderidle = 0,
 	NA_sound_welderstop,
-	
+
 	NA_MAX_SOUNDS
 };
 
-static const char *NA_sound_files[NA_MAX_SOUNDS] =
+static const char* NA_sound_files[NA_MAX_SOUNDS] =
 {
 	"weapons/welderidle.wav",	// selfweld in progress
 	"weapons/welderstop.wav"	// selfweld done

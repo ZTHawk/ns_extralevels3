@@ -5,7 +5,7 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 
-static const char *H_config_names[] =
+static const char* H_config_names[] =
 {
 	"HUNGER",
 	"H_COST",
@@ -19,33 +19,33 @@ static const char *H_config_names[] =
 
 class Upgrade_Hunger : public base_upgrade_data
 {
-	public:
+public:
 	float bonusSpeed;
 	float bonusHealthPercentage;
 	float baseTime;
 	float bonusTime;
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
-	void precache( );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
+	void precache();
 };
 
 class EL_Hunger : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	public:
-	void Think_Post( );
-	void reset_basic( );
-	
-	private:
+
+public:
+	void Think_Post();
+	void reset_basic();
+
+private:
 	bool justKilled;	// check if player killed someone
 	float lastFrags;	// last saved frags
 	float HungerTime;
 	float HungerEndTime;
 	float SpeedBonus;
-	
+
 	int amount_boosts_got;
 };
 
@@ -57,11 +57,11 @@ enum H_sounds
 {
 	H_sound_primalscream = 0,
 	H_sound_chargekill,
-	
+
 	H_MAX_SOUNDS
 };
 
-static const char *H_sound_files[H_MAX_SOUNDS] =
+static const char* H_sound_files[H_MAX_SOUNDS] =
 {
 	"weapons/primalscream.wav",
 	"weapons/chargekill.wav"

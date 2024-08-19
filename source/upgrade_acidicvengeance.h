@@ -5,7 +5,7 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 
-static const char *AV_config_names[] =
+static const char* AV_config_names[] =
 {
 	"ACIDICVENGEANCE",
 	"AV_COST",
@@ -22,7 +22,7 @@ static const char *AV_config_names[] =
 
 class Upgrade_Acidicvengeance : public base_upgrade_data
 {
-	public:
+public:
 	float MA_HealthDmg;
 	float MA_ArmorDmg;
 	float HA_HealthDmg;
@@ -30,27 +30,27 @@ class Upgrade_Acidicvengeance : public base_upgrade_data
 	float GorgeGestateBonus;
 	float InitRange;
 	float ClassRange;
-	
-	void init( );
-	bool add_to_menu( byte ID , int num , int &Keys , char *menu );
-	void show_upgrade_menu( edict_t *player );
-	void precache( );
+
+	void init();
+	bool add_to_menu(byte ID, int num, int& Keys, char* menu);
+	void show_upgrade_menu(edict_t* player);
+	void precache();
 };
 
 class EL_Acidicvengeance : public base_upgrade_pl_data
 {
 	UPGRADE_DATA_PLAYER;	// Makro
-	
-	public:
+
+public:
 	float ma_HealthDmg;
 	float ma_ArmorDmg;
 	float ha_HealthDmg;
 	float ha_ArmorDmg;
-	
-	void respawned( );
-	void initAV( );
-	
-	private:
+
+	void respawned();
+	void initAV();
+
+private:
 	byte startedAV;
 };
 
@@ -61,11 +61,11 @@ extern EL_Acidicvengeance player_acidicvengeance[MAX_PLAYERS_PLUS1];
 enum AV_sounds
 {
 	AV_xenocide_explode = 0,
-	
+
 	AV_MAX_SOUNDS
 };
 
-static const char *AV_sound_files[AV_MAX_SOUNDS] =
+static const char* AV_sound_files[AV_MAX_SOUNDS] =
 {
 	"weapons/divinewindexplode.wav"
 };
