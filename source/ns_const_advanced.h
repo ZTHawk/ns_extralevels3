@@ -157,7 +157,7 @@
 #define OFFSET_WIN_SOUND_EFFECTS		6504	// this offset is needed to check if the player has sound effects running (eg: when being digested) (at least setting to 0 it disables things like that)
 #define OFFSET_LIN_SOUND_EFFECTS		6572	// linux offset
 
-#endif NS version check
+#endif // NS version check
 
 #ifdef __linux__
 #define MAKE_OFFSET( name )	OFFSET_LIN_##name
