@@ -35,7 +35,7 @@
 */
 #include "string.h"
 
-vector<char*> banList;
+std::vector<char*> banList;
 
 //=========================================================
 // UTIL_LogPrintf - Prints a logged message to console.

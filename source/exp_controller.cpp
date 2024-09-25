@@ -16,7 +16,7 @@ void EXP_Controller::put_in_server(edict_t* pEntity)
 	//if ( player_data[ID].isBot == true )
 	//	return;
 
-	vector<EXP_Data_t>::iterator iter = exp_data.begin();
+	std::vector<EXP_Data_t>::iterator iter = exp_data.begin();
 	while ( iter != exp_data.end() )
 	{
 		if ( strcmp(player_data[ID].SteamID, iter->SteamID) != 0 )
@@ -68,7 +68,7 @@ void EXP_Controller::join_team(edict_t* pEntity)
 	//if ( strlen(player_data[ID].SteamID) < STEAMID_LENGTH )
 	//	return;
 
-	vector<EXP_Data_t>::iterator iter = exp_data.begin();
+	std::vector<EXP_Data_t>::iterator iter = exp_data.begin();
 	while ( iter != exp_data.end() )
 	{
 		if ( strcmp(player_data[ID].SteamID, iter->SteamID) != 0 )
@@ -97,7 +97,7 @@ void EXP_Controller::Think()
 
 	next_think = gpGlobals->time + EXP_CONTROLLER_CHECK_TIME;
 
-	vector<EXP_Data_t>::iterator iter = exp_data.begin();
+	std::vector<EXP_Data_t>::iterator iter = exp_data.begin();
 	while ( iter != exp_data.end() )
 	{
 		if ( gpGlobals->time > iter->next_reconnect_time )

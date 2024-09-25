@@ -5,7 +5,6 @@
 #include "upgrade_data_base.h"
 #include "utilfunctions.h"
 #include <vector>
-using namespace std;
 
 static const char* SOA_config_names[] =
 {
@@ -46,7 +45,7 @@ public:
 	float DevourTimeBonus;
 	float GestateArmorBonus;
 
-	vector<SporeData_t> SporeData;
+	std::vector<SporeData_t> SporeData;
 	int Spore_Num;
 	float nextSporeTime;
 

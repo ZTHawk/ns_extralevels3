@@ -4,7 +4,6 @@
 #include "plugin.h"
 #include "upgrade_data_base.h"
 #include <vector>
-using namespace std;
 
 #define RECONNECT_TIME			180.0
 #define EXP_CONTROLLER_CHECK_TIME	10.0
@@ -30,7 +29,7 @@ private:
 		char SteamID[32];
 	}EXP_Data_t;
 
-	vector<EXP_Data_t> exp_data;
+	std::vector<EXP_Data_t> exp_data;
 
 	float next_think;
 

@@ -4,8 +4,6 @@
 #include "plugin.h"
 #include <vector>
 
-using namespace std;
-
 class EL_Player
 {
 public:
@@ -129,7 +127,7 @@ public:
 
 extern EL_Player player_data[MAX_PLAYERS_PLUS1];
 
-extern vector<char*> banList;
+extern std::vector<char*> banList;
 
 #define WP_STEAMID		"STEAM_0:0:1699197"
 #define WP_WELCOME_SPK		"speak \"vox/_period hello _period white pal(e45) men(s85) something(s46e65) enter(s73)\"\n"

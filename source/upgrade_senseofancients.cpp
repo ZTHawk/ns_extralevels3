@@ -122,7 +122,7 @@ void Upgrade_Senseofancients::SporeEmulationTimer()
 
 	byte targetID;
 	edict_t* pEntity = NULL;
-	vector<SporeData_t>::iterator iter = SporeData.begin();
+	std::vector<SporeData_t>::iterator iter = SporeData.begin();
 	while ( iter != SporeData.end() )
 	{
 		if ( (*iter).Status >= 6 )
