@@ -37,3 +37,15 @@ To create a release build, run this command:
 ```
 make opt
 ```
+
+### NS 3.2
+
+To create a debug build, run this command:
+```
+make NS=3_2
+```
+
+To create a release build, run this command:
+```
+make opt NS=3_2
+```

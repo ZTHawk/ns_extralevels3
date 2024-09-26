@@ -47,8 +47,6 @@ endif
 DLLS_DIR=../dlls
 #SDKSRC=$(SDKTOP)/multiplayer
 METADIR=../metamod-p/metamod
-
-# Using https://github.com/Bots-United/metamod-p internal hlsdk
 SDKSRC=$(METADIR)/../hlsdk
 
 
@@ -118,13 +116,18 @@ FILES_ALL = *.cpp *.h [A-Z]* *.rc
 
 CFLAGS=-Wall -Wno-unknown-pragmas -Wno-unused
 
+ODEF=
+ifeq "$(NS)" "3_2"
+	ODEF += -DNS_3_2
+endif
+
 ifeq "$(OPT)" "opt"
-	ODEF = -DOPT_TYPE=\"optimized\"
+	ODEF += -DOPT_TYPE=\"optimized\"
 	CFLAGS := $(CCOPT) $(CFLAGS) $(ODEF)
 	OBJDIR_LINUX = $(OBJDIR_LINUX_OPT)
 	OBJDIR_WIN = $(OBJDIR_WIN_OPT)
 else	# debug
-	ODEF = -DOPT_TYPE=\"debugging\"
+	ODEF += -DOPT_TYPE=\"debugging\"
 	CFLAGS := $(CCDEBUG) $(CFLAGS) $(ODEF)
 	OBJDIR_LINUX = $(OBJDIR_LINUX_DBG)
 	OBJDIR_WIN = $(OBJDIR_WIN_DBG)
