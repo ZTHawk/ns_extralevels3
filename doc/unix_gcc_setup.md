@@ -1,22 +1,39 @@
-## Setting up Unix system for compilation (gcc)
+# Setting up Unix system for compilation (gcc)
 
-### Install GCC:
+Tested on debian 12 (bookworm).
 
-Run the following command to install all required tools:  
-`apt update && apt install gcc git build-essential gcc-multilib g++-multilib`
+## Install GCC (and other tools):
 
-### Clone repositories (EL3 + metamod-p)
+Run the following command to install all required tools:
+```
+apt update && apt install git gcc build-essential gcc-multilib g++-multilib
+```
 
-Clone EL3 repository:  
-`git clone https://github.com/ZTHawk/ns_extralevels3.git`
+## Clone repositories
 
-Clone metamod-p repository:  
-`git clone https://github.com/Bots-United/metamod-p.git`
+Clone EL3 repository:
+```
+git clone https://github.com/ZTHawk/ns_extralevels3.git
+```
 
-### Compiling
+Clone metamod-p repository:
+```
+git clone https://github.com/Bots-United/metamod-p.git
+```
 
-To create a debug build run:  
-`make`
+## Compiling
 
-To create a release build run:  
-`make opt`
+Move into EL3 folder:
+```
+cd ns_extralevels3
+```
+
+To create a debug build, run this command:
+```
+make
+```
+
+To create a release build, run this command:
+```
+make opt
+```
