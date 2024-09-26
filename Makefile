@@ -45,8 +45,11 @@ else	## windows
 endif
 
 DLLS_DIR=../dlls
-SDKSRC=$(SDKTOP)/multiplayer
+#SDKSRC=$(SDKTOP)/multiplayer
 METADIR=../metamod-p/metamod
+
+# Using https://github.com/Bots-United/metamod-p internal hlsdk
+SDKSRC=$(METADIR)/../hlsdk
 
 
 #############################################################################
@@ -96,7 +99,7 @@ CCOPT = -march=i586 $(CCO) -ffast-math -funroll-loops \
 	-falign-jumps=2 -falign-functions=2 -s
 
 # optimization level; overridden for certain problematic files
-CCO = -O6
+CCO = -O6 -m32
 
 # debugging; halt on warnings
 CCDEBUG+= -ggdb3
@@ -106,7 +109,7 @@ CCDEBUG+= -ggdb3
 # COMPILE SETUP
 #############################################################################
 
-CC=gcc-linux
+CC=gcc
 
 SRCDIR=.
 INCLUDEDIRS=-I$(SRCDIR) -I ./source -I$(SRCDIR)/source -I$(METADIR) -I$(SDKSRC)/engine -I$(SDKSRC)/common \
@@ -266,12 +269,15 @@ clean: clean_$(TARGET)
 
 clean_linux:
 	test -n "$(OBJDIR_LINUX)"
-	-rm -rf $(OBJDIR_LINUX)/*
-	
+#	-rm -rf $(OBJDIR_LINUX)/*
+	-rm -rf $(OBJDIR_LINUX)
+	rm Rules.depend
+	rm -rf msgs
 
 clean_win32:
 	test -n "$(OBJDIR_WIN)"
 	-rm -f $(OBJDIR_WIN)/*
+	rm Rules.depend
 
 cleanall_linux:
 	$(MAKE) clean_linux

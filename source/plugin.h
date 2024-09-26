@@ -245,5 +245,9 @@ public:
 
 extern hl_string_base hl_strings;
 
+#ifndef GETPLAYERAUTHID
+#define GETPLAYERAUTHID	(*g_engfuncs.pfnGetPlayerAuthId)
+#endif // !GETPLAYERAUTHID
+
 #endif // #ifndef VERS_PLUGIN_H
 #endif // #ifndef _PLUGIN_H_
