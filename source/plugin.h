@@ -10,14 +10,14 @@
 //=================================================================
 //Plugin Information
 //=================================================================
-#define PLUGIN_DATE		"November 11, 2008"
+#define PLUGIN_DATE		"August 03, 2025"
 #define PLUGIN_NAME		"ExtraLevels 3 MM"
 #define PLUGIN_AUTHOR		"White Panther"
 #define PLUGIN_EMAIL		""
 #define PLUGIN_URL		""
 #define MY_LOGTAG		"EXTRALEVELS_3_MM"
 #define PLUGIN_CVAR		"mm_extralevels3"
-#define PLUGIN_VERSION		"0.7.9beta1"
+#define PLUGIN_VERSION		"0.7.9.1"
 #define PLUGIN_LOADABLE		PT_CHANGELEVEL
 #define PLUGIN_UNLOADABLE	PT_ANYPAUSE
 
