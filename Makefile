@@ -100,7 +100,7 @@ CCOPT = -march=i586 $(CCO) -ffast-math -funroll-loops \
 CCO = -O6 -m32
 
 # debugging; halt on warnings
-CCDEBUG+= -ggdb3
+CCDEBUG+= -march=i586 -ggdb3
 
 
 #############################################################################
@@ -180,7 +180,7 @@ $(OBJDIR_LINUX)/%.o: $(SRCDIR)/%.cpp
 	$(DO_CC_LINUX)
 
 # linux .so target file
-LIBFILE_LINUX = $(MODNAME)_i386.so
+LIBFILE_LINUX = $(MODNAME)_i586.so
 TARGET_LINUX = $(OBJDIR_LINUX)/$(LIBFILE_LINUX)
 
 
