@@ -70,10 +70,10 @@ endif
 
 CC_WIN=$(PATH_WIN)/gcc
 RES_WIN=$(PATH_WIN)/windres
-OBJDIR_LINUX_OPT=pro.linux
-OBJDIR_WIN_OPT=pro.win32
-OBJDIR_LINUX_DBG=debug.linux
-OBJDIR_WIN_DBG=debug.win32
+OBJDIR_LINUX_OPT=pro.linux$(NS)
+OBJDIR_WIN_OPT=pro.win32$(NS)
+OBJDIR_LINUX_DBG=debug.linux$(NS)
+OBJDIR_WIN_DBG=debug.win32$(NS)
 
 
 #############################################################################
@@ -100,7 +100,7 @@ CCOPT = -march=i586 $(CCO) -ffast-math -funroll-loops \
 CCO = -O6 -m32
 
 # debugging; halt on warnings
-CCDEBUG+= -march=i586 -ggdb3
+CCDEBUG+= -m32 -march=i586 -ggdb3
 
 
 #############################################################################
