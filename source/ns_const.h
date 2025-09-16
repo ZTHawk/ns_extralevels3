@@ -103,7 +103,7 @@ enum
 	NS_WEAPON_MAX
 };
 
-enum classes
+enum EL3_Classes : byte
 {
 	NS_CLASS_UNKNOWN = 0,
 	NS_CLASS_SKULK,

@@ -81,7 +81,7 @@ void EL_Player::reset(bool in_game)
 	in_help_menu = false;
 
 	pTeam = 0;
-	pClass = 1;	// default class is 1 ( in ready room )
+	pClass = NS_CLASS_UNKNOWN;	// default class is 1 ( in ready room )
 	pDeath = 0;
 
 	if ( in_game == false )
