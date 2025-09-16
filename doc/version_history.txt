@@ -199,3 +199,7 @@ v0.7.9: ( 11.11.2008/24.06.2024 )
 			- Aliens will now receive a maximum of three boosts (HP, Speed, Primal Scream). Further kills will not extent time
 		- Sense of Ancients:
 			- removed hardcode level requirement (new config option: SOA_LEVEL)
+
+v0.7.9.2: ( 16.09.2025 )
+	- fixed:
+		- Some bots could freeze after attacking
