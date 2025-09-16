@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_ADVANCEDAMMOPACK_H_
-#define _UPGRADE_ADVANCEDAMMOPACK_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -138,5 +137,3 @@ static const int BasicAmmo[31] =
 #define AA_SHOTGUN				4.0
 #define AA_HMG					20.0
 #define AA_GL					1.0
-
-#endif

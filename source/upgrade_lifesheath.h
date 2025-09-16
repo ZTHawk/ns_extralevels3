@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_LIFESHEATH_H_
-#define _UPGRADE_LIFESHEATH_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -44,5 +43,3 @@ extern EL_Lifesheath player_lifesheath[MAX_PLAYERS_PLUS1];
 #define LS_LEVEL		12
 #define LS_COOLDOWN		5.0
 #define LS_HEALTH		50.0
-
-#endif

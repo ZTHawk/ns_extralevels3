@@ -1,5 +1,4 @@
-#ifndef _EXP_CONTROLLER_H_
-#define _EXP_CONTROLLER_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -36,5 +35,3 @@ private:
 };
 
 extern EXP_Controller exp_controller;
-
-#endif

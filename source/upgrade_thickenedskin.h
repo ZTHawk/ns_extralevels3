@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_THICKENED_SKIN_H_
-#define _UPGRADE_THICKENED_SKIN_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -111,5 +110,3 @@ static const char* TS_sound_files[TS_MAX_SOUNDS] =
 #define TS_FADE			25.0
 #define TS_ONOS			30.0
 #define TS_GESTATE		20.0
-
-#endif

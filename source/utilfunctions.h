@@ -2,8 +2,7 @@
 // Forward declarations for functions that deal directly with the engine
 //======================================================================
 
-#ifndef _UTILFUNCTIONS_H_
-#define _UTILFUNCTIONS_H_
+#pragma once
 
 #define ABSOLUTE_VALUE_EASY(x) (((x) < 0) ? (-(x)) : (x)) //very useful for gpGlobals->time comparisons
 
@@ -535,5 +534,3 @@ inline void add_private_f(edict_t* pEntity, int offset, float value)
 {
 	*(float*)((char*)(pEntity->pvPrivateData) + offset) += value;
 }
-
-#endif

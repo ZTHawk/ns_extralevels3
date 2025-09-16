@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_HUNGER_H_
-#define _UPGRADE_HUNGER_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -77,5 +76,3 @@ static const char* H_sound_files[H_MAX_SOUNDS] =
 #define H_HEALTHPERCENTAGE	10.0
 #define H_INITIALTIME		3.0
 #define H_LEVELTIME		1.0
-
-#endif

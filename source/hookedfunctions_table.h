@@ -1,5 +1,4 @@
-#ifndef _HOOKEDFUNCTIONS_TABLE_H_
-#define _HOOKEDFUNCTIONS_TABLE_H_
+#pragma once
 
 //these are the functions we want to receive, be sure to declare the functions in hookedfunctions.h, then simply
 //place the name of the function in the table here without paranthases after it or anything
@@ -575,5 +574,3 @@ enginefuncs_t meta_engfuncs_post = {
 	NULL,					// pfnQueryClientCvarValue()
 	NULL,					// pfnQueryClientCvarValue2()
 };
-
-#endif

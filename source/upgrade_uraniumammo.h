@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_URANIUMAMMO_H_
-#define _UPGRADE_URANIUMAMMO_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -59,5 +58,3 @@ extern EL_Uraniumammo player_uraniumammo[MAX_PLAYERS_PLUS1];
 #define UA_LEVEL			10
 #define UA_BULLETDMG			10.0
 #define UA_GRENDMG			7.0
-
-#endif

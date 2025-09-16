@@ -1,5 +1,4 @@
-#ifndef _PLUGIN_H_
-#define _PLUGIN_H_
+#pragma once
 
 // disable "XXX was declared deprecated" warnings
 #pragma warning(disable:4996)
@@ -250,4 +249,3 @@ extern hl_string_base hl_strings;
 #endif // !GETPLAYERAUTHID
 
 #endif // #ifndef VERS_PLUGIN_H
-#endif // #ifndef _PLUGIN_H_

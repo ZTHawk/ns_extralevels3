@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_BLOODLUST_H_
-#define _UPGRADE_BLOODLUST_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -66,5 +65,3 @@ extern EL_Bloodlust player_bloodlust[MAX_PLAYERS_PLUS1];
 #define BL_REGEN			2.0
 #define BL_ONOSPERCENTAGE		33.0
 #define BL_VAMPIRISM			1.0
-
-#endif

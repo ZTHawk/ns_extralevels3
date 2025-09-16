@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_REINFORCEDARMOR_H_
-#define _UPGRADE_REINFORCEDARMOR_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -79,5 +78,3 @@ static const char* RA_sound_files[RA_MAX_SOUNDS] =
 #define RA_LEVEL			0
 #define RA_MA				15.0
 #define RA_HA				25.0
-
-#endif

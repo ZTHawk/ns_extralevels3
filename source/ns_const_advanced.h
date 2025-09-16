@@ -1,5 +1,4 @@
-#ifndef _NS_CONST_ADVANCED_H_
-#define _NS_CONST_ADVANCED_H_
+#pragma once
 
 // Offsets (used in utilfunctions.cpp)
 
@@ -163,6 +162,4 @@
 #define MAKE_OFFSET( name )	OFFSET_LIN_##name
 #else
 #define MAKE_OFFSET( name )	OFFSET_WIN_##name
-#endif
-
 #endif

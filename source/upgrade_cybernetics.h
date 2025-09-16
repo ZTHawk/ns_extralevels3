@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_CYBERNETICS_H_
-#define _UPGRADE_CYBERNETICS_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -52,5 +51,3 @@ extern EL_Cybernetics player_cybernetics[MAX_PLAYERS_PLUS1];
 #define C_LEVEL			5
 #define C_MA			15.0
 #define C_HA_JP			8.0
-
-#endif

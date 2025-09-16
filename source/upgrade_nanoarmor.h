@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_NANOARMOR_H_
-#define _UPGRADE_NANOARMOR_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -64,5 +63,3 @@ static const char* NA_sound_files[NA_MAX_SOUNDS] =
 #define NA_LEVEL		0
 #define NA_MA			4.0
 #define NA_HA			6.0
-
-#endif

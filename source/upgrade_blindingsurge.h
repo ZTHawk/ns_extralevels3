@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_BLINDINGSURGE_H_
-#define _UPGRADE_BLINDINGSURGE_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -66,5 +65,3 @@ extern EL_Blindingsurge player_blindingsurge[MAX_PLAYERS_PLUS1];
 #define BS_HEALTH		50.0
 #define BS_RANGE		100.0
 #define BS_BLIND_TIME		1.0
-
-#endif

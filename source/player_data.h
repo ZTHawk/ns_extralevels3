@@ -1,5 +1,4 @@
-#ifndef _PLAYER_DATA_H
-#define _PLAYER_DATA_H
+#pragma once
 
 #include "plugin.h"
 #include <vector>
@@ -246,5 +245,3 @@ static const float BasicDmg[31] =
 #define MAX_ENERGY			1000.0
 
 #define PLAYER_VIEWCONE			0.71
-
-#endif

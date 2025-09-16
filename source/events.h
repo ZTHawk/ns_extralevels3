@@ -1,5 +1,4 @@
-#ifndef _EVENTS_H_
-#define _EVENTS_H_
+#pragma once
 
 #include "upgrade_data_base.h"
 
@@ -315,5 +314,3 @@ inline void EVENT_Particles(const char* Name)
 	}
 	++ParticleCount;
 }
-
-#endif

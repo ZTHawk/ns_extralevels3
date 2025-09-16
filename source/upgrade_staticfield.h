@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_STATICFIELD_H_
-#define _UPGRADE_STATICFIELD_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -68,5 +67,3 @@ static const char* SF_sound_files[SF_MAX_SOUNDS] =
 #define SF_LEVELRANGE		50.0
 #define SF_INITSHOCK		15.0
 #define SF_SHOCKADDER		5.0
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_ETHEREALSHIFT_H_
-#define _UPGRADE_ETHEREALSHIFT_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -81,5 +80,3 @@ static const char* ES_sound_files[ES_MAX_SOUNDS] =
 #define ES_CLASSMULTI			100.0
 #define ES_ONOSSHIFT			true
 #define ES_DELAY			2.0
-
-#endif

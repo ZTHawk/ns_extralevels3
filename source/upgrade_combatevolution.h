@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_COMBATEVOLUTION_H_
-#define _UPGRADE_COMBATEVOLUTION_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -95,5 +94,3 @@ extern EL_CombatEvolution player_combatevolution[MAX_PLAYERS_PLUS1];
 #define CE_LERK_DRAIN_RATE		1.0
 #define CE_FADE_CRIPPLE_RATE		10.0
 #define CE_ONOS_ARMOR_BOOST		10.0
-
-#endif

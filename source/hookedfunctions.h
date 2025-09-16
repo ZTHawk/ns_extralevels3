@@ -1,5 +1,4 @@
-#ifndef _HOOKEDFUNCTIONS_H_
-#define _HOOKEDFUNCTIONS_H_
+#pragma once
 
 //function declarations for intercepted functions, any function that we want metamod to call needs
 //to be declared in this header
@@ -60,5 +59,3 @@ void Set_Hooks_Message();
 void Set_Hooks_Message_Post();
 void Clear_Hooks_Message();
 void Clear_Hooks_Message_Post();
-
-#endif

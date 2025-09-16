@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_ACIDICVENGEANCE_H_
-#define _UPGRADE_ACIDICVENGEANCE_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -85,5 +84,3 @@ static const char* AV_sound_files[AV_MAX_SOUNDS] =
 #define AV_GORGEGEST_PERCENTAGE		50.0
 #define AV_INITRANGE			100.0
 #define AV_CLASSRANGE			50.0
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_DATA_BASE_H_
-#define _UPGRADE_DATA_BASE_H_
+#pragma once
 
 #include "plugin.h"
 
@@ -98,5 +97,3 @@ public:
 
 extern base_upgrade_data* upgrade_data[UP_END];
 extern base_upgrade_pl_data* upgrade_pl_data[UP_END][MAX_PLAYERS_PLUS1];
-
-#endif

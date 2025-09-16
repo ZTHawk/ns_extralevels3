@@ -1,5 +1,4 @@
-#ifndef _NS_CONST_H_
-#define _NS_CONST_H_
+#pragma once
 
 #include "ns_const_advanced.h"
 
@@ -203,5 +202,3 @@ enum
 	NS_PLAYERCLASS_SPECTATOR,
 	NS_PLAYERCLASS_READY,
 };
-
-#endif

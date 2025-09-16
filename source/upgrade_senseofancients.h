@@ -1,5 +1,4 @@
-#ifndef _UPGRADE_SENSEOFANCIENTS_H_
-#define _UPGRADE_SENSEOFANCIENTS_H_
+#pragma once
 
 #include "plugin.h"
 #include "upgrade_data_base.h"
@@ -231,5 +230,3 @@ static const char No_Gestate_Digest_Msg[POPUP_MSG_LEN] = "You can't gestate whil
 #define SOA_DEVOURTIME_INIT		1.5
 #define SOA_DEVOURTIME_BONUS		0.2
 #define SOA_GESTATE_ARMOR_ADD		15.0
-
-#endif
