@@ -83,7 +83,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\HLSDK\multiplayer\pm_shared;..\..\HLSDK\multiplayer\engine;..\..\HLSDK\multiplayer\dlls;..\..\HLSDK\multiplayer\common;..\..\HLSDK\multiplayer\cl_dll;..\..\HLSDK\multiplayer;..\..\metamod-p\metamod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\metamod-p\hlsdk\pm_shared;..\..\metamod-p\hlsdk\engine;..\..\metamod-p\hlsdk\dlls;..\..\metamod-p\hlsdk\common;..\..\metamod-p\metamod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;EXTRALEVELS3_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -118,7 +118,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>..\..\HLSDK\multiplayer\pm_shared;..\..\HLSDK\multiplayer\engine;..\..\HLSDK\multiplayer\dlls;..\..\HLSDK\multiplayer\common;..\..\HLSDK\multiplayer\cl_dll;..\..\HLSDK\multiplayer;..\..\metamod-p\metamod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\metamod-p\hlsdk\pm_shared;..\..\metamod-p\hlsdk\engine;..\..\metamod-p\hlsdk\dlls;..\..\metamod-p\hlsdk\common;..\..\metamod-p\metamod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;EXTRALEVELS3_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -145,7 +145,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\HLSDK\multiplayer\pm_shared;..\..\HLSDK\multiplayer\engine;..\..\HLSDK\multiplayer\dlls;..\..\HLSDK\multiplayer\common;..\..\HLSDK\multiplayer\cl_dll;..\..\HLSDK\multiplayer;..\..\metamod-p\metamod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\metamod-p\hlsdk\pm_shared;..\..\metamod-p\hlsdk\engine;..\..\metamod-p\hlsdk\dlls;..\..\metamod-p\hlsdk\common;..\..\metamod-p\metamod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;EXTRALEVELS3_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
