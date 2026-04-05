@@ -81,7 +81,7 @@ void initCVARS()
 	CVAR_REGISTER(&el3_notifyme_cvar);
 	CVAR_notify = CVAR_GET_POINTER(EL3_CVARNAME_NOTIFYME);
 
-	static cvar_t el3_instruct_cvar = { EL3_CVARNAME_INSTRUCT, EL3_CVAR_INSTRUCT_VALUE, 0, (float)atof(EL3_CVAR_INSTRUCT_VALUE), NULL };		// Set to the number of times you want the "type /xhelp for more info" message to be displayed on spawn.	
+	static cvar_t el3_instruct_cvar = { EL3_CVARNAME_INSTRUCT, EL3_CVAR_INSTRUCT_VALUE, 0, (float)atof(EL3_CVAR_INSTRUCT_VALUE), NULL };		// Set to the number of times you want the "type /xhelp for more info" message to be displayed on spawn.
 	CVAR_REGISTER(&el3_instruct_cvar);
 	CVAR_instruct = CVAR_GET_POINTER(EL3_CVARNAME_INSTRUCT);
 
@@ -144,7 +144,7 @@ void initCVARS_values()
 		temp_str = new char[strlen(str_num) + 1];
 		memset(temp_str, 0, strlen(str_num));
 		CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string = temp_str;
-		strcpy(CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string, str_num);
+		strcpy((char*)CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->string, str_num);
 		CVAR_upgrade_levels[(CVAR_LEVELNAMES_NUM - 1) - i]->value = (float)level_to_set;
 	}
 }

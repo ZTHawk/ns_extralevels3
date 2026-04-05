@@ -1106,7 +1106,7 @@ void pfnPlaybackEvent(int flags, const edict_t* pInvoker, unsigned short eventin
 	RETURN_META(MRES_IGNORED);
 }
 
-void pfnAlertMessage(ALERT_TYPE atype, char* szFmt, ...)
+void pfnAlertMessage(ALERT_TYPE atype, CONST_PATCH char* szFmt, ...)
 {
 	if ( atype != at_logged )
 		RETURN_META(MRES_IGNORED);

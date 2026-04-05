@@ -4,9 +4,16 @@
 //to be declared in this header
 
 #include <extdll.h>
+#include <vers_meta.h>
 
 #include <string.h> //to prevent linux errors while processing meta_api.h
 #include <meta_api.h>
+
+#if VPATCH_IVERSION >= 41
+#define CONST_PATCH const
+#else
+#define CONST_PATCH
+#endif
 
 // forwards
 int Spawn(edict_t* pEntity);
@@ -35,7 +42,7 @@ void pfnWriteCoord(float flValue);
 void pfnWriteString(const char* string);
 void pfnMessageEnd(void);
 void pfnPlaybackEvent(int flags, const edict_t* pInvoker, unsigned short eventindex, float delay, float* origin, float* angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2);
-void pfnAlertMessage(ALERT_TYPE atype, char* szFmt, ...);
+void pfnAlertMessage(ALERT_TYPE atype, CONST_PATCH char* szFmt, ...);
 
 // engine funcs POST
 void pfnMessageBegin_Post(int msg_dest, int msg_type, const float* pOrigin, edict_t* ed);
