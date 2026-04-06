@@ -416,7 +416,7 @@ void EL_Player::gestate_emulation()
 	}
 }
 
-bool EL_Player::check_trace_hull_stuck(Vector origin)
+bool EL_Player::check_trace_hull_stuck(Vector origin) const
 {
 	TraceResult ptr;
 	TRACE_HULL(origin, origin, false, HULL_HUMAN, pEntity, &ptr);
@@ -424,7 +424,7 @@ bool EL_Player::check_trace_hull_stuck(Vector origin)
 	return (ptr.fStartSolid || ptr.fAllSolid || !ptr.fInOpen);
 }
 
-void EL_Player::unstuck()
+void EL_Player::unstuck() const
 {
 	Vector new_origin = Vector(0.0, 0.0, 0.0);
 
@@ -652,28 +652,28 @@ void EL_Player::killPlayer()
 	int hl_strings_trigger_hurt_id = hl_strings.find("trigger_hurt");
 	edict_t* entity = CREATE_NAMED_ENTITY(hl_strings_trigger_hurt_id);
 
-	KeyValueData kvd;
+	KeyValueData kvd{};
 	kvd.szClassName = (char*)STRING(entity->v.classname);
 	kvd.szKeyName = "classname";
 	kvd.szValue = "trigger_hurt";
 	kvd.fHandled = 0;
 	MDLL_KeyValue(entity, &kvd);
 
-	KeyValueData kvd1;
+	KeyValueData kvd1{};
 	kvd1.szClassName = (char*)STRING(entity->v.classname);
 	kvd1.szKeyName = "dmg";
 	kvd1.szValue = "9999.0";
 	kvd1.fHandled = 0;
 	MDLL_KeyValue(entity, &kvd1);
 
-	KeyValueData kvd2;
+	KeyValueData kvd2{};
 	kvd2.szClassName = (char*)STRING(entity->v.classname);
 	kvd2.szKeyName = "damagetype";
 	kvd2.szValue = "1";
 	kvd2.fHandled = 0;
 	MDLL_KeyValue(entity, &kvd2);
 
-	KeyValueData kvd3;
+	KeyValueData kvd3{};
 	kvd3.szClassName = (char*)STRING(entity->v.classname);
 	kvd3.szKeyName = "origin";
 	kvd3.szValue = "8192 8192 8192";
@@ -695,7 +695,7 @@ void EL_Player::killPlayer()
 	gBlockMsgPlayer = false;
 }
 
-void EL_Player::newDeahthMsg(byte KillerID, const char* WeaponName)
+void EL_Player::newDeahthMsg(byte KillerID, const char* WeaponName) const
 {
 	MESSAGE_BEGIN(MSG_ALL, DeathMsg_ID);
 	WRITE_BYTE(KillerID);
@@ -756,7 +756,7 @@ void EL_Player::respawn_player()
 	pEntity->v.iuser3 = IUSER3_CLASS_SKULK;		// set class
 }
 
-int EL_Player::getScoreByClass()
+int EL_Player::getScoreByClass() const
 {
 	if ( pEntity->v.iuser3 < IUSER3_CLASS_SKULK )
 	{
@@ -785,7 +785,7 @@ void EL_Player::givePoints(byte victimID)
 	give_xtra_EXP(victimID, ID);
 }
 
-void EL_Player::give_xtra_EXP(byte victimID, byte FakeKiller)
+void EL_Player::give_xtra_EXP(byte victimID, byte FakeKiller) const
 {
 	bool* will_getEXP = new bool[gpGlobals->maxClients + 1];
 	byte players_in_range = 0;
@@ -936,7 +936,7 @@ void EL_Player::showMenu()
 	UTIL_ShowMenu(pEntity, Keys, -1, menu_cont);
 }
 
-void EL_Player::showMenuOLD()
+void EL_Player::showMenuOLD() const
 {
 	static char old_menu_text[NOTIFY_MSG_LEN] = "Your input /menu and menu is not used anymore. Use /xmenu or xmenu instead.\n";
 	UTIL_ClientPrint(pEntity, PRINT_CHAT, old_menu_text);

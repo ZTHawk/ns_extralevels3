@@ -95,8 +95,8 @@ public:
 	void Core();
 	void gestate_emulation();
 	void gestate_messages(bool hide_weapons, byte scoreboard_class, byte iuser3_class);
-	bool check_trace_hull_stuck(Vector origin);
-	void unstuck();
+	bool check_trace_hull_stuck(Vector origin) const;
+	void unstuck() const;
 
 	float getMaxHP();
 	float getMaxAP();
@@ -106,15 +106,15 @@ public:
 	float calc_lvl_and_xp();
 	int get_player_lvl(float XP, int lvl_to_check, int min, int max);
 	void killPlayer();
-	void newDeahthMsg(byte KillerID, const char* WeaponName);
+	void newDeahthMsg(byte KillerID, const char* WeaponName) const;
 	void respawn_player();
-	int getScoreByClass();
+	int getScoreByClass() const;
 	void givePoints(byte victimID);
-	void give_xtra_EXP(byte victimID, byte FakeKiller = 0);
+	void give_xtra_EXP(byte victimID, byte FakeKiller = 0) const;
 
 	void showNotifyMsg();
 	void showMenu();
-	void showMenuOLD();
+	void showMenuOLD() const;
 	void showHelpMenu();
 	void MenuSelection(int key);
 	void showHUD_Msg(byte vID, float XP, int level, bool is_marine);

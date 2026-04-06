@@ -932,7 +932,7 @@ bool EL_Senseofancients::ImpulseCheckBlock()
 	return true;
 }
 
-bool EL_Senseofancients::setHUDText(byte vID, bool is_marine, hudtextparms_t& hud_params, char* CoreT_GL_reload_Shift_text)
+bool EL_Senseofancients::setHUDText(byte vID, bool is_marine, hudtextparms_t& hud_params, char* CoreT_GL_reload_Shift_text) const
 {
 	if ( ParasiteMode < PARASITE_BY_MARINE_1
 		|| ParasiteMode > PARASITE_BY_MARINE_4 )

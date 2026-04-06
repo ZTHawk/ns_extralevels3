@@ -90,7 +90,7 @@ public:
 	void ReadyRoom();
 	bool ImpulseCheckBlock();
 
-	bool setHUDText(byte vID, bool is_marine, hudtextparms_t& hud_params, char* CoreT_GL_reload_Shift_text);
+	bool setHUDText(byte vID, bool is_marine, hudtextparms_t& hud_params, char* CoreT_GL_reload_Shift_text) const;
 
 private:
 	byte ParasiteChance;
