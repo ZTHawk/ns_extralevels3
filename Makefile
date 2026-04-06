@@ -114,7 +114,7 @@ INCLUDEDIRS=-I$(SRCDIR) -I ./source -I$(SRCDIR)/source -I$(METADIR) -I$(SDKSRC)/
 	    -I$(SDKSRC)/pm_shared -I$(SDKSRC)/dlls -I$(SDKSRC)
 FILES_ALL = *.cpp *.h [A-Z]* *.rc
 
-CFLAGS=-Wall -Wno-unknown-pragmas -Wno-unused
+CFLAGS=-Wall -Wno-unknown-pragmas -Wno-unused -Wno-write-strings
 
 ODEF=
 ifeq "$(NS)" "3_2"

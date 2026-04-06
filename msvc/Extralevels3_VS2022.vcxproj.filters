@@ -167,6 +167,9 @@
     <ClInclude Include="resource\resource.h">
       <Filter>Headerfiles</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\plugin_info.h">
+      <Filter>Headerfiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource\extralevels3.rc">
