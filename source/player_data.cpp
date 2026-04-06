@@ -1068,7 +1068,7 @@ void EL_Player::showHUD_Msg(byte vID, float XP, int level, bool is_marine)
 			, is_marine ? MARINE_HUD_COLOR_B : ALIEN_HUD_COLOR_B
 			, -1.0, UTIL_isAlive(pEntity) ? 0.89f : 0.82f, 0, 0.0, 3600.0, 0.0, 0.0, HUD_CHANNEL);
 
-	char CoreT_point_msg[10] = "";
+	char CoreT_point_msg[15] = "";
 	int CoreT_points_left;
 	int CoreT_max_level = max_level;
 	if ( level > BASE_MAX_LEVEL
