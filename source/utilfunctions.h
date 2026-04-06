@@ -452,7 +452,7 @@ inline void UTIL_ShowMenu(edict_t* pEdict, int slots, int displaytime, const cha
 			temp_len = 175;
 		string_len -= temp_len;
 
-		strncpy(buffer, dummyText, temp_len);
+		memcpy(buffer, dummyText, temp_len);
 		buffer[temp_len] = 0;
 		dummyText += temp_len;
 
