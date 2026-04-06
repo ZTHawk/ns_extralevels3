@@ -3,31 +3,8 @@
 // disable "XXX was declared deprecated" warnings
 #pragma warning(disable:4996)
 
-//#define linux
-//#define __linux__
+#include "plugin_info.h"
 
-//=================================================================
-//Plugin Information
-//=================================================================
-#define PLUGIN_DATE		"September 16, 2025"
-#define PLUGIN_NAME		"ExtraLevels 3 MM"
-#define PLUGIN_AUTHOR		"White Panther"
-#define PLUGIN_EMAIL		""
-#define PLUGIN_URL		""
-#define MY_LOGTAG		"EXTRALEVELS_3_MM"
-#define PLUGIN_CVAR		"mm_extralevels3"
-#define PLUGIN_VERSION		"0.7.9.2"
-#define PLUGIN_LOADABLE		PT_CHANGELEVEL
-#define PLUGIN_UNLOADABLE	PT_ANYPAUSE
-
-#define PLUGIN_VERS_DWORD	0, 7, 9, 2
-#define PLUGIN_COMMENTS		"Enjoy"
-#define PLUGIN_DESC		"More than 10 levels + new upgrades"
-#define PLUGIN_FILENAME		PLUGIN_LOGTAG ".DLL"
-#define PLUGIN_INTERNAL		PLUGIN_LOGTAG
-#define PLUGIN_COPYRIGHT	"GNU Public License"
-
-#ifndef VERS_PLUGIN_H		//so that we don't confuse the resource compiler
 #include <extdll.h>		//always
 
 #include <string.h>		//to prevent linux errors while processing meta_api.h
@@ -247,5 +224,3 @@ extern hl_string_base hl_strings;
 #ifndef GETPLAYERAUTHID
 #define GETPLAYERAUTHID	(*g_engfuncs.pfnGetPlayerAuthId)
 #endif // !GETPLAYERAUTHID
-
-#endif // #ifndef VERS_PLUGIN_H

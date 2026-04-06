@@ -27,18 +27,18 @@ LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "#include ""windows.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
     "\r\n"
     "\0"
@@ -52,9 +52,11 @@ END
 // Version
 //
 
+#include "..\source\plugin_info.h"
+
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,7,9,2
- PRODUCTVERSION 0,7,9,2
+ FILEVERSION PLUGIN_VERS_DWORD
+ PRODUCTVERSION PLUGIN_VERS_DWORD
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -69,13 +71,13 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "FileDescription", "ExtraLevels 3 MetaMod"
-            VALUE "FileVersion", "0.7.9.2"
-            VALUE "InternalName", "extralevels3"
-            VALUE "LegalCopyright", "Copyright (C) 2006-2025, White Panther; GPL licensed"
-            VALUE "OriginalFilename", "extralevels3.dll"
-            VALUE "ProductName", "ExtraLevels 3 MM"
-            VALUE "ProductVersion", "0.7.9.2"
+            VALUE "FileDescription", PLUGIN_DESCRIPTION
+            VALUE "FileVersion", PLUGIN_VERSION
+            VALUE "InternalName", PLUGIN_INTERNAL
+            VALUE "LegalCopyright", PLUGIN_COPYRIGHT
+            VALUE "OriginalFilename", PLUGIN_FILENAME
+            VALUE "ProductName", PLUGIN_NAME
+            VALUE "ProductVersion", PLUGIN_VERSION
         END
     END
     BLOCK "VarFileInfo"

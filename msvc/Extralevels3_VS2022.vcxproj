@@ -265,6 +265,7 @@
     <ClInclude Include="..\source\ns_const_advanced.h" />
     <ClInclude Include="..\source\player_data.h" />
     <ClInclude Include="..\source\plugin.h" />
+    <ClInclude Include="..\source\plugin_info.h" />
     <ClInclude Include="..\source\upgrade_acidicvengeance.h" />
     <ClInclude Include="..\source\upgrade_advancedammopack.h" />
     <ClInclude Include="..\source\upgrade_blindingsurge.h" />
