@@ -145,9 +145,6 @@ void EL_Player::disconnect()
 
 	for ( int upgrade_ID = UP_START; upgrade_ID < UP_END; ++upgrade_ID )
 	{
-		if ( upgrade_pl_data[upgrade_ID] == NULL )
-			continue;
-
 		if ( upgrade_pl_data[upgrade_ID][ID] == NULL )
 			continue;
 

@@ -818,7 +818,7 @@ void EL_Senseofancients::free_digested_Players()
 		targetEntity->v.controller[2] = 0;
 		targetEntity->v.solid = 3;
 		targetEntity->v.effects = 0;
-		targetEntity->v.flags = targetEntity->v.flags & ~FL_ONGROUND | FL_DUCKING;	// remove ONGROUND but add DUCKING
+		targetEntity->v.flags = (targetEntity->v.flags & ~FL_ONGROUND) | FL_DUCKING;	// remove ONGROUND but add DUCKING
 		targetEntity->v.weaponanim = 2;
 		targetEntity->v.flFallVelocity = 0.0;
 		targetEntity->v.fuser2 = 1000.0;

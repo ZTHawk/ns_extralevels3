@@ -48,7 +48,7 @@ void UTIL_ServerPrint(const char* fmt, ...);
 void UTIL_ClientPrint(edict_t* pEntity, int Msg_Type, char* Msg);
 
 void UTIL_clearMenu(edict_t* pEdict);
-void UTIL_ShowMenu(edict_t* pEdict, int slots, int displaytime, char* pText);
+void UTIL_ShowMenu(edict_t* pEdict, int slots, int displaytime, const char* pText);
 bool UTIL_isAlive(edict_t* pEntity);
 bool UTIL_isCloaked(edict_t* pEntity);
 void UTIL_giveItem(edict_t* pEntity, const char* Item);
@@ -438,32 +438,33 @@ inline void UTIL_clearMenu(edict_t* pEdict)
 	UTIL_ShowMenu(pEdict, 1, 1, " \n");
 }
 
-inline void UTIL_ShowMenu(edict_t* pEdict, int slots, int displaytime, char* pText)
+inline void UTIL_ShowMenu(edict_t* pEdict, int slots, int displaytime, const char* pText)
 {
-	char* dummy_text = pText;
-	char temp_char = 0;
+	const char* dummyText = pText;
 	int temp_len;
 	int string_len = strlen(pText);
+	char* buffer = new char[175 + 1];
 
-	while ( *dummy_text )
+	while ( *dummyText )
 	{
 		temp_len = string_len;
 		if ( temp_len > 175 )
 			temp_len = 175;
 		string_len -= temp_len;
-		temp_char = *(dummy_text += temp_len);
-		*dummy_text = 0;
+
+		strncpy(buffer, dummyText, temp_len);
+		buffer[temp_len] = 0;
+		dummyText += temp_len;
 
 		MESSAGE_BEGIN(MSG_ONE, ShowMenu_ID, NULL, pEdict);
 		WRITE_SHORT(slots);
 		WRITE_CHAR(displaytime);
-		WRITE_BYTE(temp_char ? TRUE : FALSE);
-		WRITE_STRING(pText);
+		WRITE_BYTE(string_len > 0 ? TRUE : FALSE);
+		WRITE_STRING(buffer);
 		MESSAGE_END();
-
-		*dummy_text = temp_char;
-		pText = dummy_text;
 	}
+
+	delete[] buffer;
 }
 
 inline void UTIL_sendScoreInfo(int ID)

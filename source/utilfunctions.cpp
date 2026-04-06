@@ -168,6 +168,43 @@ void UTIL_setWeaponReserve(edict_t* pEntity, byte WeaponID, int ReserveSize)
 	}
 }
 
+void UTIL_addWeaponReserve(edict_t* pEntity, byte WeaponID, int ReserveSize)
+{
+	switch ( WeaponID )
+	{
+		case NS_WEAPON_PISTOL:
+		{
+			add_private(pEntity, MAKE_OFFSET(AMMO_PISTOL), ReserveSize);
+			break;
+		}
+		case NS_WEAPON_LMG:
+		{
+			add_private(pEntity, MAKE_OFFSET(AMMO_LMG), ReserveSize);
+			break;
+		}
+		case NS_WEAPON_SHOTGUN:
+		{
+			add_private(pEntity, MAKE_OFFSET(AMMO_SHOTGUN), ReserveSize);
+			break;
+		}
+		case NS_WEAPON_HMG:
+		{
+			add_private(pEntity, MAKE_OFFSET(AMMO_HMG), ReserveSize);
+			break;
+		}
+		case NS_WEAPON_GRENADE_GUN:
+		{
+			add_private(pEntity, MAKE_OFFSET(AMMO_GL), ReserveSize);
+			break;
+		}
+		case NS_WEAPON_GRENADE:
+		{
+			add_private(pEntity, MAKE_OFFSET(AMMO_HG), ReserveSize);
+			break;
+		}
+	}
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////// FILE FILE FILE FILE FILE FILE FILE FILE FILE FILE FILE FILE FILE FILE FILE FILE /////////
@@ -260,11 +297,10 @@ void UTIL_getConfigFilenames()
 {
 	char* global_path = (char*)GET_PLUGIN_PATH(PLID);
 	char* addons_path = strstr(global_path, "addons");
-
-	char cfg_path_base[128];
-	memset(cfg_path_base, 0, 128);
 	char* last_slash_pos = strrchr(global_path, '/');
 
+	char cfg_path_base[32];
+	memset(cfg_path_base, 0, 32);
 	strncpy(cfg_path_base, addons_path, last_slash_pos - addons_path);
 	//cfg_path_base[last_slash_pos - addons_path + 1] = '\0';
 
