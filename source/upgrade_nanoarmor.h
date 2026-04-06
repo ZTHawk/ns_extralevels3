@@ -54,12 +54,12 @@ static const char* NA_sound_files[NA_MAX_SOUNDS] =
 	"weapons/welderstop.wav"	// selfweld done
 };
 
-#define NANO_TIME		2.0
+#define NANO_TIME		2.0f
 
 // default config settings
 #define NANOARMOR		true
 #define NA_COST			1
 #define NA_MAX			5
 #define NA_LEVEL		0
-#define NA_MA			4.0
-#define NA_HA			6.0
+#define NA_MA			4.0f
+#define NA_HA			6.0f

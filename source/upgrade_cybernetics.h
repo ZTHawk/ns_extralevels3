@@ -41,13 +41,13 @@ private:
 extern Upgrade_Cybernetics data_cybernetics;
 extern EL_Cybernetics player_cybernetics[MAX_PLAYERS_PLUS1];
 
-#define C_MAX_TIME_IN_AIR	0.5
-#define C_JP_SPEED_PERCENTAGE	33.0
+#define C_MAX_TIME_IN_AIR	0.5f
+#define C_JP_SPEED_PERCENTAGE	33.0f
 
 // default config settings
 #define CYBERNETICS		true
 #define C_COST			1
 #define C_MAX			5
 #define C_LEVEL			5
-#define C_MA			15.0
-#define C_HA_JP			8.0
+#define C_MA			15.0f
+#define C_HA_JP			8.0f

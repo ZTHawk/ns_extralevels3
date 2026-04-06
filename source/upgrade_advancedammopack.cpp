@@ -270,7 +270,7 @@ void EL_AdvancedAmmopack::set_upgrade_values()
 
 void EL_AdvancedAmmopack::respawned()
 {
-	SpawnTime = gpGlobals->time + 0.1;
+	SpawnTime = gpGlobals->time + 0.1f;
 }
 
 void EL_AdvancedAmmopack::setWeaponData_Ammo(byte mode)
@@ -754,7 +754,7 @@ bool EL_AdvancedAmmopack::setHUDText(byte vID, bool is_marine, hudtextparms_t& h
 			, is_marine ? MARINE_HUD_COLOR_R : ALIEN_HUD_COLOR_R
 			, is_marine ? MARINE_HUD_COLOR_G : ALIEN_HUD_COLOR_G
 			, is_marine ? MARINE_HUD_COLOR_B : ALIEN_HUD_COLOR_B
-			, -1.0, UTIL_isAlive(INDEXENT(vID)) ? 0.46 : 0.39, 0, 0.0, 3600.0, 0.0, 0.0, HUD_CHANNEL);
+			, -1.0, UTIL_isAlive(INDEXENT(vID)) ? 0.46f : 0.39f, 0, 0.0, 3600.0, 0.0, 0.0, HUD_CHANNEL);
 		return true;
 	} else if ( player_data[vID].curWeapon == NS_WEAPON_SHOTGUN )
 	{
@@ -764,7 +764,7 @@ bool EL_AdvancedAmmopack::setHUDText(byte vID, bool is_marine, hudtextparms_t& h
 			, is_marine ? MARINE_HUD_COLOR_R : ALIEN_HUD_COLOR_R
 			, is_marine ? MARINE_HUD_COLOR_G : ALIEN_HUD_COLOR_G
 			, is_marine ? MARINE_HUD_COLOR_B : ALIEN_HUD_COLOR_B
-			, -1.0, UTIL_isAlive(INDEXENT(vID)) ? 0.421 : 0.351, 0, 0.0, 3600.0, 0.0, 0.0, HUD_CHANNEL);
+			, -1.0, UTIL_isAlive(INDEXENT(vID)) ? 0.421f : 0.351f, 0, 0.0, 3600.0, 0.0, 0.0, HUD_CHANNEL);
 		return true;
 	}
 

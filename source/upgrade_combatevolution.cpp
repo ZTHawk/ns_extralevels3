@@ -245,7 +245,7 @@ void EL_CombatEvolution::buy_upgrade()
 void EL_CombatEvolution::set_upgrade_values()
 {
 	aura_data[AURA_SPEED] = data_combatevolution.base_speed_boost * cur_level;
-	aura_data[AURA_HEAL] = data_combatevolution.base_heal_rate * cur_level * 0.01;	// this value is a percentage
+	aura_data[AURA_HEAL] = data_combatevolution.base_heal_rate * cur_level * 0.01f;	// this value is a percentage
 	aura_data[AURA_DRAIN] = data_combatevolution.base_drain_rate * cur_level;
 	aura_data[AURA_CRIPPLE] = data_combatevolution.base_cripple_rate * cur_level;
 	aura_data[AURA_ARMOR] = data_combatevolution.base_armor_rate * cur_level;

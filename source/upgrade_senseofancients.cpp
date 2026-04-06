@@ -78,7 +78,7 @@ void Upgrade_Senseofancients::show_upgrade_menu(edict_t* pEntity)
 	const char* dummy_description = upgrade_description;
 
 	int plevel = player_senseofancients[ID].cur_level + 1;
-	float dev_time_mult = (plevel % DevourAdder == 1) ? 1.0 : (float)(player_senseofancients[ID].DevourTimeMultiplier + 1);
+	float dev_time_mult = (plevel % DevourAdder == 1) ? 1.0f : (float)(player_senseofancients[ID].DevourTimeMultiplier + 1);
 	float devour_time = DevourTimeInit - (dev_time_mult * DevourTimeBonus);
 	int players_to_devour = ((plevel - 1) / DevourAdder) + 1;
 
@@ -297,7 +297,7 @@ void EL_Senseofancients::set_upgrade_values()
 
 void EL_Senseofancients::respawned()
 {
-	SpawnTime = gpGlobals->time + 0.1;
+	SpawnTime = gpGlobals->time + 0.1f;
 }
 
 void EL_Senseofancients::Think()
@@ -505,7 +505,7 @@ void EL_Senseofancients::setWeaponData_Dmg()
 		{
 			case NS_WEAPON_PARASITE:
 			{
-				damage_to_set = BasicDmg[WeaponID] + (float)cur_level * (BasicDmg[WeaponID] / 100.0 * data_senseofancients.ParasiteDMGPercentage);
+				damage_to_set = BasicDmg[WeaponID] + (float)cur_level * (BasicDmg[WeaponID] / 100.0f * data_senseofancients.ParasiteDMGPercentage);
 				foundID = WeaponID;
 				break;
 			}
@@ -541,8 +541,8 @@ void EL_Senseofancients::check_HealingSpray()
 		if ( entID == ID )
 		{
 			add_hp_ap(targetEnt,
-				SLEF_HEALSPRAY_HP + (float)cur_level * (SLEF_HEALSPRAY_HP / 100.0 * data_senseofancients.HealsprayPercentage),
-				SELF_HEALSPRAY_AP + (float)cur_level * (SELF_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
+				SLEF_HEALSPRAY_HP + (float)cur_level * (SLEF_HEALSPRAY_HP / 100.0f * data_senseofancients.HealsprayPercentage),
+				SELF_HEALSPRAY_AP + (float)cur_level * (SELF_HEALSPRAY_AP / 100.0f * data_senseofancients.HealsprayPercentage));
 
 			continue;
 		}
@@ -556,55 +556,55 @@ void EL_Senseofancients::check_HealingSpray()
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < OTHER_HEALSPRAY_RANGE )
 					add_hp_ap(targetEnt,
-						SKULK_HEALSPRAY_HP + (float)cur_level * (SKULK_HEALSPRAY_HP / 100.0 * data_senseofancients.HealsprayPercentage),
-						SKULK_HEALSPRAY_AP + (float)cur_level * (SKULK_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
+						SKULK_HEALSPRAY_HP + (float)cur_level * (SKULK_HEALSPRAY_HP / 100.0f * data_senseofancients.HealsprayPercentage),
+						SKULK_HEALSPRAY_AP + (float)cur_level * (SKULK_HEALSPRAY_AP / 100.0f * data_senseofancients.HealsprayPercentage));
 				break;
 			}
 			case NS_AVH_USER3_ALIEN_PLAYER2:	// Gorge
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < OTHER_HEALSPRAY_RANGE )
 					add_hp_ap(targetEnt,
-						GORGE_HEALSPRAY_HP + (float)cur_level * (GORGE_HEALSPRAY_HP / 100.0 * data_senseofancients.HealsprayPercentage),
-						GORGE_HEALSPRAY_AP + (float)cur_level * (GORGE_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
+						GORGE_HEALSPRAY_HP + (float)cur_level * (GORGE_HEALSPRAY_HP / 100.0f * data_senseofancients.HealsprayPercentage),
+						GORGE_HEALSPRAY_AP + (float)cur_level * (GORGE_HEALSPRAY_AP / 100.0f * data_senseofancients.HealsprayPercentage));
 				break;
 			}
 			case NS_AVH_USER3_ALIEN_PLAYER3:	// Lerk
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < OTHER_HEALSPRAY_RANGE )
 					add_hp_ap(targetEnt,
-						LERK_HEALSPRAY_HP + (float)cur_level * (LERK_HEALSPRAY_HP / 100.0 * data_senseofancients.HealsprayPercentage),
-						LERK_HEALSPRAY_AP + (float)cur_level * (LERK_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
+						LERK_HEALSPRAY_HP + (float)cur_level * (LERK_HEALSPRAY_HP / 100.0f * data_senseofancients.HealsprayPercentage),
+						LERK_HEALSPRAY_AP + (float)cur_level * (LERK_HEALSPRAY_AP / 100.0f * data_senseofancients.HealsprayPercentage));
 				break;
 			}
 			case NS_AVH_USER3_ALIEN_PLAYER4:	// Fade
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < OTHER_HEALSPRAY_RANGE )
 					add_hp_ap(targetEnt,
-						FADE_HEALSPRAY_HP + (float)cur_level * (FADE_HEALSPRAY_HP / 100.0 * data_senseofancients.HealsprayPercentage),
-						FADE_HEALSPRAY_AP + (float)cur_level * (FADE_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
+						FADE_HEALSPRAY_HP + (float)cur_level * (FADE_HEALSPRAY_HP / 100.0f * data_senseofancients.HealsprayPercentage),
+						FADE_HEALSPRAY_AP + (float)cur_level * (FADE_HEALSPRAY_AP / 100.0f * data_senseofancients.HealsprayPercentage));
 				break;
 			}
 			case NS_AVH_USER3_ALIEN_PLAYER5:	// Onos
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < ONOS_HEALSPRAY_RANGE )
 					add_hp_ap(targetEnt,
-						ONOS_HEALSPRAY_HP + (float)cur_level * (ONOS_HEALSPRAY_HP / 100.0 * data_senseofancients.HealsprayPercentage),
-						ONOS_HEALSPRAY_AP + (float)cur_level * (ONOS_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
+						ONOS_HEALSPRAY_HP + (float)cur_level * (ONOS_HEALSPRAY_HP / 100.0f * data_senseofancients.HealsprayPercentage),
+						ONOS_HEALSPRAY_AP + (float)cur_level * (ONOS_HEALSPRAY_AP / 100.0f * data_senseofancients.HealsprayPercentage));
 				break;
 			}
 			case NS_AVH_USER3_ALIEN_EMBRYO:	// Gestate
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < OTHER_HEALSPRAY_RANGE )
 					add_hp_ap(targetEnt,
-						GESTATE_HEALSPRAY_HP + (float)cur_level * (GESTATE_HEALSPRAY_HP / 100.0 * data_senseofancients.HealsprayPercentage),
-						GESTATE_HEALSPRAY_AP + (float)cur_level * (GESTATE_HEALSPRAY_AP / 100.0 * data_senseofancients.HealsprayPercentage));
+						GESTATE_HEALSPRAY_HP + (float)cur_level * (GESTATE_HEALSPRAY_HP / 100.0f * data_senseofancients.HealsprayPercentage),
+						GESTATE_HEALSPRAY_AP + (float)cur_level * (GESTATE_HEALSPRAY_AP / 100.0f * data_senseofancients.HealsprayPercentage));
 				break;
 			}
 			case NS_AVH_USER3_HIVE:
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < HIVE_HEALSPRAY_RANGE )
 					add_hp_ap_structure(targetEnt,
-						STRUCTURE_HEALSPRAY_HP + (float)cur_level * (STRUCTURE_HEALSPRAY_HP / 100.0 * data_senseofancients.HealsprayPercentage));
+						STRUCTURE_HEALSPRAY_HP + (float)cur_level * (STRUCTURE_HEALSPRAY_HP / 100.0f * data_senseofancients.HealsprayPercentage));
 				break;
 			}
 			case NS_AVH_USER3_DEFENSE_CHAMBER:
@@ -614,14 +614,14 @@ void EL_Senseofancients::check_HealingSpray()
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < CHAMBER_HEALSPRAY_RANGE )
 					add_hp_ap_structure(targetEnt,
-						STRUCTURE_HEALSPRAY_HP + (float)cur_level * (STRUCTURE_HEALSPRAY_HP / 100.0 * data_senseofancients.HealsprayPercentage));
+						STRUCTURE_HEALSPRAY_HP + (float)cur_level * (STRUCTURE_HEALSPRAY_HP / 100.0f * data_senseofancients.HealsprayPercentage));
 				break;
 			}
 			case NS_AVH_USER3_ALIENRESTOWER:
 			{
 				if ( (pEntity->v.origin - targetEnt->v.origin).Length() < ALIEN_RT_HEALSPRAY_RANGE )
 					add_hp_ap_structure(targetEnt,
-						STRUCTURE_HEALSPRAY_HP + (float)cur_level * (STRUCTURE_HEALSPRAY_HP / 100.0 * data_senseofancients.HealsprayPercentage));
+						STRUCTURE_HEALSPRAY_HP + (float)cur_level * (STRUCTURE_HEALSPRAY_HP / 100.0f * data_senseofancients.HealsprayPercentage));
 				break;
 			}
 		}
@@ -689,7 +689,7 @@ void EL_Senseofancients::Blink_Energy()
 
 		if ( energy_Bonus > 0.0 )
 		{
-			pEntity->v.fuser3 += energy_Bonus / 100.0 * BlinkEnergyReducer;
+			pEntity->v.fuser3 += energy_Bonus / 100.0f * BlinkEnergyReducer;
 			JustBlinked = false;
 		}
 	}
@@ -946,7 +946,7 @@ bool EL_Senseofancients::setHUDText(byte vID, bool is_marine, hudtextparms_t& hu
 		, is_marine ? MARINE_HUD_COLOR_R : ALIEN_HUD_COLOR_R
 		, is_marine ? MARINE_HUD_COLOR_G : ALIEN_HUD_COLOR_G
 		, is_marine ? MARINE_HUD_COLOR_B : ALIEN_HUD_COLOR_B
-		, -1.0, UTIL_isAlive(INDEXENT(vID)) ? 0.421 : 0.351, 0, 0.0, 3600.0, 0.0, 0.0, HUD_CHANNEL);
+		, -1.0, UTIL_isAlive(INDEXENT(vID)) ? 0.421f : 0.351f, 0, 0.0, 3600.0, 0.0, 0.0, HUD_CHANNEL);
 
 	return true;
 }

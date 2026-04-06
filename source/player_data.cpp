@@ -125,7 +125,7 @@ void EL_Player::resetGestate()
 void EL_Player::put_in_server()
 {
 	ingame = true;
-	join_time_10 = gpGlobals->time + 10.0;
+	join_time_10 = gpGlobals->time + 10.0f;
 
 	const char* steamid = GETPLAYERAUTHID(pEntity);
 	strcpy(SteamID, steamid);
@@ -824,13 +824,13 @@ void EL_Player::give_xtra_EXP(byte victimID, byte FakeKiller)
 	float EXP_to_everyone = (float)((XP_ADDER_BASE
 		+ vinctimLevel * XP_ADDER_PER_LEVEL)
 		/ (float)players_in_range)
-		+ 10.0;
+		+ 10.0f;
 
 	// current EXP + additional EXP
 	// additional EXP = 0 if below or equal level 10
 	// additional EXP = EXP of victim level - EXP of level 10 cause NS already gave EXP of level 10
 #if defined _PRE_NS_321
-	float EXP_to_everyone_remover = 70.0 / (float)players_in_range + XP_ADDER_POST;
+	float EXP_to_everyone_remover = 70.0f / (float)players_in_range + XP_ADDER_POST;
 #else
 	float EXP_to_everyone_remover = (vinctimLevel <= BASE_MAX_LEVEL) ? 0.0 :
 		(((XP_ADDER_BASE
@@ -1069,7 +1069,7 @@ void EL_Player::showHUD_Msg(byte vID, float XP, int level, bool is_marine)
 			, is_marine ? MARINE_HUD_COLOR_R : ALIEN_HUD_COLOR_R
 			, is_marine ? MARINE_HUD_COLOR_G : ALIEN_HUD_COLOR_G
 			, is_marine ? MARINE_HUD_COLOR_B : ALIEN_HUD_COLOR_B
-			, -1.0, UTIL_isAlive(pEntity) ? 0.89 : 0.82, 0, 0.0, 3600.0, 0.0, 0.0, HUD_CHANNEL);
+			, -1.0, UTIL_isAlive(pEntity) ? 0.89f : 0.82f, 0, 0.0, 3600.0, 0.0, 0.0, HUD_CHANNEL);
 
 	char CoreT_point_msg[10] = "";
 	int CoreT_points_left;
@@ -1098,8 +1098,8 @@ void EL_Player::showHUD_Msg(byte vID, float XP, int level, bool is_marine)
 		UTIL_HudMessage(pEntity, hud_params, Msg_HUD);
 	} else
 	{
-		LevelPercentage = ((XP - (float)(player_data[vID].base_level_xp /*+ 1*/)) * 100.0) / (float)player_data[vID].xp_to_next_lvl;	// not needed anymore, + 1 is a fix (eg 2701 is level 10 NOT 2700)
-		LevelPercentage = (float)((int)(LevelPercentage * 10.0)) / 10.0;	// round floor, one digit behind comma
+		LevelPercentage = ((XP - (float)(player_data[vID].base_level_xp /*+ 1*/)) * 100.0f) / (float)player_data[vID].xp_to_next_lvl;	// not needed anymore, + 1 is a fix (eg 2701 is level 10 NOT 2700)
+		LevelPercentage = (float)((int)(LevelPercentage * 10.0)) / 10.0f;	// round floor, one digit behind comma
 		message_set = 0;
 
 		for ( int CoreT_j = 0; CoreT_j < CVAR_LEVELNAMES_NUM; ++CoreT_j )

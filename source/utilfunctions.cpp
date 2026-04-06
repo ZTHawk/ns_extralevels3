@@ -206,7 +206,7 @@ void UTIL_getUpgradeDataFromFile(Config_data upgrade_data[], int array_size)
 			}
 			case TYPE_FLOAT:
 			{
-				*((float*)upgrade_data[config_num].address) = atof(dummy);
+				*((float*)upgrade_data[config_num].address) = (float)atof(dummy);
 				break;
 			}
 			case TYPE_BOOL:

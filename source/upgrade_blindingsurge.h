@@ -61,7 +61,7 @@ extern EL_Blindingsurge player_blindingsurge[MAX_PLAYERS_PLUS1];
 #define BLINDINGSURGE		true
 #define BS_COST			2
 #define BS_LEVEL		12
-#define BS_COOLDOWN		5.0
-#define BS_HEALTH		50.0
-#define BS_RANGE		100.0
-#define BS_BLIND_TIME		1.0
+#define BS_COOLDOWN		5.0f
+#define BS_HEALTH		50.0f
+#define BS_RANGE		100.0f
+#define BS_BLIND_TIME		1.0f

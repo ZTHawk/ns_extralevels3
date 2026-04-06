@@ -68,7 +68,7 @@ private:
 
 	int bullets_stolen;
 
-	int Reserve_ammo_corrector;		// 
+	int Reserve_ammo_corrector;		//
 	int curWeaponMaxAmmoBasic;
 	float SpawnTime;
 
@@ -111,14 +111,14 @@ static const int BasicAmmo[31] =
 	0
 };
 
-#define RELOAD_TIME_PISTOL			3.0
-#define RELOAD_TIME_LMG				3.5
-#define RELOAD_TIME_SHOTGUN_INIT		1.2
-#define RELOAD_TIME_SHOTGUN			0.5
-#define RELOAD_TIME_SHOTGUN_END			1.2
-#define RELOAD_TIME_HMG				7.0
-#define RELOAD_TIME_GL_INIT			2.2
-#define RELOAD_TIME_GL				1.1
+#define RELOAD_TIME_PISTOL			3.0f
+#define RELOAD_TIME_LMG				3.5f
+#define RELOAD_TIME_SHOTGUN_INIT		1.2f
+#define RELOAD_TIME_SHOTGUN			0.5f
+#define RELOAD_TIME_SHOTGUN_END			1.2f
+#define RELOAD_TIME_HMG				7.0f
+#define RELOAD_TIME_GL_INIT			2.2f
+#define RELOAD_TIME_GL				1.1f
 
 #define ANIMATION_RELOAD_DONE_SHOTGUN		4
 #define ANIMATION_SWITCHED_TO_GL		13
@@ -132,8 +132,8 @@ static const int BasicAmmo[31] =
 #define AA_COST					1
 #define AA_MAX					5
 #define AA_LEVEL				0
-#define AA_PISTOL				8.0
-#define AA_LMG					10.0
-#define AA_SHOTGUN				4.0
-#define AA_HMG					20.0
-#define AA_GL					1.0
+#define AA_PISTOL				8.0f
+#define AA_LMG					10.0f
+#define AA_SHOTGUN				4.0f
+#define AA_HMG					20.0f
+#define AA_GL					1.0f

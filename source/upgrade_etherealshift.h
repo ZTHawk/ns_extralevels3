@@ -68,15 +68,15 @@ static const char* ES_sound_files[ES_MAX_SOUNDS] =
 	"misc/endcloak.wav"
 };
 
-#define SHIFT_ENERGY_COST		300.0
+#define SHIFT_ENERGY_COST		300.0f
 
 // default config settings
 #define ETHEREALSHIFT			true
 #define ES_COST				1
 #define ES_MAX				5
 #define ES_LEVEL			5
-#define ES_INITIAL			1.0
-#define ES_LVLTIME			0.5
-#define ES_CLASSMULTI			100.0
+#define ES_INITIAL			1.0f
+#define ES_LVLTIME			0.5f
+#define ES_CLASSMULTI			100.0f
 #define ES_ONOSSHIFT			true
-#define ES_DELAY			2.0
+#define ES_DELAY			2.0f

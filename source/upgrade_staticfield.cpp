@@ -139,7 +139,7 @@ void EL_Staticfield::set_upgrade_values()
 	StaticfieldRange = data_staticfield.baseRange + cur_level * data_staticfield.bonusRange;
 
 	// 100% minus how much to weaken enemy
-	StaticfieldPercentage = 100.0 - (data_staticfield.base_shock + (float)cur_level * data_staticfield.shock_adder);
+	StaticfieldPercentage = 100.0f - (data_staticfield.base_shock + (float)cur_level * data_staticfield.shock_adder);
 	if ( StaticfieldPercentage > SF_MAX_STRENGTH )
 		StaticfieldPercentage = SF_MAX_STRENGTH;
 }
@@ -193,8 +193,8 @@ void EL_Staticfield::Think()
 
 		cur_max_armor = player_data[targetID].maxAP;
 
-		static_hp = cur_max_health / 100.0 * StaticfieldPercentage;
-		static_ap = cur_max_armor / 100.0 * StaticfieldPercentage;
+		static_hp = cur_max_health / 100.0f * StaticfieldPercentage;
+		static_ap = cur_max_armor / 100.0f * StaticfieldPercentage;
 
 		if ( targetEntity->v.health > static_hp )
 		{

@@ -77,20 +77,20 @@ public:
 extern Upgrade_CombatEvolution data_combatevolution;
 extern EL_CombatEvolution player_combatevolution[MAX_PLAYERS_PLUS1];
 
-#define CE_RANGE			400.0	// 170.0
-#define CE_DRAIN_RANGE			100.0
-#define CE_AURA_TIME			2.0
-#define CE_HEAL_AURA_DELAY		1.0
-#define CE_CRIPPLE_AURA_DELAY		10.0
-#define CE_CRIPPLE_TIME			2.0
+#define CE_RANGE			400.0f	// 170.0
+#define CE_DRAIN_RANGE			100.0f
+#define CE_AURA_TIME			2.0f
+#define CE_HEAL_AURA_DELAY		1.0f
+#define CE_CRIPPLE_AURA_DELAY		10.0f
+#define CE_CRIPPLE_TIME			2.0f
 
 // default config settings
 #define COMBATEVOLUTION			true
 #define CE_COST				1
 #define CE_MAX				5
 #define CE_LEVEL			20
-#define CE_SKULK_SPEED_BOOST		10.0
-#define CE_GORGE_HEAL_RATE		1.0
-#define CE_LERK_DRAIN_RATE		1.0
-#define CE_FADE_CRIPPLE_RATE		10.0
-#define CE_ONOS_ARMOR_BOOST		10.0
+#define CE_SKULK_SPEED_BOOST		10.0f
+#define CE_GORGE_HEAL_RATE		1.0f
+#define CE_LERK_DRAIN_RATE		1.0f
+#define CE_FADE_CRIPPLE_RATE		10.0f
+#define CE_ONOS_ARMOR_BOOST		10.0f

@@ -77,10 +77,10 @@ static const char* AV_sound_files[AV_MAX_SOUNDS] =
 #define AV_COST				1
 #define AV_MAX				5
 #define AV_LEVEL			0
-#define AV_MA_HP			10.0
-#define AV_MA_AP			10.0
-#define AV_HA_HP			10.0
-#define AV_HA_AP			20.0
-#define AV_GORGEGEST_PERCENTAGE		50.0
-#define AV_INITRANGE			100.0
-#define AV_CLASSRANGE			50.0
+#define AV_MA_HP			10.0f
+#define AV_MA_AP			10.0f
+#define AV_HA_HP			10.0f
+#define AV_HA_AP			20.0f
+#define AV_GORGEGEST_PERCENTAGE		50.0f
+#define AV_INITRANGE			100.0f
+#define AV_CLASSRANGE			50.0f

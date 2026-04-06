@@ -56,5 +56,5 @@ extern EL_Uraniumammo player_uraniumammo[MAX_PLAYERS_PLUS1];
 #define UA_COST				1
 #define UA_MAX				5
 #define UA_LEVEL			10
-#define UA_BULLETDMG			10.0
-#define UA_GRENDMG			7.0
+#define UA_BULLETDMG			10.0f
+#define UA_GRENDMG			7.0f

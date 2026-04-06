@@ -4,10 +4,10 @@
 #include "upgrade_data_base.h"
 #include <vector>
 
-#define RECONNECT_TIME			180.0
-#define EXP_CONTROLLER_CHECK_TIME	10.0
+#define RECONNECT_TIME			180.0f
+#define EXP_CONTROLLER_CHECK_TIME	10.0f
 #define STEAMID_LENGTH			10
-#define RECONNECT_EXPLOIT_TIME		5.0
+#define RECONNECT_EXPLOIT_TIME		5.0f
 
 class EXP_Controller
 {

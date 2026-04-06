@@ -64,7 +64,7 @@ void Upgrade_Etherealshift::show_upgrade_menu(edict_t* pEntity)
 	if ( player_data[ID].pClass == NS_CLASS_SKULK
 		|| player_data[ID].pClass == NS_CLASS_GORGE
 		|| player_data[ID].pClass == NS_CLASS_LERK )
-		shift_level += shift_level / 100.0 * ShiftClassMultiplier_percent;
+		shift_level += shift_level / 100.0f * ShiftClassMultiplier_percent;
 
 	float newShiftTime = ShiftInitial + shift_level * (player_etherealshift[ID].cur_level + 1);
 
@@ -147,7 +147,7 @@ void EL_Etherealshift::buy_upgrade()
 void EL_Etherealshift::set_upgrade_values()
 {
 	float shift_level_bonus = data_etherealshift.ShiftLevel
-		+ (data_etherealshift.ShiftLevel / 100.0 * data_etherealshift.ShiftClassMultiplier_percent);
+		+ (data_etherealshift.ShiftLevel / 100.0f * data_etherealshift.ShiftClassMultiplier_percent);
 	maxShiftTime = data_etherealshift.ShiftInitial + (float)cur_level * shift_level_bonus;
 	maxShiftTime_FadeOnos = data_etherealshift.ShiftInitial + (float)cur_level * data_etherealshift.ShiftLevel;
 }
@@ -249,7 +249,7 @@ bool EL_Etherealshift::setHUDText(byte vID, bool is_marine, hudtextparms_t& hud_
 		, is_marine ? MARINE_HUD_COLOR_R : ALIEN_HUD_COLOR_R
 		, is_marine ? MARINE_HUD_COLOR_G : ALIEN_HUD_COLOR_G
 		, is_marine ? MARINE_HUD_COLOR_B : ALIEN_HUD_COLOR_B
-		, -1.0, UTIL_isAlive(INDEXENT(vID)) ? 0.753 : 0.683, 0, 0.0, 3600.0, 0.0, 0.0, HUD_CHANNEL);
+		, -1.0, UTIL_isAlive(INDEXENT(vID)) ? 0.753f : 0.683f, 0, 0.0, 3600.0, 0.0, 0.0, HUD_CHANNEL);
 
 	return true;
 }

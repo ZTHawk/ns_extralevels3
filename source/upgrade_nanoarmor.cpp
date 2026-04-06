@@ -153,15 +153,15 @@ void EL_Nanoarmor::Think()
 	if ( pEntity->v.armorvalue < player_data[ID].maxAP )
 	{
 		if ( !welding_self )
-			EMIT_SOUND_DYN2(pEntity, CHAN_STREAM, NA_sound_files[NA_sound_welderidle], 0.4, ATTN_NORM, 0, PITCH_NORM);
+			EMIT_SOUND_DYN2(pEntity, CHAN_STREAM, NA_sound_files[NA_sound_welderidle], 0.4f, ATTN_NORM, 0, PITCH_NORM);
 
 		welding_self = true;
-		EMIT_SOUND_DYN2(pEntity, CHAN_AUTO, NA_sound_files[NA_sound_welderstop], 0.8, ATTN_NORM, 0, PITCH_NORM);
+		EMIT_SOUND_DYN2(pEntity, CHAN_AUTO, NA_sound_files[NA_sound_welderstop], 0.8f, ATTN_NORM, 0, PITCH_NORM);
 	} else if ( welding_self )
 	{
 		// as we already have max AP so stop selfweld and sound
 		welding_self = false;
-		EMIT_SOUND_DYN2(pEntity, CHAN_STREAM, NA_sound_files[NA_sound_welderidle], 0.0, ATTN_NORM, SND_STOP, PITCH_NORM);
+		EMIT_SOUND_DYN2(pEntity, CHAN_STREAM, NA_sound_files[NA_sound_welderidle], 0.0f, ATTN_NORM, SND_STOP, PITCH_NORM);
 		return;
 	} else
 		return;

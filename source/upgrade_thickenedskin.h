@@ -90,23 +90,23 @@ static const char* TS_sound_files[TS_MAX_SOUNDS] =
 	"misc/regeneration.wav"
 };
 
-#define METABOLIZE_HEAL_HP		20.0
-#define METABOLIZE_HEAL_TIME		1.5
-#define TS_HEAL_TIME			2.0
-#define TS_HIVE_HEAL_TIME		1.0
+#define METABOLIZE_HEAL_HP		20.0f
+#define METABOLIZE_HEAL_TIME		1.5f
+#define TS_HEAL_TIME			2.0f
+#define TS_HIVE_HEAL_TIME		1.0f
 
-#define HIVE_HEAL_RANGE			525.0
+#define HIVE_HEAL_RANGE			525.0f
 
-#define TS_HEALRATE_NON_MAX_AP		0.3
+#define TS_HEALRATE_NON_MAX_AP		0.3f
 
 // default config settings
 #define THICKENEDSKIN		true
 #define TS_COST			1
 #define TS_MAX			5
 #define TS_LEVEL		0
-#define TS_SKULK		10.0
-#define TS_GORGE		25.0
-#define TS_LERK			15.0
-#define TS_FADE			25.0
-#define TS_ONOS			30.0
-#define TS_GESTATE		20.0
+#define TS_SKULK		10.0f
+#define TS_GORGE		25.0f
+#define TS_LERK			15.0f
+#define TS_FADE			25.0f
+#define TS_ONOS			30.0f
+#define TS_GESTATE		20.0f

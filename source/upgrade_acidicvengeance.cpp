@@ -224,8 +224,8 @@ void EL_Acidicvengeance::Think()
 		// no need to check for NS_CLASS_GESTATE as it has been done before
 		if ( curClass == NS_CLASS_GORGE )
 		{
-			health_damage += (health_damage / 100.0 * data_acidicvengeance.GorgeGestateBonus);
-			armor_damage += (armor_damage / 100.0 * data_acidicvengeance.GorgeGestateBonus);
+			health_damage += (health_damage / 100.0f * data_acidicvengeance.GorgeGestateBonus);
+			armor_damage += (armor_damage / 100.0f * data_acidicvengeance.GorgeGestateBonus);
 		}
 
 		if ( targetEntity->v.health - health_damage < 1.0 )

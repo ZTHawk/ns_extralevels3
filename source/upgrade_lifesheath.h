@@ -41,5 +41,5 @@ extern EL_Lifesheath player_lifesheath[MAX_PLAYERS_PLUS1];
 #define LIFESHEATH		true
 #define LS_COST			2
 #define LS_LEVEL		12
-#define LS_COOLDOWN		5.0
-#define LS_HEALTH		50.0
+#define LS_COOLDOWN		5.0f
+#define LS_HEALTH		50.0f

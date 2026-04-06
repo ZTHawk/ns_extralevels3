@@ -62,12 +62,12 @@ static const char* RA_sound_files[RA_MAX_SOUNDS] =
 	"weapons/welderhit.wav"		// selfweld in progress 2
 };
 
-#define WELD_RANGE			200.0
-#define ARMOR_ADD_PER_WELD		35.0
-#define WELD_DISTANCE			500.0
-#define WELD_TIME			0.7
+#define WELD_RANGE			200.0f
+#define ARMOR_ADD_PER_WELD		35.0f
+#define WELD_DISTANCE			500.0f
+#define WELD_TIME			0.7f
 
-#define MAX_ARMOR_VALUE			12800.0		// +100 for health
+#define MAX_ARMOR_VALUE			12800.0f		// +100 for health
 
 #define AngleVectors			(*g_engfuncs.pfnAngleVectors)
 
@@ -76,5 +76,5 @@ static const char* RA_sound_files[RA_MAX_SOUNDS] =
 #define RA_COST				1
 #define RA_MAX				5
 #define RA_LEVEL			0
-#define RA_MA				15.0
-#define RA_HA				25.0
+#define RA_MA				15.0f
+#define RA_HA				25.0f

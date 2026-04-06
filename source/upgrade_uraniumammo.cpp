@@ -141,9 +141,9 @@ void EL_Uraniumammo::set_upgrade_values()
 		if ( !FNullEnt((entWeapon = INDEXENT(entPrimaryGunID))) )
 		{
 			if ( PrimaryGunID == NS_WEAPON_GRENADE_GUN )
-				dmg_to_set = BasicDmg[PrimaryGunID] + (float)cur_level * (BasicDmg[PrimaryGunID] / 100.0 * data_uraniumammo.GrenadeDmgPercentage);
+				dmg_to_set = BasicDmg[PrimaryGunID] + (float)cur_level * (BasicDmg[PrimaryGunID] / 100.0f * data_uraniumammo.GrenadeDmgPercentage);
 			else
-				dmg_to_set = BasicDmg[PrimaryGunID] + (float)cur_level * (BasicDmg[PrimaryGunID] / 100.0 * data_uraniumammo.BulletDmgPercentage);
+				dmg_to_set = BasicDmg[PrimaryGunID] + (float)cur_level * (BasicDmg[PrimaryGunID] / 100.0f * data_uraniumammo.BulletDmgPercentage);
 
 			UTIL_setWeaponDamage(entWeapon, dmg_to_set);
 		}
@@ -151,14 +151,14 @@ void EL_Uraniumammo::set_upgrade_values()
 		// Pistol
 		if ( !FNullEnt((entWeapon = INDEXENT(entPistolID))) )
 		{
-			dmg_to_set = BasicDmg[NS_WEAPON_PISTOL] + (float)cur_level * (BasicDmg[NS_WEAPON_PISTOL] / 100.0 * data_uraniumammo.BulletDmgPercentage);
+			dmg_to_set = BasicDmg[NS_WEAPON_PISTOL] + (float)cur_level * (BasicDmg[NS_WEAPON_PISTOL] / 100.0f * data_uraniumammo.BulletDmgPercentage);
 			UTIL_setWeaponDamage(entWeapon, dmg_to_set);
 		}
 
 		// HandGrenade
 		if ( !FNullEnt((entWeapon = INDEXENT(entHandGrenadeID))) )
 		{
-			dmg_to_set = BasicDmg[NS_WEAPON_GRENADE] + (float)cur_level * (BasicDmg[NS_WEAPON_GRENADE] / 100.0 * data_uraniumammo.GrenadeDmgPercentage);
+			dmg_to_set = BasicDmg[NS_WEAPON_GRENADE] + (float)cur_level * (BasicDmg[NS_WEAPON_GRENADE] / 100.0f * data_uraniumammo.GrenadeDmgPercentage);
 			UTIL_setWeaponDamage(entWeapon, dmg_to_set);
 		}
 	}
@@ -166,7 +166,7 @@ void EL_Uraniumammo::set_upgrade_values()
 
 void EL_Uraniumammo::respawned()
 {
-	SpawnTime = gpGlobals->time + 0.1;
+	SpawnTime = gpGlobals->time + 0.1f;
 }
 
 void EL_Uraniumammo::Think()
@@ -277,14 +277,14 @@ void EL_Uraniumammo::findWeaponData(byte mode)
 					&& WeaponID == NS_WEAPON_PISTOL )
 					continue;
 
-				damage_to_set = BasicDmg[WeaponID] + (float)cur_level * (BasicDmg[WeaponID] / 100.0 * data_uraniumammo.BulletDmgPercentage);
+				damage_to_set = BasicDmg[WeaponID] + (float)cur_level * (BasicDmg[WeaponID] / 100.0f * data_uraniumammo.BulletDmgPercentage);
 				foundID = WeaponID;
 				break;
 			}
 			case NS_WEAPON_GRENADE_GUN:
 			case NS_WEAPON_GRENADE:
 			{
-				damage_to_set = BasicDmg[WeaponID] + (float)cur_level * (BasicDmg[WeaponID] / 100.0 * data_uraniumammo.GrenadeDmgPercentage);
+				damage_to_set = BasicDmg[WeaponID] + (float)cur_level * (BasicDmg[WeaponID] / 100.0f * data_uraniumammo.GrenadeDmgPercentage);
 				foundID = WeaponID;
 				break;
 			}

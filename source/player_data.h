@@ -228,20 +228,20 @@ static const float BasicDmg[31] =
 #define GESTATE_SOUND( pEntity ) \
 	CLIENT_COMMAND(pEntity, "spk hud/points_spent\n")
 
-#define DISPLAY_TIME_SPECIAL		0.5
-#define DISPLAY_TIME			1.0
-#define XP_ADDER_BASE			60.0
-#define XP_ADDER_PER_LEVEL		10.0
-#define XP_ADDER_POST			10.0
+#define DISPLAY_TIME_SPECIAL		0.5f
+#define DISPLAY_TIME			1.0f
+#define XP_ADDER_BASE			60.0f
+#define XP_ADDER_PER_LEVEL		10.0f
+#define XP_ADDER_POST			10.0f
 
 #define PROGRESS_BAR_CHANNEL		3
 
 #define IUSER3_CLASS_SKULK		3
 #define IUSER3_CLASS_GESTATE		8
 
-#define BASE_AP_ADDER_MA_JP		20.0
-#define BASE_AP_ADDER_HA		30.0
+#define BASE_AP_ADDER_MA_JP		20.0f
+#define BASE_AP_ADDER_HA		30.0f
 
-#define MAX_ENERGY			1000.0
+#define MAX_ENERGY			1000.0f
 
-#define PLAYER_VIEWCONE			0.71
+#define PLAYER_VIEWCONE			0.71f

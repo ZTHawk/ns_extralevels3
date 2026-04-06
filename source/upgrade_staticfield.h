@@ -55,15 +55,15 @@ static const char* SF_sound_files[SF_MAX_SOUNDS] =
 	"misc/elecspark3.wav"
 };
 
-#define SF_MAX_STRENGTH		99.0
-#define SF_TIME			2.0
+#define SF_MAX_STRENGTH		99.0f
+#define SF_TIME			2.0f
 
 // default config settings
 #define STATICFIELD		true
 #define SF_COST			1
 #define SF_MAX			5
 #define SF_LEVEL		0
-#define SF_INITIALRANGE		400.0
-#define SF_LEVELRANGE		50.0
-#define SF_INITSHOCK		15.0
-#define SF_SHOCKADDER		5.0
+#define SF_INITIALRANGE		400.0f
+#define SF_LEVELRANGE		50.0f
+#define SF_INITSHOCK		15.0f
+#define SF_SHOCKADDER		5.0f

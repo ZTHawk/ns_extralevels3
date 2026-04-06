@@ -72,7 +72,7 @@ static const char* H_sound_files[H_MAX_SOUNDS] =
 #define H_COST			1
 #define H_MAX			5
 #define H_LEVEL			0
-#define H_SPEED			6.0
-#define H_HEALTHPERCENTAGE	10.0
-#define H_INITIALTIME		3.0
-#define H_LEVELTIME		1.0
+#define H_SPEED			6.0f
+#define H_HEALTHPERCENTAGE	10.0f
+#define H_INITIALTIME		3.0f
+#define H_LEVELTIME		1.0f

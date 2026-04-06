@@ -61,10 +61,10 @@ void Upgrade_Bloodlust::show_upgrade_menu(edict_t* pEntity)
 	char menu[UPGRADE_DESCRIPTION_LEN];
 	const char* dummy_description = upgrade_description;
 
-	float bloodlust_percentage = (baseAdrenalineRegen * 100.0 / BASE_ADRENELINE_REGEN)
+	float bloodlust_percentage = (baseAdrenalineRegen * 100.0f / BASE_ADRENELINE_REGEN)
 		* (player_bloodlust[ID].cur_level + 1);
 
-	float bloodlust_percentage_onos = bloodlust_percentage / 100.0 * OnosPercentage;
+	float bloodlust_percentage_onos = bloodlust_percentage / 100.0f * OnosPercentage;
 
 	float vampirism = baseVampirism * (player_bloodlust[ID].cur_level + 1);
 
@@ -133,7 +133,7 @@ void EL_Bloodlust::buy_upgrade()
 void EL_Bloodlust::set_upgrade_values()
 {
 	BloodlustRegen = cur_level * data_bloodlust.baseAdrenalineRegen;
-	BloodlustRegenOnos = cur_level * data_bloodlust.baseAdrenalineRegen / 100.0 * data_bloodlust.OnosPercentage;
+	BloodlustRegenOnos = cur_level * data_bloodlust.baseAdrenalineRegen / 100.0f * data_bloodlust.OnosPercentage;
 	Vampirism = cur_level * data_bloodlust.baseVampirism;
 	Vampirism_Fade_Onos = Vampirism * BL_VAMPIRISM_PERCENTAGE;
 }
@@ -243,7 +243,7 @@ void EL_Bloodlust::drink_my_Blood()
 		// crash when sending message while in message handling (maybe switch this code to Damage Post)
 		//player_data[ID].newDeahthMsg(attacker_ID, STRING(entAttackerWeapon->v.classname) /* keep weapon name */);
 
-		health_add = pEntity->v.health - 1.0;
+		health_add = pEntity->v.health - 1.0f;
 		pEntity->v.health = 1.0;
 	} else
 	{

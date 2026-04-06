@@ -664,7 +664,7 @@ void ClientPreThink(edict_t* pEntity)
 			if ( player_data[ID].died_during_gestate == true )
 			{
 				player_data[ID].died_during_gestate = false;
-				player_data[ID].respawn_time = gpGlobals->time + 0.1;
+				player_data[ID].respawn_time = gpGlobals->time + 0.1f;
 
 				player_data[ID].gestate_block_Damage_msg = true;
 				player_data[ID].killPlayer();

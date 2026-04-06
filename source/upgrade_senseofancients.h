@@ -171,8 +171,8 @@ static const char* Weapon_Models[SOA_MODEL_MAX] =
 
 static const char No_Gestate_Digest_Msg[POPUP_MSG_LEN] = "You can't gestate while digesting a player.";
 
-#define PARASITE_RANGE			250.0
-#define SPORE_RANGE			250.0
+#define PARASITE_RANGE			250.0f
+#define SPORE_RANGE			250.0f
 
 #define PARASITE_NONE			0
 #define PARASITE_INIT			1
@@ -185,48 +185,48 @@ static const char No_Gestate_Digest_Msg[POPUP_MSG_LEN] = "You can't gestate whil
 #define PARASITE_BY_MARINE_4		8
 #define PARASITE_DONE			9
 
-#define DEVOUR_HP_DEGEN			15.25
-#define DEVOUR_HP_REGEN			15.0
+#define DEVOUR_HP_DEGEN			15.25f
+#define DEVOUR_HP_REGEN			15.0f
 
-#define PARASITE_TIME			1.0
-#define DIGEST_TIME			1.0
-#define SPORE_EMU_TIME			1.0
-#define EVOLVE_TIME			5.0
+#define PARASITE_TIME			1.0f
+#define DIGEST_TIME			1.0f
+#define SPORE_EMU_TIME			1.0f
+#define EVOLVE_TIME			5.0f
 
-#define SKULK_HEALSPRAY_HP		15.0
-#define SKULK_HEALSPRAY_AP		15.8
-#define GORGE_HEALSPRAY_HP		19.0
-#define GORGE_HEALSPRAY_AP		19.0
-#define LERK_HEALSPRAY_HP		18.0
-#define LERK_HEALSPRAY_AP		18.0
-#define FADE_HEALSPRAY_HP		25.0
-#define FADE_HEALSPRAY_AP		25.0
-#define ONOS_HEALSPRAY_HP		51.0
-#define ONOS_HEALSPRAY_AP		51.0
-#define GESTATE_HEALSPRAY_HP		13.0
-#define GESTATE_HEALSPRAY_AP		21.0
-#define SLEF_HEALSPRAY_HP		9.0
-#define SELF_HEALSPRAY_AP		9.5
-#define STRUCTURE_HEALSPRAY_HP		65.0
+#define SKULK_HEALSPRAY_HP		15.0f
+#define SKULK_HEALSPRAY_AP		15.8f
+#define GORGE_HEALSPRAY_HP		19.0f
+#define GORGE_HEALSPRAY_AP		19.0f
+#define LERK_HEALSPRAY_HP		18.0f
+#define LERK_HEALSPRAY_AP		18.0f
+#define FADE_HEALSPRAY_HP		25.0f
+#define FADE_HEALSPRAY_AP		25.0f
+#define ONOS_HEALSPRAY_HP		51.0f
+#define ONOS_HEALSPRAY_AP		51.0f
+#define GESTATE_HEALSPRAY_HP		13.0f
+#define GESTATE_HEALSPRAY_AP		21.0f
+#define SLEF_HEALSPRAY_HP		9.0f
+#define SELF_HEALSPRAY_AP		9.5f
+#define STRUCTURE_HEALSPRAY_HP		65.0f
 
-#define ONOS_HEALSPRAY_RANGE		191.22
-#define OTHER_HEALSPRAY_RANGE		177.51
-#define HIVE_HEALSPRAY_RANGE		339.61
-#define CHAMBER_HEALSPRAY_RANGE		196.54
-#define ALIEN_RT_HEALSPRAY_RANGE	251.62
+#define ONOS_HEALSPRAY_RANGE		191.22f
+#define OTHER_HEALSPRAY_RANGE		177.51f
+#define HIVE_HEALSPRAY_RANGE		339.61f
+#define CHAMBER_HEALSPRAY_RANGE		196.54f
+#define ALIEN_RT_HEALSPRAY_RANGE	251.62f
 
 // default config settings
 #define SENSEOFANCIENTS			true
 #define SOA_COST			1
 #define SOA_MAX				5
 #define SOA_LEVEL			10
-#define SOA_PARASITE_INIT		5.0
-#define SOA_PARASITE_ADD		5.0
-#define SOA_PARASITE_DMG		10.0
-#define SOA_HEALSPRAY_DMG		30.0
-#define SOA_GASDAMAGE			3.0
-#define SOA_BLINK_ENERGY_BONUS		10.0
+#define SOA_PARASITE_INIT		5.0f
+#define SOA_PARASITE_ADD		5.0f
+#define SOA_PARASITE_DMG		10.0f
+#define SOA_HEALSPRAY_DMG		30.0f
+#define SOA_GASDAMAGE			3.0f
+#define SOA_BLINK_ENERGY_BONUS		10.0f
 #define SOA_DEVOUR_ADDER		5
-#define SOA_DEVOURTIME_INIT		1.5
-#define SOA_DEVOURTIME_BONUS		0.2
-#define SOA_GESTATE_ARMOR_ADD		15.0
+#define SOA_DEVOURTIME_INIT		1.5f
+#define SOA_DEVOURTIME_BONUS		0.2f
+#define SOA_GESTATE_ARMOR_ADD		15.0f

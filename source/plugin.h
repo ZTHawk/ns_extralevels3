@@ -100,7 +100,7 @@ using std::pair;
 #define HIVE_1_WEAPONS			2
 #define HIVE_0_WEAPONS			1
 
-#define CVAR_CHECK_DELAY		1.0
+#define CVAR_CHECK_DELAY		1.0f
 
 #define MENU_KEY_1			(1<<0)
 #define MENU_KEY_2			(1<<1)

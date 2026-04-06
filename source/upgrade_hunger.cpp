@@ -164,7 +164,7 @@ void EL_Hunger::Think()
 			++amount_boosts_got;
 			HungerEndTime = gpGlobals->time + HungerTime;
 
-			pEntity->v.health += (player_data[ID].maxHP / 100.0 * data_hunger.bonusHealthPercentage);
+			pEntity->v.health += (player_data[ID].maxHP / 100.0f * data_hunger.bonusHealthPercentage);
 			SpeedBonus += data_hunger.bonusSpeed;
 
 			if ( UTIL_getMask(pEntity, NS_MASK_SILENCE) == false )

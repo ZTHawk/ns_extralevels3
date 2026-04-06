@@ -48,20 +48,20 @@ public:
 extern Upgrade_Bloodlust data_bloodlust;
 extern EL_Bloodlust player_bloodlust[MAX_PLAYERS_PLUS1];
 
-#define BASE_ADRENELINE_REGEN		15.5	// adreneline player gets with lvl 3 adren per 0.1 sec ( not 100% exact value )
-#define ONOS_MIN_ADRENALINE		64.0
+#define BASE_ADRENELINE_REGEN		15.5f	// adreneline player gets with lvl 3 adren per 0.1 sec ( not 100% exact value )
+#define ONOS_MIN_ADRENALINE		64.0f
 
-#define BL_TIME				0.1
+#define BL_TIME				0.1f
 
-#define BL_KILL_BOOSTER			100.0
-#define BL_VAMPIRISM_PERCENTAGE		0.5	// 1.0 = 100%
-#define BL_VAMPIRISM_HA_PERCENTAGE	0.5	// 1.0 = 100%
+#define BL_KILL_BOOSTER			100.0f
+#define BL_VAMPIRISM_PERCENTAGE		0.5f	// 1.0 = 100%
+#define BL_VAMPIRISM_HA_PERCENTAGE	0.5f	// 1.0 = 100%
 
 // default config settings
 #define BLOODLUST			true
 #define BL_COST				1
 #define BL_MAX				5
 #define BL_LEVEL			0
-#define BL_REGEN			2.0
-#define BL_ONOSPERCENTAGE		33.0
-#define BL_VAMPIRISM			1.0
+#define BL_REGEN			2.0f
+#define BL_ONOSPERCENTAGE		33.0f
+#define BL_VAMPIRISM			1.0f
