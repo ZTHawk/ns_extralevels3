@@ -145,8 +145,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader />
       <PrecompiledHeaderOutputFile>.\Debug/extralevels3.pch</PrecompiledHeaderOutputFile>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <AssemblerListingLocation>.\Debug/asm/</AssemblerListingLocation>
@@ -166,8 +165,7 @@
       <ProgramDatabaseFile>.\Debug/extralevels3.pdb</ProgramDatabaseFile>
       <SubSystem>NotSet</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
+      <DataExecutionPrevention />
       <ImportLibrary>.\Debug/extralevels3.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
@@ -208,12 +206,10 @@
       <PreprocessorDefinitions>NS_3_2;WIN32;NDEBUG;_WINDOWS;_USRDLL;EXTRALEVELS3_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader />
       <PrecompiledHeaderOutputFile>.\Debug/extralevels3.pch</PrecompiledHeaderOutputFile>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>
-      </DebugInformationFormat>
+      <DebugInformationFormat />
       <AssemblerListingLocation>$(IntDir)/asm/</AssemblerListingLocation>
       <ProgramDataBaseFileName>$(IntDir)/pdb/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <ObjectFileName>$(IntDir)/obj/</ObjectFileName>
@@ -225,9 +221,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
+      <DataExecutionPrevention />
       <TargetMachine>MachineX86</TargetMachine>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
